@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prepare": "husky",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -15,6 +15,7 @@
   "packageManager": "pnpm@10.25.0",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.0.10",
     "electron": "^40.0.0",
     "eslint": "^9.39.2",
@@ -24,8 +25,10 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "globals": "^17.1.0",
     "husky": "^9.1.7",
+    "jest": "^30.2.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "ts-jest": "^29.4.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1"
   },
