@@ -8,9 +8,7 @@ export interface IpcControllerMetadata {
 export type IpcHandlerType = "handle" | "handleOnce" | "on" | "once";
 
 export interface IpcHandlerMetadata {
-  channel: string;
   handler: (...args: unknown[]) => unknown;
-  id: string;
   methodName: string;
   rawEvent: boolean;
   type: IpcHandlerType;
