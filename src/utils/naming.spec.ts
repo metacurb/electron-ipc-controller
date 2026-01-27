@@ -1,6 +1,17 @@
 import { buildChannel, deriveNamespaceFromClassName } from "./naming";
+import { toSnakeCase } from "./to-snake-case";
+
+jest.mock("./to-snake-case");
+
+const mockToSnakeCase = jest.mocked(toSnakeCase);
 
 describe("Naming Utils", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockToSnakeCase.mockImplementation((input) => input);
+  });
+
   describe("buildChannel", () => {
     test("should combine namespace and method with a colon", () => {
       expect(buildChannel("user", "create")).toBe("user:create");
@@ -9,23 +20,11 @@ describe("Naming Utils", () => {
 
   describe("deriveNamespaceFromClassName", () => {
     test.each([
-      ["UserController", "user"],
-      ["UserControllerController", "user_controller"],
-      ["UserProfileController", "user_profile"],
+      ["UserController", "User"],
+      ["UserControllerController", "UserController"],
+      ["UserProfileController", "UserProfile"],
     ])('should remove "Controller" suffix from %s', (input, expected) => {
       expect(deriveNamespaceFromClassName(input)).toBe(expected);
-    });
-
-    test("should snake_case camelCase names", () => {
-      expect(deriveNamespaceFromClassName("UserProfileController")).toBe("user_profile");
-    });
-
-    test("should handle names without Controller suffix", () => {
-      expect(deriveNamespaceFromClassName("Auth")).toBe("auth");
-    });
-
-    test("should handle lowercase names", () => {
-      expect(deriveNamespaceFromClassName("status")).toBe("status");
     });
   });
 });

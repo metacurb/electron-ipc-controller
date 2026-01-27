@@ -11,7 +11,7 @@ describe("createIpcDecorator", () => {
 
   test("should attach metadata", () => {
     class TestController {
-      @TestDecorator("foo")
+      @TestDecorator()
       method() {}
     }
 
@@ -30,7 +30,7 @@ describe("createIpcDecorator", () => {
 
   test("should support custom options", () => {
     class TestController {
-      @TestDecorator("bar", { rawEvent: true })
+      @TestDecorator({ rawEvent: true })
       method() {}
     }
 
