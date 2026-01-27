@@ -38,12 +38,7 @@ export default defineConfig([
       "simple-import-sort/imports": [
         "error",
         {
-          groups: [
-            ["^\\u0000"],
-            ["^@?\\w"],
-            ["^@", "^"],
-            ["^\\./"],
-          ],
+          groups: [["^\\u0000"], ["^@?\\w"], ["^@", "^"], ["^\\./"]],
         },
       ],
       "@typescript-eslint/no-floating-promises": "warn",
