@@ -9,7 +9,7 @@ export interface ControllerOptions {
   namespace?: string;
 }
 
-export const Controller =
+export const IpcController =
   ({ namespace: userDefinedNamespace }: ControllerOptions = {}): ClassDecorator =>
   (target) => {
     const ctor = target as unknown as Constructor;

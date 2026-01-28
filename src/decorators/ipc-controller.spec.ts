@@ -3,21 +3,21 @@ import Container from "typedi";
 import { createControllerMetadata } from "../metadata/controller-metadata";
 import { IpcControllerMetadata } from "../metadata/types";
 
-import { Controller } from "./controller";
+import { IpcController } from "./ipc-controller";
 import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-decorator";
 
 jest.mock("../metadata/controller-metadata");
 
 const mockCreateControllerMetadata = jest.mocked(createControllerMetadata);
 
-describe("Controller decorator", () => {
+describe("IpcController decorator", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     Container.reset();
   });
 
   test("should register class in Container", () => {
-    @Controller()
+    @IpcController()
     class TestController {}
 
     expect(Container.has(TestController)).toBe(true);
@@ -25,7 +25,7 @@ describe("Controller decorator", () => {
   });
 
   test("should set default namespace from class name", () => {
-    @Controller()
+    @IpcController()
     class UserProfileController {}
 
     expect(mockCreateControllerMetadata).toHaveBeenCalledWith(UserProfileController, {
@@ -36,7 +36,7 @@ describe("Controller decorator", () => {
   test("should set custom namespace if provided", () => {
     const namespace = "custom";
 
-    @Controller({ namespace })
+    @IpcController({ namespace })
     class MyController {}
 
     expect(mockCreateControllerMetadata).toHaveBeenCalledWith(MyController, {
@@ -59,7 +59,7 @@ describe("Controller decorator", () => {
     class TestController {}
     Reflect.defineMetadata(IPC_PENDING_HANDLERS, pending, TestController);
 
-    Controller()(TestController);
+    IpcController()(TestController);
 
     expect(handlers.get("handleSomething")).toBe(pending[0]);
   });
@@ -80,6 +80,6 @@ describe("Controller decorator", () => {
     class TestController {}
     Reflect.defineMetadata(IPC_PENDING_HANDLERS, pending, TestController);
 
-    expect(() => Controller()(TestController)).toThrow("Duplicate handler name handleSomething");
+    expect(() => IpcController()(TestController)).toThrow("Duplicate handler name handleSomething");
   });
 });

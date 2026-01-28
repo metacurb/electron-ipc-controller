@@ -1,12 +1,12 @@
 import { IpcHandlerMetadata } from "../metadata/types";
 
-import { Controller } from "./controller";
+import { IpcController } from "./ipc-controller";
 import { IpcHandle } from "./ipc-handle";
 import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-decorator";
 
 describe("IpcHandle decorator", () => {
   test("should attach metadata with handle type", () => {
-    @Controller()
+    @IpcController()
     class TestController {
       @IpcHandle()
       fooHandler() {
