@@ -2,7 +2,7 @@ import { ipcMain } from "electron";
 
 import { wrapWithCorrelation } from "../correlation/wrap-with-correlation";
 import { Disposer, IpcHandlerMetadata } from "../metadata/types";
-import { buildChannel } from "../utils/naming";
+import { createChannelName } from "../utils/create-channel-name";
 
 type RegisterHandlerConfig = {
   correlation: boolean;
@@ -17,7 +17,7 @@ export const registerHandler = (
   const wrappedHandler = wrapWithCorrelation(meta.handler, correlation);
   const boundHandler = wrappedHandler.bind(instance);
 
-  const channel = buildChannel(namespace, meta.methodName);
+  const channel = createChannelName(namespace, meta.methodName);
 
   if (meta.type === "handle" || meta.type === "handleOnce") {
     ipcMain[meta.type](channel, boundHandler);

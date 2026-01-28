@@ -1,15 +1,15 @@
 import { randomUUID } from "node:crypto";
 
-import { deriveNamespaceFromClassName } from "../utils/naming";
+import { deriveNamespace } from "../utils/derive-namespace";
 
 import { Constructor, IpcControllerMetadata } from "./types";
 
 const IPC_CONTROLLER_METADATA = Symbol("ipc:controller");
 
-export const generateMeta = (target: Constructor, namespace?: string): IpcControllerMetadata => ({
+export const generateMeta = (target: Constructor): IpcControllerMetadata => ({
   handlers: new Map(),
   id: randomUUID(),
-  namespace: namespace ?? deriveNamespaceFromClassName(target.name),
+  namespace: deriveNamespace(target.name),
   target,
 });
 
@@ -26,14 +26,14 @@ export const getControllerMetadata = (target: Constructor) => {
   return meta;
 };
 
-export const createControllerMetadata = (target: Constructor, options?: { namespace?: string }) => {
+export const createControllerMetadata = (target: Constructor) => {
   const existing: IpcControllerMetadata | undefined = Reflect.getMetadata(
     IPC_CONTROLLER_METADATA,
     target,
   );
   if (existing) return existing;
 
-  const meta = generateMeta(target, options?.namespace);
+  const meta = generateMeta(target);
   Reflect.defineMetadata(IPC_CONTROLLER_METADATA, Object.freeze(meta), target);
   return meta;
 };

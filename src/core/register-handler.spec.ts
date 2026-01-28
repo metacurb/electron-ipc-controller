@@ -1,13 +1,13 @@
 import { ipcMain } from "electron";
 
 import { IpcHandlerMetadata } from "../metadata/types";
-import { buildChannel } from "../utils/naming";
+import { createChannelName } from "../utils/create-channel-name";
 
 import { registerHandler } from "./register-handler";
 
-jest.mock("../utils/naming");
+jest.mock("../utils/create-channel-name");
 
-const mockBuildChannel = jest.mocked(buildChannel);
+const mockCreateChannelName = jest.mocked(createChannelName);
 
 const testNamespace = "test-namespace";
 const mockChannel = "mock_channel";
@@ -20,7 +20,7 @@ describe("registerHandler", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    mockBuildChannel.mockReturnValue(mockChannel);
+    mockCreateChannelName.mockReturnValue(mockChannel);
   });
 
   const createHandler = (type: IpcHandlerMetadata["type"]): IpcHandlerMetadata => ({

@@ -1,6 +1,6 @@
 import { randomUUID, UUID } from "node:crypto";
 
-import { deriveNamespaceFromClassName } from "../utils/naming";
+import { deriveNamespace } from "../utils/derive-namespace";
 
 import {
   createControllerMetadata,
@@ -9,14 +9,14 @@ import {
 } from "./controller-metadata";
 
 jest.mock("node:crypto");
-jest.mock("../utils/naming");
+jest.mock("../utils/derive-namespace");
 
 const testUuid = "test-uuid";
 const testDerivedNamespace = "test-derived-namespace";
 
 describe("Controller Metadata Utils", () => {
   const mockRandomUUID = jest.mocked(randomUUID);
-  const mockDeriveNamespace = jest.mocked(deriveNamespaceFromClassName);
+  const mockDeriveNamespace = jest.mocked(deriveNamespace);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -39,13 +39,6 @@ describe("Controller Metadata Utils", () => {
 
       expect(mockDeriveNamespace).toHaveBeenCalledWith("TestController");
     });
-
-    it("should use provided namespace", () => {
-      const meta = generateMeta(TestController, "custom-namespace");
-
-      expect(meta.namespace).toBe("custom-namespace");
-      expect(mockDeriveNamespace).not.toHaveBeenCalled();
-    });
   });
 
   describe("createControllerMetadata", () => {
@@ -64,12 +57,6 @@ describe("Controller Metadata Utils", () => {
       const second = createControllerMetadata(TestController);
       expect(second).toEqual(first);
       expect(mockRandomUUID).toHaveBeenCalledTimes(1);
-    });
-
-    it("should respect options when creating", () => {
-      class OtherController {}
-      const meta = createControllerMetadata(OtherController, { namespace: "custom" });
-      expect(meta.namespace).toBe("custom");
     });
   });
 

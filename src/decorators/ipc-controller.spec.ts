@@ -28,20 +28,7 @@ describe("IpcController decorator", () => {
     @IpcController()
     class UserProfileController {}
 
-    expect(mockCreateControllerMetadata).toHaveBeenCalledWith(UserProfileController, {
-      namespace: undefined,
-    });
-  });
-
-  test("should set custom namespace if provided", () => {
-    const namespace = "custom";
-
-    @IpcController({ namespace })
-    class MyController {}
-
-    expect(mockCreateControllerMetadata).toHaveBeenCalledWith(MyController, {
-      namespace,
-    });
+    expect(mockCreateControllerMetadata).toHaveBeenCalledWith(UserProfileController);
   });
 
   test("should register pending handlers", () => {
