@@ -1,50 +1,26 @@
-import { Container } from "typedi";
+import { BrowserWindow } from "electron";
 
-import { getControllerMetadata } from "../metadata/controller-metadata";
-import {
-  Constructor,
-  Disposer,
-  IpcApplicationMetadata,
-  IpcControllerMetadata,
-} from "../metadata/types";
-import { generatePreloadApi } from "../preload/generate-preload-api";
+import { registerHandlers } from "../metadata/register-handlers";
+import { Constructor } from "../metadata/types";
 
-import { registerHandler } from "./register-handler";
-
-interface IpcAppOptions {
+export interface IpcAppOptions {
   controllers: Constructor[];
   correlation?: boolean;
+  window: BrowserWindow;
 }
 
 export interface IpcApp {
   dispose(): void;
-  generatePreloadApi: () => ReturnType<typeof generatePreloadApi>;
 }
 
-export const createIpcApp = ({ controllers, correlation = true }: IpcAppOptions): IpcApp => {
-  const controllersMeta = new Map<string, IpcControllerMetadata>();
-  const disposers: Disposer[] = [];
+export const createIpcApp = ({
+  controllers,
+  correlation = true,
+  window,
+}: IpcAppOptions): IpcApp => {
+  const { controllersMeta, disposers, emitMetadata } = registerHandlers(controllers, correlation);
 
-  for (const Controller of controllers) {
-    const meta = getControllerMetadata(Controller);
-    const instance = Container.get(Controller);
-
-    for (const handler of meta.handlers.values()) {
-      const dispose = registerHandler(handler, instance, {
-        correlation,
-        namespace: meta.namespace,
-      });
-      if (dispose) {
-        disposers.push(dispose);
-      }
-    }
-
-    controllersMeta.set(meta.id, meta);
-  }
-
-  const metadata: IpcApplicationMetadata = {
-    controllers: controllersMeta,
-  };
+  emitMetadata(controllersMeta, window);
 
   return {
     dispose() {
@@ -52,6 +28,5 @@ export const createIpcApp = ({ controllers, correlation = true }: IpcAppOptions)
         dispose();
       }
     },
-    generatePreloadApi: () => generatePreloadApi(metadata),
   };
 };
