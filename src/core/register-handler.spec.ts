@@ -26,7 +26,6 @@ describe("registerHandler", () => {
   const createHandler = (type: IpcHandlerMetadata["type"]): IpcHandlerMetadata => ({
     handler: mockInstance.testMethod,
     methodName: "method",
-    rawEvent: false,
     type,
   });
 

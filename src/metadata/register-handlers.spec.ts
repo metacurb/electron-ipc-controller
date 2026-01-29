@@ -19,7 +19,6 @@ const mockContainer = jest.mocked(Container);
 const mockHandler: IpcHandlerMetadata = {
   handler: () => {},
   methodName: "testMethod",
-  rawEvent: false,
   type: "on",
 };
 

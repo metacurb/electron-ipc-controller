@@ -23,22 +23,7 @@ describe("createIpcDecorator", () => {
     expect(meta).toEqual<IpcHandlerMetadata>({
       handler: expect.any(Function),
       methodName: "methodName",
-      rawEvent: false,
       type: "handle",
     });
-  });
-
-  test("should support custom options", () => {
-    class TestController {
-      @TestDecorator({ rawEvent: true })
-      method() {}
-    }
-
-    const [meta]: IpcHandlerMetadata[] = Reflect.getOwnMetadata(
-      IPC_PENDING_HANDLERS,
-      TestController.prototype,
-    );
-
-    expect(meta.rawEvent).toBe(true);
   });
 });
