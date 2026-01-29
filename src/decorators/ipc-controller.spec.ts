@@ -1,10 +1,8 @@
-import Container from "typedi";
-
 import { setControllerMetadata } from "../metadata/set-controller-metadata";
 import { IpcControllerMetadata } from "../metadata/types";
 
 import { IpcController } from "./ipc-controller";
-import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-decorator";
+import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-handler-decorator";
 
 jest.mock("../metadata/set-controller-metadata");
 
@@ -13,15 +11,6 @@ const mockCreateControllerMetadata = jest.mocked(setControllerMetadata);
 describe("IpcController decorator", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    Container.reset();
-  });
-
-  test("should register class in Container", () => {
-    @IpcController()
-    class TestController {}
-
-    expect(Container.has(TestController)).toBe(true);
-    expect(Container.get(TestController)).toBeInstanceOf(TestController);
   });
 
   test("should set default namespace from class name", () => {

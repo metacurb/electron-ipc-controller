@@ -1,9 +1,7 @@
-import Container from "typedi";
-
 import { setControllerMetadata } from "../metadata/set-controller-metadata";
 import { Constructor, IpcHandlerMetadata } from "../metadata/types";
 
-import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-decorator";
+import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-handler-decorator";
 
 export const IpcController = (): ClassDecorator => (target) => {
   const ctor = target as unknown as Constructor;
@@ -18,9 +16,5 @@ export const IpcController = (): ClassDecorator => (target) => {
     }
 
     meta.handlers.set(handler.methodName, handler);
-  }
-
-  if (!Container.has(ctor)) {
-    Container.set(ctor, new ctor());
   }
 };

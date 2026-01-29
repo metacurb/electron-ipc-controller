@@ -2,7 +2,7 @@ import { IpcHandlerMetadata, IpcHandlerType } from "../../metadata/types";
 
 export const IPC_PENDING_HANDLERS = Symbol("ipc:pending_handlers");
 
-export const createIpcDecorator = (type: IpcHandlerType) => (): MethodDecorator => {
+export const createIpcHandlerDecorator = (type: IpcHandlerType) => (): MethodDecorator => {
   return (target, propertyKey, descriptor: PropertyDescriptor) => {
     const handlerMeta: IpcHandlerMetadata = {
       handler: descriptor.value,

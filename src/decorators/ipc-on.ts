@@ -1,3 +1,3 @@
-import { createIpcDecorator } from "./utils/create-ipc-decorator";
+import { createIpcHandlerDecorator } from "./utils/create-ipc-handler-decorator";
 
-export const IpcOn = createIpcDecorator("on");
+export const IpcOn = createIpcHandlerDecorator("on");

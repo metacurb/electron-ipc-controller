@@ -1,9 +1,9 @@
 import { IpcHandlerMetadata } from "../../metadata/types";
 
-import { createIpcDecorator, IPC_PENDING_HANDLERS } from "./create-ipc-decorator";
+import { createIpcHandlerDecorator, IPC_PENDING_HANDLERS } from "./create-ipc-handler-decorator";
 
-describe("createIpcDecorator", () => {
-  const TestDecorator = createIpcDecorator("handle");
+describe("createIpcHandlerDecorator", () => {
+  const TestDecorator = createIpcHandlerDecorator("handle");
 
   beforeEach(() => {
     jest.clearAllMocks();
