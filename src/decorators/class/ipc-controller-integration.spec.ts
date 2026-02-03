@@ -21,4 +21,24 @@ describe("IpcController inheritance (Integration)", () => {
     expect(meta.handlers.has("childMethod")).toBe(true);
     expect(meta.handlers.size).toBe(2);
   });
+
+  test("should support custom namespace and method names", () => {
+    @IpcController("custom")
+    class TestController {
+      @IpcHandle("get")
+      getSettings() {}
+
+      @IpcHandle("set")
+      setSettings() {}
+    }
+
+    const meta = getControllerMetadata(TestController);
+    expect(meta.namespace).toBe("custom");
+
+    expect(meta.handlers.has("get")).toBe(true);
+    expect(meta.handlers.get("get")?.channel).toBe("custom.get");
+
+    expect(meta.handlers.has("set")).toBe(true);
+    expect(meta.handlers.get("set")?.channel).toBe("custom.set");
+  });
 });

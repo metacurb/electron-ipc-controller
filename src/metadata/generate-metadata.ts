@@ -4,9 +4,12 @@ import { deriveNamespace } from "../utils/derive-namespace";
 
 import { Constructor, IpcControllerMetadata } from "./types";
 
-export const generateMetadata = (target: Constructor): IpcControllerMetadata => ({
+export const generateMetadata = (
+  target: Constructor,
+  namespace?: string,
+): IpcControllerMetadata => ({
   handlers: new Map(),
   id: randomUUID(),
-  namespace: deriveNamespace(target.name),
+  namespace: namespace || deriveNamespace(target.name),
   target,
 });

@@ -3,22 +3,24 @@ import { setControllerMetadata } from "../../metadata/set-controller-metadata";
 import { Constructor, PendingHandlerMetadata } from "../../metadata/types";
 import { createChannelName } from "../../utils/create-channel-name";
 
-export const IpcController = (): ClassDecorator => (target) => {
-  const ctor = target as unknown as Constructor<object>;
+export const IpcController =
+  (namespace?: string): ClassDecorator =>
+  (target) => {
+    const ctor = target as unknown as Constructor<object>;
 
-  const meta = setControllerMetadata(ctor);
+    const meta = setControllerMetadata(ctor, namespace);
 
-  const pending: PendingHandlerMetadata[] =
-    Reflect.getMetadata(IPC_PENDING_HANDLERS, ctor.prototype) || [];
+    const pending: PendingHandlerMetadata[] =
+      Reflect.getMetadata(IPC_PENDING_HANDLERS, ctor.prototype) || [];
 
-  for (const handler of pending) {
-    if (meta.handlers.has(handler.methodName)) {
-      throw new Error(`Duplicate handler name ${handler.methodName} in controller ${ctor.name}`);
+    for (const handler of pending) {
+      if (meta.handlers.has(handler.methodName)) {
+        throw new Error(`Duplicate handler name ${handler.methodName} in controller ${ctor.name}`);
+      }
+
+      meta.handlers.set(handler.methodName, {
+        ...handler,
+        channel: createChannelName(namespace || meta.namespace, handler.methodName),
+      });
     }
-
-    meta.handlers.set(handler.methodName, {
-      ...handler,
-      channel: createChannelName(meta.namespace, handler.methodName),
-    });
-  }
-};
+  };

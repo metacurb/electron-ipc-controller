@@ -29,6 +29,25 @@ describe("createIpcHandlerDecorator", () => {
     });
   });
 
+  test("should support custom method name", () => {
+    class TestController {
+      @TestDecorator("customName")
+      methodName() {}
+    }
+
+    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(
+      IPC_PENDING_HANDLERS,
+      TestController.prototype,
+    );
+
+    expect(meta).toEqual<PendingHandlerMetadata>({
+      handler: expect.any(Function),
+      methodName: "customName",
+      paramInjections: undefined,
+      type: "handle",
+    });
+  });
+
   test("should include parameter injections if present", () => {
     class TestController {
       methodName() {}

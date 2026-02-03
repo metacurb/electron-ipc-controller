@@ -41,6 +41,29 @@ describe("IpcController decorator", () => {
     expect(handlers.get("handleSomething")).toEqual(pending[0]);
   });
 
+  test("should support custom namespace", () => {
+    const handlers = new Map();
+
+    mockSetControllerMetadata.mockReturnValue({
+      handlers,
+      id: "id",
+      namespace: "custom-namespace",
+      target: class {},
+    });
+
+    const pending = [
+      { channel: "test", handler: jest.fn(), methodName: "handleSomething", type: "handle" },
+    ];
+
+    class TestController {}
+    Reflect.defineMetadata(IPC_PENDING_HANDLERS, pending, TestController.prototype);
+
+    IpcController("custom-namespace")(TestController);
+
+    expect(mockSetControllerMetadata).toHaveBeenCalledWith(TestController, "custom-namespace");
+    expect(mockCreateChannelName).toHaveBeenCalledWith("custom-namespace", "handleSomething");
+  });
+
   test("should throw on duplicate handlers", () => {
     const handlerMeta: IpcHandlerMetadata = {
       channel: "test",
