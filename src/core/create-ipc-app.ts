@@ -1,11 +1,15 @@
 import { BrowserWindow } from "electron";
 
-import { registerHandlers } from "../metadata/register-handlers";
 import { Constructor } from "../metadata/types";
+
+import { assembleIpc } from "./assemble-ipc";
+import { emitIpcContract } from "./emit-ipc-contract";
+import { ControllerResolver } from "./types";
 
 export interface IpcAppOptions {
   controllers: Constructor[];
   correlation?: boolean;
+  resolver: ControllerResolver;
   window: BrowserWindow;
 }
 
@@ -15,12 +19,13 @@ export interface IpcApp {
 
 export const createIpcApp = ({
   controllers,
-  correlation = true,
+  correlation,
+  resolver,
   window,
 }: IpcAppOptions): IpcApp => {
-  const { controllersMeta, disposers, emitMetadata } = registerHandlers(controllers, correlation);
+  const disposers = assembleIpc(controllers, { correlation, resolver });
 
-  emitMetadata(controllersMeta, window);
+  emitIpcContract(controllers, window);
 
   return {
     dispose() {

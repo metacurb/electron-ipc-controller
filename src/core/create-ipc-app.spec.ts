@@ -1,68 +1,55 @@
 import { BrowserWindow } from "electron";
 
-import { registerHandlers } from "../metadata/register-handlers";
-
+import { assembleIpc } from "./assemble-ipc";
 import { createIpcApp } from "./create-ipc-app";
+import { emitIpcContract } from "./emit-ipc-contract";
+import { ControllerResolver } from "./types";
 
-jest.mock("../metadata/register-handlers");
+jest.mock("./assemble-ipc");
+jest.mock("./emit-ipc-contract");
 
-const mockRegisterHandlers = jest.mocked(registerHandlers);
+const mockAssembleIpc = jest.mocked(assembleIpc);
+const mockEmitIpcContract = jest.mocked(emitIpcContract);
+
+const mockResolver: ControllerResolver = {
+  resolve: (Controller) => new Controller(),
+};
+
+const controllers = [class A {}, class B {}];
 
 describe("createIpcApp", () => {
   const mockWindow = {} as BrowserWindow;
-  const mockEmitMetadata = jest.fn();
-  const mockDisposer = jest.fn();
-  const mockControllersMeta = new Map();
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockRegisterHandlers.mockReturnValue({
-      controllersMeta: mockControllersMeta,
-      disposers: [mockDisposer],
-      emitMetadata: mockEmitMetadata,
-    });
   });
 
-  test("should call registerHandlers with controllers and correlation", () => {
-    const controllers = [class A {}, class B {}];
+  test("should call assembleIpc with correct args, and emit IPC contract", () => {
+    const mockDisposer = jest.fn();
+    mockAssembleIpc.mockReturnValue([mockDisposer]);
+
     createIpcApp({
       controllers,
       correlation: false,
+      resolver: mockResolver,
       window: mockWindow,
     });
 
-    expect(mockRegisterHandlers).toHaveBeenCalledWith(controllers, false);
-  });
-
-  test("should use default correlation value of true", () => {
-    createIpcApp({
-      controllers: [],
-      window: mockWindow,
+    expect(mockAssembleIpc).toHaveBeenCalledWith(controllers, {
+      correlation: false,
+      resolver: mockResolver,
     });
-
-    expect(mockRegisterHandlers).toHaveBeenCalledWith([], true);
-  });
-
-  test("should call emitMetadata with controllersMeta and window", () => {
-    createIpcApp({
-      controllers: [],
-      window: mockWindow,
-    });
-
-    expect(mockEmitMetadata).toHaveBeenCalledWith(mockControllersMeta, mockWindow);
+    expect(mockEmitIpcContract).toHaveBeenCalledWith(controllers, mockWindow);
   });
 
   test("should return an object with a dispose method that calls all disposers", () => {
     const disposer1 = jest.fn();
     const disposer2 = jest.fn();
-    mockRegisterHandlers.mockReturnValue({
-      controllersMeta: mockControllersMeta,
-      disposers: [disposer1, disposer2],
-      emitMetadata: mockEmitMetadata,
-    });
+    mockAssembleIpc.mockReturnValue([disposer1, disposer2]);
 
     const app = createIpcApp({
-      controllers: [],
+      controllers,
+      resolver: mockResolver,
       window: mockWindow,
     });
 

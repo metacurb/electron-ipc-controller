@@ -1,8 +1,8 @@
+import { IPC_PENDING_HANDLERS } from "../metadata/constants";
 import { IpcHandlerMetadata } from "../metadata/types";
 
 import { IpcController } from "./ipc-controller";
 import { IpcHandle } from "./ipc-handle";
-import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-handler-decorator";
 
 describe("IpcHandle decorator", () => {
   test("should attach metadata with handle type", () => {

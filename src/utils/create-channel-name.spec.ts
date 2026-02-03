@@ -12,7 +12,7 @@ describe("createChannelName", () => {
     mockToSnakeCase.mockImplementation((input) => input);
   });
 
-  test("should combine namespace and method with a colon", () => {
-    expect(createChannelName("user", "create")).toBe("user:create");
+  test("should combine namespace and method with a dot", () => {
+    expect(createChannelName("user", "create")).toBe("user.create");
   });
 });

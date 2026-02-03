@@ -6,5 +6,4 @@ export { IpcHandleOnce } from "./decorators/ipc-handle-once";
 export { IpcOn } from "./decorators/ipc-on";
 export { IpcOnce } from "./decorators/ipc-once";
 
-export { registerHandlers } from "./metadata/register-handlers";
 export { createIpcApp, IpcApp, IpcAppOptions } from "./core/create-ipc-app";

@@ -1,7 +1,7 @@
-import { IpcHandlerMetadata } from "../metadata/types";
+import { IPC_PENDING_HANDLERS } from "../metadata/constants";
+import { PendingHandlerMetadata } from "../metadata/types";
 
 import { IpcOnce } from "./ipc-once";
-import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-handler-decorator";
 
 describe("IpcOnce decorator", () => {
   test("should attach metadata with once type", () => {
@@ -12,7 +12,7 @@ describe("IpcOnce decorator", () => {
       }
     }
 
-    const [meta]: IpcHandlerMetadata[] = Reflect.getOwnMetadata(
+    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(
       IPC_PENDING_HANDLERS,
       TestController.prototype,
     );

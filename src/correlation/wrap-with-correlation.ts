@@ -4,7 +4,7 @@ import { correlationStore } from "./correlation-store";
 
 export const wrapWithCorrelation = <TArgs extends unknown[], TReturn>(
   handler: (...args: TArgs) => TReturn | Promise<TReturn>,
-  enabled: boolean,
+  enabled: boolean = false,
 ) => {
   if (!enabled) return handler;
 

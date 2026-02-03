@@ -1,13 +1,20 @@
-import { createMock } from "@golevelup/ts-jest";
 import { BrowserWindow } from "electron";
 
-import { IPC_METADATA_CHANNEL } from "./constants";
-import { emitMetadata } from "./emit-metadata";
-import { IpcControllerMetadata } from "./types";
+import { IpcControllerMetadata } from "../metadata/types";
 
-describe("emitMetadata", () => {
+import { IPC_CONTRACT_CHANNEL } from "./constants";
+import { emitIpcContract } from "./emit-ipc-contract";
+import { serializeControllers } from "./serialize-controllers";
+
+jest.mock("./serialize-controllers");
+
+const mockSerializeControllers = jest.mocked(serializeControllers);
+
+const controllers = [class A {}, class B {}];
+const serializedControllers = { controllers: [] };
+
+describe("emitIpcContract", () => {
   let mockWindow: jest.Mocked<BrowserWindow>;
-  let controllersMeta: Map<string, IpcControllerMetadata>;
   let mockWebContents: jest.Mocked<Electron.WebContents>;
 
   beforeEach(() => {
@@ -21,29 +28,29 @@ describe("emitMetadata", () => {
       webContents: mockWebContents,
     } as unknown as jest.Mocked<BrowserWindow>;
 
-    controllersMeta = new Map();
-
     jest.clearAllMocks();
+
+    mockSerializeControllers.mockReturnValue(serializedControllers);
   });
 
   it("should do nothing if targetWindow is undefined", () => {
-    emitMetadata(controllersMeta);
+    emitIpcContract(controllers);
     expect(mockWebContents.send).not.toHaveBeenCalled();
   });
 
   it("should send metadata immediately if webContents is not loading", () => {
     mockWebContents.isLoading.mockReturnValue(false);
 
-    emitMetadata(controllersMeta, mockWindow);
+    emitIpcContract(controllers, mockWindow);
 
-    expect(mockWebContents.send).toHaveBeenCalledWith(IPC_METADATA_CHANNEL, controllersMeta);
+    expect(mockWebContents.send).toHaveBeenCalledWith(IPC_CONTRACT_CHANNEL, serializedControllers);
     expect(mockWebContents.once).not.toHaveBeenCalled();
   });
 
   it("should wait for did-finish-load if webContents is loading", () => {
     mockWebContents.isLoading.mockReturnValue(true);
 
-    emitMetadata(controllersMeta, mockWindow);
+    emitIpcContract(controllers, mockWindow);
 
     expect(mockWebContents.send).not.toHaveBeenCalled();
     expect(mockWebContents.once).toHaveBeenCalledWith("did-finish-load", expect.any(Function));
@@ -52,6 +59,6 @@ describe("emitMetadata", () => {
     // @ts-expect-error we don't care about the type here, we're just testing the callback
     callback();
 
-    expect(mockWebContents.send).toHaveBeenCalledWith(IPC_METADATA_CHANNEL, controllersMeta);
+    expect(mockWebContents.send).toHaveBeenCalledWith(IPC_CONTRACT_CHANNEL, serializedControllers);
   });
 });

@@ -1,55 +1,62 @@
+import { IPC_PENDING_HANDLERS } from "../metadata/constants";
 import { setControllerMetadata } from "../metadata/set-controller-metadata";
-import { IpcControllerMetadata } from "../metadata/types";
+import { IpcHandlerMetadata } from "../metadata/types";
+import { createChannelName } from "../utils/create-channel-name";
 
 import { IpcController } from "./ipc-controller";
-import { IPC_PENDING_HANDLERS } from "./utils/create-ipc-handler-decorator";
 
 jest.mock("../metadata/set-controller-metadata");
+jest.mock("../utils/create-channel-name");
 
-const mockCreateControllerMetadata = jest.mocked(setControllerMetadata);
+const mockSetControllerMetadata = jest.mocked(setControllerMetadata);
+const mockCreateChannelName = jest.mocked(createChannelName);
 
 describe("IpcController decorator", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  test("should set default namespace from class name", () => {
-    @IpcController()
-    class UserProfileController {}
-
-    expect(mockCreateControllerMetadata).toHaveBeenCalledWith(UserProfileController);
+    mockCreateChannelName.mockReturnValue("test");
   });
 
   test("should register pending handlers", () => {
     const handlers = new Map();
 
-    mockCreateControllerMetadata.mockReturnValue({
+    mockCreateChannelName.mockReturnValue("test");
+    mockSetControllerMetadata.mockReturnValue({
       handlers,
       id: "id",
       namespace: "test",
       target: class {},
-    } as IpcControllerMetadata);
+    });
 
-    const pending = [{ handler: jest.fn(), methodName: "handleSomething", type: "handle" }];
+    const pending = [
+      { channel: "test", handler: jest.fn(), methodName: "handleSomething", type: "handle" },
+    ];
 
     class TestController {}
     Reflect.defineMetadata(IPC_PENDING_HANDLERS, pending, TestController);
 
     IpcController()(TestController);
 
-    expect(handlers.get("handleSomething")).toBe(pending[0]);
+    expect(mockCreateChannelName).toHaveBeenCalledWith("test", "handleSomething");
+    expect(handlers.get("handleSomething")).toEqual(pending[0]);
   });
 
   test("should throw on duplicate handlers", () => {
-    const handlers = new Map();
-    handlers.set("handleSomething", {});
+    const handlerMeta: IpcHandlerMetadata = {
+      channel: "test",
+      handler: jest.fn(),
+      methodName: "handleSomething",
+      type: "handle",
+    };
 
-    mockCreateControllerMetadata.mockReturnValue({
+    const handlers = new Map(Object.entries({ handleSomething: handlerMeta }));
+
+    mockSetControllerMetadata.mockReturnValue({
       handlers,
       id: "id",
       namespace: "test",
       target: class {},
-    } as IpcControllerMetadata);
+    });
 
     const pending = [{ handler: jest.fn(), methodName: "handleSomething", type: "handle" }];
 

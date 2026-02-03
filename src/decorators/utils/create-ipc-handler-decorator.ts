@@ -1,16 +1,15 @@
-import { IpcHandlerMetadata, IpcHandlerType } from "../../metadata/types";
-
-export const IPC_PENDING_HANDLERS = Symbol("ipc:pending_handlers");
+import { IPC_PENDING_HANDLERS } from "../../metadata/constants";
+import { IpcHandlerType, PendingHandlerMetadata } from "../../metadata/types";
 
 export const createIpcHandlerDecorator = (type: IpcHandlerType) => (): MethodDecorator => {
   return (target, propertyKey, descriptor: PropertyDescriptor) => {
-    const handlerMeta: IpcHandlerMetadata = {
+    const handlerMeta: PendingHandlerMetadata = {
       handler: descriptor.value,
       methodName: String(propertyKey),
       type,
     };
 
-    const pending: IpcHandlerMetadata[] =
+    const pending: PendingHandlerMetadata[] =
       Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, target) || [];
 
     pending.push(handlerMeta);

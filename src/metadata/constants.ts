@@ -1,2 +1,2 @@
 export const IPC_CONTROLLER_METADATA = Symbol("ipc:controller");
-export const IPC_METADATA_CHANNEL = "ipc:metadata";
+export const IPC_PENDING_HANDLERS = Symbol("ipc:pending_handlers");
