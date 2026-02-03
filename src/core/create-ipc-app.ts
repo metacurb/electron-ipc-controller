@@ -40,8 +40,14 @@ export const createIpcApp = ({
 
   return {
     dispose() {
-      for (const dispose of disposers) {
-        dispose();
+      const handlers = disposers.splice(0, disposers.length);
+
+      for (const dispose of handlers) {
+        try {
+          dispose();
+        } catch (error) {
+          console.error("Failed to dispose IPC handler:", error);
+        }
       }
     },
   };

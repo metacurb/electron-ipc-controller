@@ -69,6 +69,46 @@ describe("createIpcApp", () => {
     expect(disposer2).toHaveBeenCalled();
   });
 
+  test("should not call disposers multiple times if dispose is called repeatedly", () => {
+    const disposer = jest.fn();
+    mockAssembleIpc.mockReturnValue([disposer]);
+
+    const app = createIpcApp({
+      controllers,
+      resolver: mockResolver,
+      window: mockWindow,
+    });
+
+    app.dispose();
+    app.dispose();
+    app.dispose();
+
+    expect(disposer).toHaveBeenCalledTimes(1);
+  });
+
+  test("should continue disposing other handlers if one fails", () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation();
+    const disposer1 = jest.fn().mockImplementation(() => {
+      throw new Error("fail");
+    });
+    const disposer2 = jest.fn();
+    mockAssembleIpc.mockReturnValue([disposer1, disposer2]);
+
+    const app = createIpcApp({
+      controllers,
+      resolver: mockResolver,
+      window: mockWindow,
+    });
+
+    app.dispose();
+
+    expect(disposer1).toHaveBeenCalled();
+    expect(disposer2).toHaveBeenCalled();
+    expect(consoleError).toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
+
   test("should throw if controllers have duplicate namespaces", () => {
     mockGetControllerMetadata.mockImplementation((target) => ({
       handlers: new Map(),
