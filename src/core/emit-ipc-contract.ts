@@ -14,6 +14,9 @@ export const emitIpcContract = (controllers: Constructor[], targetWindow?: Brows
   if (!webContents.isLoading()) {
     webContents.send(IPC_CONTRACT_CHANNEL, serialized);
   } else {
-    webContents.once("did-finish-load", () => webContents.send(IPC_CONTRACT_CHANNEL, serialized));
+    webContents.once("did-finish-load", () => {
+      if (targetWindow.isDestroyed()) return;
+      webContents.send(IPC_CONTRACT_CHANNEL, serialized);
+    });
   }
 };

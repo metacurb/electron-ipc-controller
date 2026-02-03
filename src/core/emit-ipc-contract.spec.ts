@@ -68,4 +68,21 @@ describe("emitIpcContract", () => {
 
     expect(mockWebContents.send).toHaveBeenCalledWith(IPC_CONTRACT_CHANNEL, serializedControllers);
   });
+
+  it("should not send metadata if window is destroyed during load", () => {
+    mockWebContents.isLoading.mockReturnValue(true);
+
+    emitIpcContract(controllers, mockWindow);
+
+    expect(mockWebContents.once).toHaveBeenCalledWith("did-finish-load", expect.any(Function));
+
+    const callback = mockWebContents.once.mock.calls[0][1];
+
+    mockWindow.isDestroyed.mockReturnValue(true);
+
+    // @ts-expect-error we don't care about the type here, we're just testing the callback
+    callback();
+
+    expect(mockWebContents.send).not.toHaveBeenCalled();
+  });
 });
