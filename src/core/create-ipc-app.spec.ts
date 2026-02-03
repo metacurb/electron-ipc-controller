@@ -1,15 +1,19 @@
 import { BrowserWindow } from "electron";
 
+import { getControllerMetadata } from "../metadata/get-controller-metadata";
+
 import { assembleIpc } from "./assemble-ipc";
 import { createIpcApp } from "./create-ipc-app";
 import { emitIpcContract } from "./emit-ipc-contract";
 import { ControllerResolver } from "./types";
 
+jest.mock("../metadata/get-controller-metadata");
 jest.mock("./assemble-ipc");
 jest.mock("./emit-ipc-contract");
 
 const mockAssembleIpc = jest.mocked(assembleIpc);
 const mockEmitIpcContract = jest.mocked(emitIpcContract);
+const mockGetControllerMetadata = jest.mocked(getControllerMetadata);
 
 const mockResolver: ControllerResolver = {
   resolve: (Controller) => new Controller(),
@@ -22,6 +26,12 @@ describe("createIpcApp", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockGetControllerMetadata.mockImplementation((target) => ({
+      handlers: new Map(),
+      id: "id",
+      namespace: target.name.toLowerCase(),
+      target,
+    }));
   });
 
   test("should call assembleIpc with correct args, and emit IPC contract", () => {
@@ -57,5 +67,22 @@ describe("createIpcApp", () => {
 
     expect(disposer1).toHaveBeenCalled();
     expect(disposer2).toHaveBeenCalled();
+  });
+
+  test("should throw if controllers have duplicate namespaces", () => {
+    mockGetControllerMetadata.mockImplementation((target) => ({
+      handlers: new Map(),
+      id: "id",
+      namespace: "same_namespace",
+      target,
+    }));
+
+    expect(() =>
+      createIpcApp({
+        controllers,
+        resolver: mockResolver,
+        window: mockWindow,
+      }),
+    ).toThrow("Duplicate namespace 'same_namespace' found in controllers.");
   });
 });
