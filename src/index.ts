@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 export { IpcController } from "./decorators/ipc-controller";
 export { IpcHandle } from "./decorators/ipc-handle";
 export { IpcHandleOnce } from "./decorators/ipc-handle-once";
