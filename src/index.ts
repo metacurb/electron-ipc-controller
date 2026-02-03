@@ -5,3 +5,5 @@ export { IpcOn } from "./decorators/ipc-on";
 export { IpcOnce } from "./decorators/ipc-once";
 
 export { createIpcApp, IpcApp, IpcAppOptions } from "./core/create-ipc-app";
+
+export { getCorrelationId } from "./correlation/get-correlation-id";

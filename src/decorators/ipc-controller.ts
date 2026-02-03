@@ -8,8 +8,7 @@ export const IpcController = (): ClassDecorator => (target) => {
 
   const meta = setControllerMetadata(ctor);
 
-  const pending: PendingHandlerMetadata[] =
-    Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, target) || [];
+  const pending: PendingHandlerMetadata[] = Reflect.getMetadata(IPC_PENDING_HANDLERS, target) || [];
 
   for (const handler of pending) {
     if (meta.handlers.has(handler.methodName)) {

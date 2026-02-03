@@ -10,7 +10,7 @@ export const createIpcHandlerDecorator = (type: IpcHandlerType) => (): MethodDec
     };
 
     const pending: PendingHandlerMetadata[] =
-      Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, target) || [];
+      Reflect.getMetadata(IPC_PENDING_HANDLERS, target) || [];
 
     pending.push(handlerMeta);
 

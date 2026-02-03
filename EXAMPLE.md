@@ -6,7 +6,7 @@
 
 ```ts
 // main/controllers/settings.controller.ts
-import { Controller, IpcHandle, IpcOn } from "framework/decorators";
+import { Controller, IpcHandle, IpcOn } from "framework";
 
 @Controller()
 export class SettingsController {
@@ -43,7 +43,7 @@ export class SettingsController {
 
 ```ts
 // main/ipc-app.ts
-import { createIpcApp } from "framework/core";
+import { createIpcApp } from "framework";
 import { SettingsController } from "./controllers/settings.controller";
 
 export const app = createIpcApp({
@@ -130,7 +130,7 @@ window.ipc.settings.reset((updated) => {
 Example (simplified):
 
 ```ts
-import { getCorrelationId, IpcHandle } from "framework/decorators";
+import { getCorrelationId, IpcHandle } from "framework";
 
 @IpcHandle()
 async getSettings() {
