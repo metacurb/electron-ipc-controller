@@ -45,7 +45,8 @@ describe("assembleIpc", () => {
     class ControllerB {}
 
     const resolver = createMockResolver();
-    const metadata = createMockMetadata([]);
+    const handler = createMockHandler("method");
+    const metadata = createMockMetadata([handler]);
 
     mockGetControllerMetadata.mockReturnValue(metadata);
 
@@ -61,7 +62,8 @@ describe("assembleIpc", () => {
     class ControllerB {}
 
     const resolver = createMockResolver();
-    const metadata = createMockMetadata([]);
+    const handler = createMockHandler("method");
+    const metadata = createMockMetadata([handler]);
 
     mockGetControllerMetadata.mockReturnValue(metadata);
 
@@ -175,7 +177,8 @@ describe("assembleIpc", () => {
     expect(mockRegisterHandler).not.toHaveBeenCalled();
   });
 
-  test("should return empty array when controller has no handlers", () => {
+  test("should return empty array and warn when controller has no handlers", () => {
+    const consoleWarn = jest.spyOn(console, "warn").mockImplementation();
     class Controller {}
 
     const metadata = createMockMetadata([]);
@@ -187,6 +190,11 @@ describe("assembleIpc", () => {
 
     expect(disposers).toEqual([]);
     expect(mockRegisterHandler).not.toHaveBeenCalled();
+    expect(consoleWarn).toHaveBeenCalledWith(
+      "Controller 'Controller' has no IPC handlers registered.",
+    );
+
+    consoleWarn.mockRestore();
   });
 
   test("should handle multiple controllers with multiple handlers", () => {

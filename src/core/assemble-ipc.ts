@@ -26,6 +26,10 @@ export const assembleIpc = (
     }
     const meta = getControllerMetadata(Controller);
 
+    if (meta.handlers.size === 0) {
+      console.warn(`Controller '${Controller.name}' has no IPC handlers registered.`);
+    }
+
     for (const handler of meta.handlers.values()) {
       const dispose = registerHandler(handler, instance, {
         correlation: options.correlation,
