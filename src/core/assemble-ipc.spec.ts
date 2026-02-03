@@ -219,4 +219,17 @@ describe("assembleIpc", () => {
     expect(disposers).toContain(disposer2);
     expect(disposers).toContain(disposer3);
   });
+
+  test("should rethrow with context if resolver fails", () => {
+    class Controller {}
+    const resolver = createMockResolver();
+    const error = new Error("Resolution failed");
+    (resolver.resolve as jest.Mock).mockImplementation(() => {
+      throw error;
+    });
+
+    expect(() => assembleIpc([Controller], { resolver })).toThrow(
+      "Failed to resolve controller 'Controller': Resolution failed",
+    );
+  });
 });

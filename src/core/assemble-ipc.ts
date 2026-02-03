@@ -14,7 +14,16 @@ export const assembleIpc = (
   const disposers: Disposer[] = [];
 
   for (const Controller of controllers) {
-    const instance = options.resolver.resolve(Controller);
+    let instance;
+    try {
+      instance = options.resolver.resolve(Controller);
+    } catch (error) {
+      throw new Error(
+        `Failed to resolve controller '${Controller.name}': ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
     const meta = getControllerMetadata(Controller);
 
     for (const handler of meta.handlers.values()) {
