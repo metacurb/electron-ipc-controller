@@ -2,8 +2,6 @@ import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
 import { ParameterInjection } from "../../metadata/types";
 
-import { resolveInjectionValue } from "./resolve-injection-value";
-
 export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn>(
   handler: (...args: TArgs) => TReturn,
   paramInjections: ParameterInjection[] | undefined,
@@ -23,7 +21,8 @@ export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn
     for (let i = 0; i < totalArgsCount; i++) {
       const injection = injectionsMap.get(i);
       if (injection) {
-        finalArgs.push(resolveInjectionValue(injection.type, event));
+        const resolved = injection.resolver(event, injection.data);
+        finalArgs.push(resolved);
       } else {
         if (argIndex < args.length) {
           finalArgs.push(args[argIndex++]);

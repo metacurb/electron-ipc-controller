@@ -1,3 +1,7 @@
-import { createParameterInjectionDecorator } from "../utils/create-parameter-injection-decorator";
+import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
-export const Origin = createParameterInjectionDecorator("Origin", false);
+import { createParamDecorator } from "../utils/create-param-decorator";
+
+export const impl = (event: IpcMainEvent | IpcMainInvokeEvent) => event.senderFrame;
+
+export const Origin = createParamDecorator(impl);

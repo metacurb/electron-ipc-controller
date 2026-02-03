@@ -1,3 +1,5 @@
+import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
+
 export interface IpcControllerMetadata {
   handlers: Map<string, IpcHandlerMetadata>;
   id: string;
@@ -15,11 +17,10 @@ export interface IpcHandlerMetadata {
   type: IpcHandlerType;
 }
 
-export type ParameterInjectionType = "RawEvent" | "Sender" | "ProcessId" | "Origin" | "Window";
-
-export interface ParameterInjection {
+export interface ParameterInjection<T = unknown> {
+  data?: unknown;
   index: number;
-  type: ParameterInjectionType;
+  resolver: (event: IpcMainEvent | IpcMainInvokeEvent, data?: T) => unknown;
 }
 
 export type PendingHandlerMetadata = Omit<IpcHandlerMetadata, "channel">;

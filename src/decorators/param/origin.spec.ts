@@ -1,22 +1,21 @@
-import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
-import { ParameterInjection } from "../../metadata/types";
+import { IpcMainInvokeEvent } from "electron";
 
-import { Origin } from "./origin";
+import { createParamDecorator } from "../utils/create-param-decorator";
 
-describe("Origin decorator", () => {
-  test("should use Origin injection type", () => {
-    class TestClass {
-      testMethod(@Origin() origin: unknown) {
-        return origin;
-      }
-    }
+import { impl, Origin } from "./origin";
 
-    const injections: ParameterInjection[] = Reflect.getOwnMetadata(
-      IPC_PARAM_INJECTIONS,
-      TestClass.prototype,
-      "testMethod",
-    );
+jest.mock("../utils/create-param-decorator", () => ({
+  createParamDecorator: jest.fn(() => () => {}),
+}));
 
-    expect(injections[0].type).toBe("Origin");
+describe("Origin param decorator", () => {
+  test("should resolve to event.senderFrame", () => {
+    const mockEvent = { senderFrame: { name: "frame" } } as unknown as IpcMainInvokeEvent;
+    expect(impl(mockEvent)).toBe(mockEvent.senderFrame);
+  });
+
+  test("should be created with createParamDecorator", () => {
+    expect(createParamDecorator).toHaveBeenCalledWith(impl);
+    expect(Origin).toBeDefined();
   });
 });

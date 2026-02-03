@@ -1,22 +1,25 @@
-import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
-import { ParameterInjection } from "../../metadata/types";
+import { BrowserWindow, IpcMainInvokeEvent } from "electron";
 
-import { Window } from "./window";
+import { createParamDecorator } from "../utils/create-param-decorator";
 
-describe("Window decorator", () => {
-  test("should use Window injection type", () => {
-    class TestClass {
-      testMethod(@Window() win: unknown) {
-        return win;
-      }
-    }
+import { impl, Window } from "./window";
 
-    const injections: ParameterInjection[] = Reflect.getOwnMetadata(
-      IPC_PARAM_INJECTIONS,
-      TestClass.prototype,
-      "testMethod",
-    );
+jest.mock("../utils/create-param-decorator", () => ({
+  createParamDecorator: jest.fn(() => () => {}),
+}));
 
-    expect(injections[0].type).toBe("Window");
+describe("Window param decorator", () => {
+  test("should resolve to BrowserWindow", () => {
+    const mockEvent = { sender: {} } as unknown as IpcMainInvokeEvent;
+    const mockWindow = {};
+    (BrowserWindow.fromWebContents as jest.Mock).mockReturnValue(mockWindow);
+
+    expect(impl(mockEvent)).toBe(mockWindow);
+    expect(BrowserWindow.fromWebContents).toHaveBeenCalledWith(mockEvent.sender);
+  });
+
+  test("should be created with createParamDecorator", () => {
+    expect(createParamDecorator).toHaveBeenCalledWith(impl);
+    expect(Window).toBeDefined();
   });
 });

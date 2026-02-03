@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { ipcMain, IpcMainInvokeEvent } from "electron";
 
 import { wrapWithCorrelation } from "../correlation/wrap-with-correlation";
 import { IpcHandlerMetadata, IpcHandlerType } from "../metadata/types";
@@ -13,6 +13,8 @@ const mockCreateChannelName = jest.mocked(createChannelName);
 const mockWrapWithCorrelation = jest.mocked(wrapWithCorrelation);
 
 const mockChannel = "mock_channel";
+
+const rawEventResolver = (event: IpcMainInvokeEvent, _data: unknown) => event;
 
 describe("registerHandler", () => {
   const mockInstance = {
@@ -69,7 +71,7 @@ describe("registerHandler", () => {
     test("should inject event at index 0", () => {
       const handler: IpcHandlerMetadata = {
         ...createHandler("handle"),
-        paramInjections: [{ index: 0, type: "RawEvent" }],
+        paramInjections: [{ index: 0, resolver: rawEventResolver }],
       };
 
       registerHandler(handler, mockInstance, { correlation: false });
@@ -86,7 +88,7 @@ describe("registerHandler", () => {
     test("should inject event at index 1", () => {
       const handler: IpcHandlerMetadata = {
         ...createHandler("handle"),
-        paramInjections: [{ index: 1, type: "RawEvent" }],
+        paramInjections: [{ index: 1, resolver: rawEventResolver }],
       };
 
       registerHandler(handler, mockInstance, { correlation: false });
@@ -103,7 +105,7 @@ describe("registerHandler", () => {
     test("should inject event at index 2 (last)", () => {
       const handler: IpcHandlerMetadata = {
         ...createHandler("handle"),
-        paramInjections: [{ index: 2, type: "RawEvent" }],
+        paramInjections: [{ index: 2, resolver: rawEventResolver }],
       };
 
       registerHandler(handler, mockInstance, { correlation: false });
@@ -142,7 +144,7 @@ describe("registerHandler", () => {
     test("should work with correlation and event injection", () => {
       const handler: IpcHandlerMetadata = {
         ...createHandler("handle"),
-        paramInjections: [{ index: 1, type: "RawEvent" }],
+        paramInjections: [{ index: 1, resolver: rawEventResolver }],
       };
 
       registerHandler(handler, mockInstance, { correlation: true });

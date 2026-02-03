@@ -1,22 +1,21 @@
-import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
-import { ParameterInjection } from "../../metadata/types";
+import { IpcMainInvokeEvent } from "electron";
 
-import { RawEvent } from "./raw-event";
+import { createParamDecorator } from "../utils/create-param-decorator";
 
-describe("RawEvent decorator", () => {
-  test("should use RawEvent injection type", () => {
-    class TestClass {
-      testMethod(@RawEvent() event: unknown) {
-        return event;
-      }
-    }
+import { impl, RawEvent } from "./raw-event";
 
-    const injections: ParameterInjection[] = Reflect.getOwnMetadata(
-      IPC_PARAM_INJECTIONS,
-      TestClass.prototype,
-      "testMethod",
-    );
+jest.mock("../utils/create-param-decorator", () => ({
+  createParamDecorator: jest.fn(() => () => {}),
+}));
 
-    expect(injections[0].type).toBe("RawEvent");
+describe("RawEvent param decorator", () => {
+  test("should resolve to event", () => {
+    const mockEvent = {} as unknown as IpcMainInvokeEvent;
+    expect(impl(mockEvent)).toBe(mockEvent);
+  });
+
+  test("should be created with createParamDecorator", () => {
+    expect(createParamDecorator).toHaveBeenCalledWith(impl);
+    expect(RawEvent).toBeDefined();
   });
 });

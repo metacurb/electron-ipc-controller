@@ -11,6 +11,8 @@ export { ProcessId } from "./decorators/param/process-id";
 export { Origin } from "./decorators/param/origin";
 export { Window } from "./decorators/param/window";
 
+export { createParamDecorator } from "./decorators/utils/create-param-decorator";
+
 export { createIpcApp, IpcApp, IpcAppOptions } from "./core/create-ipc-app";
 
 export { getCorrelationId } from "./correlation/get-correlation-id";

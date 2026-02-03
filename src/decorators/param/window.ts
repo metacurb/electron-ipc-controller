@@ -1,3 +1,8 @@
-import { createParameterInjectionDecorator } from "../utils/create-parameter-injection-decorator";
+import { BrowserWindow, IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
-export const Window = createParameterInjectionDecorator("Window", false);
+import { createParamDecorator } from "../utils/create-param-decorator";
+
+export const impl = (event: IpcMainEvent | IpcMainInvokeEvent) =>
+  BrowserWindow.fromWebContents(event.sender);
+
+export const Window = createParamDecorator(impl);

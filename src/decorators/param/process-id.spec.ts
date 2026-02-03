@@ -1,22 +1,21 @@
-import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
-import { ParameterInjection } from "../../metadata/types";
+import { IpcMainInvokeEvent } from "electron";
 
-import { ProcessId } from "./process-id";
+import { createParamDecorator } from "../utils/create-param-decorator";
 
-describe("ProcessId decorator", () => {
-  test("should use ProcessId injection type", () => {
-    class TestClass {
-      testMethod(@ProcessId() pid: unknown) {
-        return pid;
-      }
-    }
+import { impl, ProcessId } from "./process-id";
 
-    const injections: ParameterInjection[] = Reflect.getOwnMetadata(
-      IPC_PARAM_INJECTIONS,
-      TestClass.prototype,
-      "testMethod",
-    );
+jest.mock("../utils/create-param-decorator", () => ({
+  createParamDecorator: jest.fn(() => () => {}),
+}));
 
-    expect(injections[0].type).toBe("ProcessId");
+describe("ProcessId param decorator", () => {
+  test("should resolve to event.processId", () => {
+    const mockEvent = { processId: 123 } as unknown as IpcMainInvokeEvent;
+    expect(impl(mockEvent)).toBe(123);
+  });
+
+  test("should be created with createParamDecorator", () => {
+    expect(createParamDecorator).toHaveBeenCalledWith(impl);
+    expect(ProcessId).toBeDefined();
   });
 });

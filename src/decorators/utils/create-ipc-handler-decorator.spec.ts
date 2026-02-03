@@ -34,7 +34,7 @@ describe("createIpcHandlerDecorator", () => {
       methodName() {}
     }
 
-    const mockInjections: ParameterInjection[] = [{ index: 0, type: "RawEvent" }];
+    const mockInjections: ParameterInjection[] = [{ index: 0, resolver: () => {} }];
 
     Reflect.defineMetadata(
       IPC_PARAM_INJECTIONS,
