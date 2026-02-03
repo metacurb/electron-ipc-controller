@@ -1,7 +1,7 @@
-import { IPC_PENDING_HANDLERS } from "../metadata/constants";
-import { IpcHandlerMetadata } from "../metadata/types";
+import { IPC_PENDING_HANDLERS } from "../../metadata/constants";
+import { IpcHandlerMetadata } from "../../metadata/types";
+import { IpcController } from "../class/ipc-controller";
 
-import { IpcController } from "./ipc-controller";
 import { IpcHandleOnce } from "./ipc-handle-once";
 
 describe("IpcHandleOnce decorator", () => {

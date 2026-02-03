@@ -1,11 +1,11 @@
-import { IPC_PENDING_HANDLERS } from "../metadata/constants";
-import { getControllerMetadata } from "../metadata/get-controller-metadata";
-import { setControllerMetadata } from "../metadata/set-controller-metadata";
-import { IpcHandlerMetadata } from "../metadata/types";
-import { createChannelName } from "../utils/create-channel-name";
+import { IPC_PENDING_HANDLERS } from "../../metadata/constants";
+import { getControllerMetadata } from "../../metadata/get-controller-metadata";
+import { setControllerMetadata } from "../../metadata/set-controller-metadata";
+import { IpcHandlerMetadata } from "../../metadata/types";
+import { createChannelName } from "../../utils/create-channel-name";
+import { IpcHandle } from "../method/ipc-handle";
 
 import { IpcController } from "./ipc-controller";
-import { IpcHandle } from "./ipc-handle";
 
 jest.mock("../metadata/set-controller-metadata");
 jest.mock("../utils/create-channel-name");

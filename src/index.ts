@@ -1,15 +1,15 @@
-export { IpcController } from "./decorators/ipc-controller";
+export { IpcController } from "./decorators/class/ipc-controller";
 
-export { IpcHandle } from "./decorators/ipc-handle";
-export { IpcHandleOnce } from "./decorators/ipc-handle-once";
-export { IpcOn } from "./decorators/ipc-on";
-export { IpcOnce } from "./decorators/ipc-once";
+export { IpcHandle } from "./decorators/method/ipc-handle";
+export { IpcHandleOnce } from "./decorators/method/ipc-handle-once";
+export { IpcOn } from "./decorators/method/ipc-on";
+export { IpcOnce } from "./decorators/method/ipc-once";
 
-export { RawEvent } from "./decorators/raw-event";
-export { Sender } from "./decorators/sender";
-export { ProcessId } from "./decorators/process-id";
-export { Origin } from "./decorators/origin";
-export { Window } from "./decorators/window";
+export { RawEvent } from "./decorators/param/raw-event";
+export { Sender } from "./decorators/param/sender";
+export { ProcessId } from "./decorators/param/process-id";
+export { Origin } from "./decorators/param/origin";
+export { Window } from "./decorators/param/window";
 
 export { createIpcApp, IpcApp, IpcAppOptions } from "./core/create-ipc-app";
 

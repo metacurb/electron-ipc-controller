@@ -1,7 +1,7 @@
-import { IPC_PENDING_HANDLERS } from "../metadata/constants";
-import { setControllerMetadata } from "../metadata/set-controller-metadata";
-import { Constructor, PendingHandlerMetadata } from "../metadata/types";
-import { createChannelName } from "../utils/create-channel-name";
+import { IPC_PENDING_HANDLERS } from "../../metadata/constants";
+import { setControllerMetadata } from "../../metadata/set-controller-metadata";
+import { Constructor, PendingHandlerMetadata } from "../../metadata/types";
+import { createChannelName } from "../../utils/create-channel-name";
 
 export const IpcController = (): ClassDecorator => (target) => {
   const ctor = target as unknown as Constructor<object>;

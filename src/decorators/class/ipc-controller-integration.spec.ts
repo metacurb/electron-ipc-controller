@@ -1,7 +1,7 @@
-import { getControllerMetadata } from "../metadata/get-controller-metadata";
+import { getControllerMetadata } from "../../metadata/get-controller-metadata";
+import { IpcHandle } from "../method/ipc-handle";
 
 import { IpcController } from "./ipc-controller";
-import { IpcHandle } from "./ipc-handle";
 
 describe("IpcController inheritance (Integration)", () => {
   test("should inherit handlers from parent class", () => {

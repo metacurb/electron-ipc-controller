@@ -1,5 +1,5 @@
-import { IPC_PENDING_HANDLERS } from "../metadata/constants";
-import { PendingHandlerMetadata } from "../metadata/types";
+import { IPC_PENDING_HANDLERS } from "../../metadata/constants";
+import { PendingHandlerMetadata } from "../../metadata/types";
 
 import { IpcOn } from "./ipc-on";
 

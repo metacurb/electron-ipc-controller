@@ -1,5 +1,5 @@
-import { IPC_PARAM_INJECTIONS } from "../metadata/constants";
-import { ParameterInjection } from "../metadata/types";
+import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
+import { ParameterInjection } from "../../metadata/types";
 
 import { ProcessId } from "./process-id";
 
