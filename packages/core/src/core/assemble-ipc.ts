@@ -19,9 +19,7 @@ export const assembleIpc = (
       instance = options.resolver.resolve(Controller);
     } catch (error) {
       throw new Error(
-        `Failed to resolve controller '${Controller.name}': ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        `Failed to resolve controller '${Controller.name}': ${error instanceof Error ? error.message : String(error)}`,
       );
     }
     const meta = getControllerMetadata(Controller);

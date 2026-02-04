@@ -14,10 +14,7 @@ describe("IpcHandle decorator", () => {
       }
     }
 
-    const [meta]: IpcHandlerMetadata[] = Reflect.getOwnMetadata(
-      IPC_PENDING_HANDLERS,
-      TestController.prototype,
-    );
+    const [meta]: IpcHandlerMetadata[] = Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, TestController.prototype);
 
     expect(meta.handler).toBeDefined();
     expect(meta.type).toBe("handle");

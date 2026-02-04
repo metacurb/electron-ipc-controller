@@ -28,9 +28,7 @@ describe("IpcController decorator", () => {
       target: class {},
     });
 
-    const pending = [
-      { channel: "test", handler: jest.fn(), methodName: "handleSomething", type: "handle" },
-    ];
+    const pending = [{ channel: "test", handler: jest.fn(), methodName: "handleSomething", type: "handle" }];
 
     class TestController {}
     Reflect.defineMetadata(IPC_PENDING_HANDLERS, pending, TestController.prototype);
@@ -51,9 +49,7 @@ describe("IpcController decorator", () => {
       target: class {},
     });
 
-    const pending = [
-      { channel: "test", handler: jest.fn(), methodName: "handleSomething", type: "handle" },
-    ];
+    const pending = [{ channel: "test", handler: jest.fn(), methodName: "handleSomething", type: "handle" }];
 
     class TestController {}
     Reflect.defineMetadata(IPC_PENDING_HANDLERS, pending, TestController.prototype);

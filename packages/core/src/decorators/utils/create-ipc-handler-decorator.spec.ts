@@ -16,10 +16,7 @@ describe("createIpcHandlerDecorator", () => {
       methodName() {}
     }
 
-    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(
-      IPC_PENDING_HANDLERS,
-      TestController.prototype,
-    );
+    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, TestController.prototype);
 
     expect(meta).toEqual<PendingHandlerMetadata>({
       handler: expect.any(Function),
@@ -35,10 +32,7 @@ describe("createIpcHandlerDecorator", () => {
       methodName() {}
     }
 
-    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(
-      IPC_PENDING_HANDLERS,
-      TestController.prototype,
-    );
+    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, TestController.prototype);
 
     expect(meta).toEqual<PendingHandlerMetadata>({
       handler: expect.any(Function),
@@ -55,21 +49,13 @@ describe("createIpcHandlerDecorator", () => {
 
     const mockInjections: ParameterInjection[] = [{ index: 0, resolver: () => {} }];
 
-    Reflect.defineMetadata(
-      IPC_PARAM_INJECTIONS,
-      mockInjections,
-      TestController.prototype,
-      "methodName",
-    );
+    Reflect.defineMetadata(IPC_PARAM_INJECTIONS, mockInjections, TestController.prototype, "methodName");
 
     const descriptor = Object.getOwnPropertyDescriptor(TestController.prototype, "methodName")!;
 
     createIpcHandlerDecorator("handle")()(TestController.prototype, "methodName", descriptor);
 
-    const meta: PendingHandlerMetadata[] = Reflect.getOwnMetadata(
-      IPC_PENDING_HANDLERS,
-      TestController.prototype,
-    );
+    const meta: PendingHandlerMetadata[] = Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, TestController.prototype);
 
     const lastMeta = meta[meta.length - 1];
 

@@ -12,10 +12,7 @@ describe("IpcOnce decorator", () => {
       }
     }
 
-    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(
-      IPC_PENDING_HANDLERS,
-      TestController.prototype,
-    );
+    const [meta]: PendingHandlerMetadata[] = Reflect.getOwnMetadata(IPC_PENDING_HANDLERS, TestController.prototype);
 
     expect(meta.handler).toBeDefined();
     expect(meta.type).toBe("once");

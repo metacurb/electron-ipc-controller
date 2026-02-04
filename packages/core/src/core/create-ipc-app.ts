@@ -18,12 +18,7 @@ export interface IpcApp {
   dispose(): void;
 }
 
-export const createIpcApp = ({
-  controllers,
-  correlation,
-  resolver,
-  window,
-}: IpcAppOptions): IpcApp => {
+export const createIpcApp = ({ controllers, correlation, resolver, window }: IpcAppOptions): IpcApp => {
   if (!Array.isArray(controllers)) {
     throw new Error("controllers must be an array");
   }

@@ -21,27 +21,21 @@ describe("createParameterInjectionWrapper", () => {
   });
 
   test("should inject resolved value at index 0", () => {
-    const wrapper = createParameterInjectionWrapper(handler, [
-      { index: 0, resolver: rawEventResolver },
-    ]);
+    const wrapper = createParameterInjectionWrapper(handler, [{ index: 0, resolver: rawEventResolver }]);
     wrapper(mockEvent, "arg1");
 
     expect(handler).toHaveBeenCalledWith(mockEvent, "arg1");
   });
 
   test("should inject resolved value at index 1", () => {
-    const wrapper = createParameterInjectionWrapper(handler, [
-      { index: 1, resolver: rawEventResolver },
-    ]);
+    const wrapper = createParameterInjectionWrapper(handler, [{ index: 1, resolver: rawEventResolver }]);
     wrapper(mockEvent, "arg1");
 
     expect(handler).toHaveBeenCalledWith("arg1", mockEvent);
   });
 
   test("should inject resolved value at index 1 with multiple args", () => {
-    const wrapper = createParameterInjectionWrapper(handler, [
-      { index: 1, resolver: rawEventResolver },
-    ]);
+    const wrapper = createParameterInjectionWrapper(handler, [{ index: 1, resolver: rawEventResolver }]);
     wrapper(mockEvent, "arg1", "arg2");
 
     expect(handler).toHaveBeenCalledWith("arg1", mockEvent, "arg2");

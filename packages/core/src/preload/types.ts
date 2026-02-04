@@ -4,9 +4,7 @@ import { IpcHandlerType } from "../metadata/types";
 export type Disposer = () => void;
 
 // Handler types based on IPC method type
-export type HandleMethod<TArgs extends unknown[] = unknown[], TReturn = unknown> = (
-  ...args: TArgs
-) => Promise<TReturn>;
+export type HandleMethod<TArgs extends unknown[] = unknown[], TReturn = unknown> = (...args: TArgs) => Promise<TReturn>;
 
 export type SendMethod<TArgs extends unknown[] = unknown[]> = (...args: TArgs) => void;
 

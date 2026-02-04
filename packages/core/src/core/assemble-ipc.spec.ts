@@ -17,10 +17,7 @@ describe("assembleIpc", () => {
     resolve: jest.fn((controller) => new controller()),
   };
 
-  const createMockHandler = (
-    methodName: string,
-    type: IpcHandlerMetadata["type"] = "handle",
-  ): IpcHandlerMetadata => ({
+  const createMockHandler = (methodName: string, type: IpcHandlerMetadata["type"] = "handle"): IpcHandlerMetadata => ({
     channel: `test_channel_${methodName}`,
     handler: jest.fn(),
     methodName,
@@ -179,9 +176,7 @@ describe("assembleIpc", () => {
 
     expect(disposers).toEqual([]);
     expect(mockRegisterHandler).not.toHaveBeenCalled();
-    expect(consoleWarn).toHaveBeenCalledWith(
-      "Controller 'Controller' has no IPC handlers registered.",
-    );
+    expect(consoleWarn).toHaveBeenCalledWith("Controller 'Controller' has no IPC handlers registered.");
 
     consoleWarn.mockRestore();
   });
@@ -202,10 +197,7 @@ describe("assembleIpc", () => {
     const disposer1 = jest.fn();
     const disposer2 = jest.fn();
     const disposer3 = jest.fn();
-    mockRegisterHandler
-      .mockReturnValueOnce(disposer1)
-      .mockReturnValueOnce(disposer2)
-      .mockReturnValueOnce(disposer3);
+    mockRegisterHandler.mockReturnValueOnce(disposer1).mockReturnValueOnce(disposer2).mockReturnValueOnce(disposer3);
 
     const disposers = assembleIpc([ControllerA, ControllerB], { resolver: mockResolver });
 

@@ -24,8 +24,7 @@ export const createIpcHandlerDecorator =
         type,
       };
 
-      const pending: PendingHandlerMetadata[] =
-        Reflect.getMetadata(IPC_PENDING_HANDLERS, target) || [];
+      const pending: PendingHandlerMetadata[] = Reflect.getMetadata(IPC_PENDING_HANDLERS, target) || [];
 
       if (pending.some((h) => h.methodName === methodName)) {
         throw new Error(`Method '${methodName}' already has an IPC decorator.`);

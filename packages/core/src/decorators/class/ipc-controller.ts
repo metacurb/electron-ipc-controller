@@ -10,8 +10,7 @@ export const IpcController =
 
     const meta = setControllerMetadata(ctor, namespace);
 
-    const pending: PendingHandlerMetadata[] =
-      Reflect.getMetadata(IPC_PENDING_HANDLERS, ctor.prototype) || [];
+    const pending: PendingHandlerMetadata[] = Reflect.getMetadata(IPC_PENDING_HANDLERS, ctor.prototype) || [];
 
     for (const handler of pending) {
       if (meta.handlers.has(handler.methodName)) {

@@ -21,11 +21,6 @@ export const createParamDecorator = <T = unknown>(
         resolver,
       };
 
-      Reflect.defineMetadata(
-        IPC_PARAM_INJECTIONS,
-        [...existingInjections, newInjection],
-        target,
-        propertyKey,
-      );
+      Reflect.defineMetadata(IPC_PARAM_INJECTIONS, [...existingInjections, newInjection], target, propertyKey);
     };
 };
