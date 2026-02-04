@@ -1,7 +1,5 @@
 import { BrowserWindow } from "electron";
 
-import { IpcControllerMetadata } from "../metadata/types";
-
 import { IPC_CONTRACT_CHANNEL } from "./constants";
 import { emitIpcContract } from "./emit-ipc-contract";
 import { serializeControllers } from "./serialize-controllers";

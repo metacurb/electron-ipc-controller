@@ -16,6 +16,8 @@ const mockChannel = "mock_channel";
 
 const rawEventResolver = (event: IpcMainInvokeEvent, _data: unknown) => event;
 
+const mockIpcMain = jest.mocked(ipcMain);
+
 describe("registerHandler", () => {
   const mockInstance = {
     testMethod: jest.fn(),
@@ -76,10 +78,8 @@ describe("registerHandler", () => {
 
       registerHandler(handler, mockInstance, { correlation: false });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const registeredHandler = (ipcMain.handle as jest.Mock).mock.calls[0][1];
-      const mockEvent = { sender: { id: 123 } };
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const registeredHandler = mockIpcMain.handle.mock.calls[0][1];
+      const mockEvent = { sender: { id: 123 } } as IpcMainInvokeEvent;
       registeredHandler(mockEvent, "payload1", "payload2");
 
       expect(mockInstance.testMethod).toHaveBeenCalledWith(mockEvent, "payload1", "payload2");
@@ -93,10 +93,9 @@ describe("registerHandler", () => {
 
       registerHandler(handler, mockInstance, { correlation: false });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const registeredHandler = (ipcMain.handle as jest.Mock).mock.calls[0][1];
-      const mockEvent = { sender: { id: 123 } };
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const registeredHandler = mockIpcMain.handle.mock.calls[0][1];
+      const mockEvent = { sender: { id: 123 } } as IpcMainInvokeEvent;
+
       registeredHandler(mockEvent, "payload1", "payload2");
 
       expect(mockInstance.testMethod).toHaveBeenCalledWith("payload1", mockEvent, "payload2");
@@ -110,10 +109,8 @@ describe("registerHandler", () => {
 
       registerHandler(handler, mockInstance, { correlation: false });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const registeredHandler = (ipcMain.handle as jest.Mock).mock.calls[0][1];
-      const mockEvent = { sender: { id: 123 } };
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const registeredHandler = mockIpcMain.handle.mock.calls[0][1];
+      const mockEvent = { sender: { id: 123 } } as IpcMainInvokeEvent;
       registeredHandler(mockEvent, "payload1", "payload2");
 
       expect(mockInstance.testMethod).toHaveBeenCalledWith("payload1", "payload2", mockEvent);
@@ -127,10 +124,8 @@ describe("registerHandler", () => {
 
       registerHandler(handler, mockInstance, { correlation: false });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const registeredHandler = (ipcMain.handle as jest.Mock).mock.calls[0][1];
-      const mockEvent = { sender: { id: 123 } };
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const registeredHandler = mockIpcMain.handle.mock.calls[0][1];
+      const mockEvent = { sender: { id: 123 } } as IpcMainInvokeEvent;
       registeredHandler(mockEvent, "payload1", "payload2");
 
       expect(mockInstance.testMethod).toHaveBeenCalledWith("payload1", "payload2");
@@ -149,10 +144,8 @@ describe("registerHandler", () => {
 
       registerHandler(handler, mockInstance, { correlation: true });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const registeredHandler = (ipcMain.handle as jest.Mock).mock.calls[0][1];
-      const mockEvent = { sender: { id: 123 } };
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const registeredHandler = mockIpcMain.handle.mock.calls[0][1];
+      const mockEvent = { sender: { id: 123 } } as IpcMainInvokeEvent;
       registeredHandler(mockEvent, "payload");
 
       expect(mockWrapWithCorrelation).toHaveBeenCalledWith(mockInstance.testMethod, true);

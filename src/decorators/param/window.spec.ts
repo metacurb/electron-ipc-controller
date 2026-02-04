@@ -8,14 +8,16 @@ jest.mock("../utils/create-param-decorator", () => ({
   createParamDecorator: jest.fn(() => () => {}),
 }));
 
+const mockBrowserWindow = jest.mocked(BrowserWindow);
+
 describe("Window param decorator", () => {
   test("should resolve to BrowserWindow", () => {
     const mockEvent = { sender: {} } as unknown as IpcMainInvokeEvent;
-    const mockWindow = {};
-    (BrowserWindow.fromWebContents as jest.Mock).mockReturnValue(mockWindow);
+    const mockWindow = {} as BrowserWindow;
+    mockBrowserWindow.fromWebContents.mockReturnValue(mockWindow);
 
     expect(impl(mockEvent)).toBe(mockWindow);
-    expect(BrowserWindow.fromWebContents).toHaveBeenCalledWith(mockEvent.sender);
+    expect(mockBrowserWindow.fromWebContents).toHaveBeenCalledWith(mockEvent.sender);
   });
 
   test("should be created with createParamDecorator", () => {

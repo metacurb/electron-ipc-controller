@@ -13,10 +13,9 @@ const mockGetControllerMetadata = jest.mocked(getControllerMetadata);
 
 describe("assembleIpc", () => {
   const mockDisposer = jest.fn();
-
-  const createMockResolver = (): ControllerResolver => ({
+  const mockResolver: ControllerResolver = {
     resolve: jest.fn((controller) => new controller()),
-  });
+  };
 
   const createMockHandler = (
     methodName: string,
@@ -44,30 +43,28 @@ describe("assembleIpc", () => {
     class ControllerA {}
     class ControllerB {}
 
-    const resolver = createMockResolver();
     const handler = createMockHandler("method");
     const metadata = createMockMetadata([handler]);
 
     mockGetControllerMetadata.mockReturnValue(metadata);
 
-    assembleIpc([ControllerA, ControllerB], { resolver });
+    assembleIpc([ControllerA, ControllerB], { resolver: mockResolver });
 
-    expect(resolver.resolve).toHaveBeenCalledTimes(2);
-    expect(resolver.resolve).toHaveBeenCalledWith(ControllerA);
-    expect(resolver.resolve).toHaveBeenCalledWith(ControllerB);
+    expect(mockResolver.resolve).toHaveBeenCalledTimes(2);
+    expect(mockResolver.resolve).toHaveBeenCalledWith(ControllerA);
+    expect(mockResolver.resolve).toHaveBeenCalledWith(ControllerB);
   });
 
   test("should get metadata for each controller", () => {
     class ControllerA {}
     class ControllerB {}
 
-    const resolver = createMockResolver();
     const handler = createMockHandler("method");
     const metadata = createMockMetadata([handler]);
 
     mockGetControllerMetadata.mockReturnValue(metadata);
 
-    assembleIpc([ControllerA, ControllerB], { resolver });
+    assembleIpc([ControllerA, ControllerB], { resolver: mockResolver });
 
     expect(mockGetControllerMetadata).toHaveBeenCalledTimes(2);
     expect(mockGetControllerMetadata).toHaveBeenCalledWith(ControllerA);
@@ -81,10 +78,9 @@ describe("assembleIpc", () => {
     const handler2 = createMockHandler("method2", "on");
     const metadata = createMockMetadata([handler1, handler2]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValue(metadata);
 
-    assembleIpc([Controller], { resolver });
+    assembleIpc([Controller], { resolver: mockResolver });
 
     expect(mockRegisterHandler).toHaveBeenCalledTimes(2);
     expect(mockRegisterHandler).toHaveBeenCalledWith(handler1, expect.any(Controller), {
@@ -101,10 +97,9 @@ describe("assembleIpc", () => {
     const handler = createMockHandler("method");
     const metadata = createMockMetadata([handler]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValue(metadata);
 
-    assembleIpc([Controller], { correlation: true, resolver });
+    assembleIpc([Controller], { correlation: true, resolver: mockResolver });
 
     expect(mockRegisterHandler).toHaveBeenCalledWith(handler, expect.any(Controller), {
       correlation: true,
@@ -117,10 +112,9 @@ describe("assembleIpc", () => {
     const handler = createMockHandler("method");
     const metadata = createMockMetadata([handler]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValue(metadata);
 
-    assembleIpc([Controller], { correlation: false, resolver });
+    assembleIpc([Controller], { correlation: false, resolver: mockResolver });
 
     expect(mockRegisterHandler).toHaveBeenCalledWith(handler, expect.any(Controller), {
       correlation: false,
@@ -137,11 +131,10 @@ describe("assembleIpc", () => {
     const handler2 = createMockHandler("method2");
     const metadata = createMockMetadata([handler1, handler2]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValue(metadata);
     mockRegisterHandler.mockReturnValueOnce(disposer1).mockReturnValueOnce(disposer2);
 
-    const disposers = assembleIpc([Controller], { resolver });
+    const disposers = assembleIpc([Controller], { resolver: mockResolver });
 
     expect(disposers).toHaveLength(2);
     expect(disposers).toContain(disposer1);
@@ -157,20 +150,17 @@ describe("assembleIpc", () => {
     const handler2 = createMockHandler("method2");
     const metadata = createMockMetadata([handler1, handler2]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValue(metadata);
     mockRegisterHandler.mockReturnValueOnce(disposer1).mockReturnValueOnce(undefined);
 
-    const disposers = assembleIpc([Controller], { resolver });
+    const disposers = assembleIpc([Controller], { resolver: mockResolver });
 
     expect(disposers).toHaveLength(1);
     expect(disposers).toContain(disposer1);
   });
 
   test("should return empty array when no controllers are provided", () => {
-    const resolver = createMockResolver();
-
-    const disposers = assembleIpc([], { resolver });
+    const disposers = assembleIpc([], { resolver: mockResolver });
 
     expect(disposers).toEqual([]);
     expect(mockGetControllerMetadata).not.toHaveBeenCalled();
@@ -183,10 +173,9 @@ describe("assembleIpc", () => {
 
     const metadata = createMockMetadata([]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValue(metadata);
 
-    const disposers = assembleIpc([Controller], { resolver });
+    const disposers = assembleIpc([Controller], { resolver: mockResolver });
 
     expect(disposers).toEqual([]);
     expect(mockRegisterHandler).not.toHaveBeenCalled();
@@ -208,7 +197,6 @@ describe("assembleIpc", () => {
     const metadataA = createMockMetadata([handlerA1, handlerA2]);
     const metadataB = createMockMetadata([handlerB1]);
 
-    const resolver = createMockResolver();
     mockGetControllerMetadata.mockReturnValueOnce(metadataA).mockReturnValueOnce(metadataB);
 
     const disposer1 = jest.fn();
@@ -219,7 +207,7 @@ describe("assembleIpc", () => {
       .mockReturnValueOnce(disposer2)
       .mockReturnValueOnce(disposer3);
 
-    const disposers = assembleIpc([ControllerA, ControllerB], { resolver });
+    const disposers = assembleIpc([ControllerA, ControllerB], { resolver: mockResolver });
 
     expect(mockRegisterHandler).toHaveBeenCalledTimes(3);
     expect(disposers).toHaveLength(3);
@@ -230,13 +218,12 @@ describe("assembleIpc", () => {
 
   test("should rethrow with context if resolver fails", () => {
     class Controller {}
-    const resolver = createMockResolver();
     const error = new Error("Resolution failed");
-    (resolver.resolve as jest.Mock).mockImplementation(() => {
+    (mockResolver.resolve as jest.Mock).mockImplementation(() => {
       throw error;
     });
 
-    expect(() => assembleIpc([Controller], { resolver })).toThrow(
+    expect(() => assembleIpc([Controller], { resolver: mockResolver })).toThrow(
       "Failed to resolve controller 'Controller': Resolution failed",
     );
   });
