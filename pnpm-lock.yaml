@@ -63,6 +63,21 @@ importers:
         specifier: ^8.54.0
         version: 8.54.0(eslint@9.39.2)(typescript@5.9.3)
 
+  apps/docs: {}
+
+  packages/core:
+    dependencies:
+      electron:
+        specifier: '>=24.0.0'
+        version: 40.1.0
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
+
+  packages/examples: {}
+
+  packages/vite-plugin: {}
+
 packages:
 
   '@babel/code-frame@7.28.6':

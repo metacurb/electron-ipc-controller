@@ -1,17 +1,14 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "declaration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "noEmit": true
   },
-  "include": ["src/**/*", "jest.setup.ts"]
+  "references": [
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/vite-plugin"
+    }
+  ]
 }

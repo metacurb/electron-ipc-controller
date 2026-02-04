@@ -1,0 +1,16 @@
+{
+  "name": "electron-ipc-controller",
+  "version": "0.1.0",
+  "description": "A class-based IPC abstraction for Electron applications",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "electron": ">=24.0.0",
+    "reflect-metadata": "^0.2.2"
+  }
+}

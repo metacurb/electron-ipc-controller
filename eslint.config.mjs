@@ -9,7 +9,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default defineConfig([
   {
-    ignores: ["eslint.config.mjs", "dist/**", "node_modules/**"],
+    ignores: ["eslint.config.mjs", "**/dist/**", "**/node_modules/**"],
   },
   eslintConfigPrettier,
   js.configs.recommended,
@@ -22,7 +22,7 @@ export default defineConfig([
       sourceType: "module",
       parserOptions: {
         projectService: {
-          allowDefaultProject: ["*.js", "*.mjs"],
+          allowDefaultProject: ["*.js", "*.mjs", "packages/*/jest.config.js"],
         },
         tsconfigRootDir: import.meta.dirname,
       },
