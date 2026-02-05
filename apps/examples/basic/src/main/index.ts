@@ -8,7 +8,7 @@ let mainWindow: BrowserWindow | null = null;
 
 function createWindow(): void {
   mainWindow = new BrowserWindow({
-    height: 600,
+    height: 800,
     webPreferences: {
       preload: require.resolve("@electron-ipc-controller/core/preload.js"),
     },

@@ -20,9 +20,9 @@ export class CounterController {
   }
 
   @IpcHandle("inc")
-  increment(@CorrelationId() correlationId: string, @Sender() sender: WebContents): number {
-    console.log({ correlationId, senderId: sender.id }, "[CounterController] Incrementing counter");
-    this.counter++;
+  increment(@CorrelationId() correlationId: string, @Sender() sender: WebContents, incrementBy: number = 1): number {
+    console.log({ correlationId, incrementBy, senderId: sender.id }, "[CounterController] Incrementing counter");
+    this.counter += incrementBy;
     return this.counter;
   }
 

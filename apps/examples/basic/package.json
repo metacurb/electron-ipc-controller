@@ -5,7 +5,7 @@
   "description": "Basic Electron example using electron-ipc-controller",
   "main": "dist/main/index.js",
   "scripts": {
-    "build": "tsc && copyfiles -u 1 src/renderer/index.html dist",
+    "build": "tsc && copyfiles -u 1 \"src/renderer/**/*\" dist",
     "start": "pnpm build && electron .",
     "dev": "tsc -w & electron ."
   },
