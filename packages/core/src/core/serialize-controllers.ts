@@ -1,7 +1,6 @@
 import { getControllerMetadata } from "../metadata/get-controller-metadata";
 import { Constructor } from "../metadata/types";
-
-import { SerializedIpcContract } from "./types";
+import { SerializedIpcContract } from "../shared/types";
 
 export const serializeControllers = (controllers: Constructor[]): SerializedIpcContract => ({
   controllers: controllers.map((Controller) => {

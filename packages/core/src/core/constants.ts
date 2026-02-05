@@ -1,1 +1,1 @@
-export const IPC_CONTRACT_CHANNEL = "ipc_controller_contract";
+export { IPC_CONTRACT_CHANNEL } from "../shared/constants";

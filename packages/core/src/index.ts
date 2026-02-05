@@ -20,5 +20,3 @@ export { createIpcApp } from "./core/create-ipc-app";
 export type { IpcApp, IpcAppOptions } from "./core/create-ipc-app";
 
 export { getCorrelationId } from "./correlation/get-correlation-id";
-
-export { setupPreload } from "./preload";

@@ -3,23 +3,42 @@
   "version": "0.1.0",
   "description": "A class-based IPC abstraction for Electron applications",
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./preload": {
+      "types": "./dist/preload/index.d.ts",
+      "import": "./dist/preload/index.mjs",
+      "require": "./dist/preload/index.js"
+    },
+    "./preload.js": "./dist/preload.entry.js"
+  },
+  "typesVersions": {
+    "*": {
+      "preload": [
+        "./dist/preload/index.d.ts"
+      ]
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node scripts/build.mjs",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "electron": ">=24.0.0",
+    "electron": ">=28.0.0",
     "reflect-metadata": "^0.2.2"
+  },
+  "devDependencies": {
+    "electron": "^40.1.0",
+    "esbuild": "^0.27.2"
   }
 }

@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
 
-import { SerializedIpcContract } from "../core/types";
+import { SerializedIpcContract } from "../shared/types";
 
 import { createPreloadApi } from "./create-preload-api";
 import { HandleMethod, SendMethod } from "./types";

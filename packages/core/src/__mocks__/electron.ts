@@ -13,6 +13,10 @@ export const ipcRenderer = {
   send: jest.fn(),
 };
 
+export const contextBridge = {
+  exposeInMainWorld: jest.fn(),
+};
+
 export const BrowserWindow = {
   fromWebContents: jest.fn(),
 };

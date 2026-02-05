@@ -1,4 +1,6 @@
 export { createPreloadApi } from "./create-preload-api";
 export { setupPreload } from "./setup-preload";
-export type { InferIpcApi, IpcContract } from "./infer-ipc-api";
-export type { Disposer, HandleMethod, PreloadApi, PreloadNamespace } from "./types";
+export type { Disposer, HandleMethod, MethodCreator, PreloadApi, PreloadNamespace, SendMethod } from "./types";
+
+export type { IpcHandlerType, SerializedController, SerializedHandler, SerializedIpcContract } from "../shared/types";
+export { IPC_CONTRACT_CHANNEL } from "../shared/constants";
