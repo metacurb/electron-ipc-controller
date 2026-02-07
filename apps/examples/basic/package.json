@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "copyfiles": "^2.4.1",
-    "electron": "^40.1.0",
+    "electron": "^40.2.1",
     "typescript": "^5.7.0"
   }
 }
