@@ -41,6 +41,6 @@
   "devDependencies": {
     "@electron-ipc-controller/shared": "workspace:*",
     "electron": "^40.1.0",
-    "esbuild": "^0.27.2"
+    "esbuild": "^0.27.3"
   }
 }
