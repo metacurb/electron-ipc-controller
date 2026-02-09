@@ -55,7 +55,6 @@ export function electronIpcController({
   const generate = () => {
     try {
       const entryPath = path.resolve(root, main);
-
       if (!fs.existsSync(entryPath)) {
         console.warn(`[${pkg.name}] Main entry not found at: ${entryPath}`);
         return;
@@ -63,26 +62,21 @@ export function electronIpcController({
 
       console.log(`[${pkg.name}] Generating IPC types from ${entryPath}...`);
       const { controllers, processedFiles } = findControllers(entryPath);
-
       if (controllers.length === 0) {
         console.warn(`[${pkg.name}] No createIpcApp() call found in ${entryPath}; generated types will be empty.`);
       }
 
       const metadataHash = hashControllerMetadata(controllers);
-      if (!state.updateMetadataHash(metadataHash)) {
-        return;
-      }
+      const absOutput = path.resolve(root, output);
+      if (!state.updateMetadataHash(metadataHash)) return;
 
       state.setControllerFiles(new Set([...processedFiles].map(normalizePath)));
 
       const typeDef = generateTypes(controllers);
 
       const hash = crypto.createHash("md5").update(typeDef).digest("hex");
-      if (!state.updateHash(hash)) {
-        return;
-      }
+      if (!state.updateHash(hash)) return;
 
-      const absOutput = path.resolve(root, output);
       fs.mkdirSync(path.dirname(absOutput), { recursive: true });
       fs.writeFileSync(absOutput, typeDef);
       console.log(`[${pkg.name}] Types generated at ${output}`);

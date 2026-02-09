@@ -22,4 +22,12 @@ describe("pipeline e2e", () => {
     const generated = generateTypes(controllers);
     expect(generated).toMatchSnapshot();
   });
+
+  it("nest-module fixture generates expected types", () => {
+    const entryPath = path.join(fixturesDir, "nest-module", "index.ts");
+    const tsconfigPath = path.join(fixturesDir, "nest-module", "tsconfig.json");
+    const { controllers } = findControllers(entryPath, tsconfigPath);
+    const generated = generateTypes(controllers);
+    expect(generated).toMatchSnapshot();
+  });
 });
