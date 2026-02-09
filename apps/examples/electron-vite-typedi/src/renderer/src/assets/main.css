@@ -1,0 +1,201 @@
+:root {
+  --ev-c-white: #ffffff;
+  --ev-c-black: #1b1b1f;
+  --ev-c-black-soft: #222222;
+  --ev-c-black-mute: #282828;
+  --ev-c-text-1: rgba(255, 255, 245, 0.86);
+  --ev-c-text-2: rgba(235, 235, 245, 0.6);
+  --color-background: var(--ev-c-black);
+  --color-background-mute: var(--ev-c-black-mute);
+  --color-text: var(--ev-c-text-1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  background-image: url('./wavy-lines.svg');
+  background-size: cover;
+  font-family: Inter, system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.text {
+  font-size: 28px;
+  color: var(--ev-c-text-1);
+  font-weight: 700;
+  line-height: 32px;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.text + .text {
+  margin-top: 10px;
+}
+
+.react {
+  background: linear-gradient(315deg, #087ea4 55%, #7c93ee);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ts {
+  background: linear-gradient(315deg, #3178c6 45%, #f0dc4e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Counter Component */
+.counter-card {
+  margin-top: 2rem;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  text-align: center;
+  min-width: 320px;
+  backdrop-filter: blur(10px);
+}
+
+.counter-card h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  color: var(--ev-c-text-2);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.counter-value {
+  font-size: 5rem;
+  font-weight: 800;
+  color: #00d9ff;
+  margin: 1.5rem 0;
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+
+.counter-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.counter-actions button {
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00d9ff, #00a8cc);
+  color: #000;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.counter-actions button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 217, 255, 0.4);
+}
+
+.counter-actions button:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.counter-actions button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.counter-actions button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.counter-actions button.secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.status {
+  margin-top: 2rem;
+  padding: 0.8rem;
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.1);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #00ff88;
+  letter-spacing: -0.02em;
+}
+
+.status.error {
+  background: rgba(255, 68, 68, 0.05);
+  border-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.increment-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+  color: var(--ev-c-text-2);
+  font-size: 0.9rem;
+}
+
+.increment-options input {
+  width: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  padding: 0.5rem;
+  text-align: center;
+  outline: none;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.increment-options input:focus {
+  border-color: #00d9ff;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+}
+
+@media (max-width: 600px) {
+  .text {
+    font-size: 22px;
+  }
+
+  .counter-value {
+    font-size: 4rem;
+  }
+
+  .counter-card {
+    min-width: 280px;
+    padding: 1.5rem;
+  }
+}
