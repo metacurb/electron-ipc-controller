@@ -28,7 +28,6 @@ export default defineConfig([
             "packages/*/jest.config.js",
             "packages/*/jest.config.cjs",
             "packages/*/scripts/*.mjs",
-            "apps/examples/electron-vite-nest/src/preload/*.d.ts",
             "apps/*/*/eslint.config.mjs",
           ],
           maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,

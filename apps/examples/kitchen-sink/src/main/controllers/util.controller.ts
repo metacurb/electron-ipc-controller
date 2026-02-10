@@ -14,8 +14,8 @@ export class UtilController {
   }
 
   @IpcHandle()
-  withRawEvent(@RawEvent() event: IpcMainInvokeEvent): { senderId: number } {
-    this.logger.log('util.withRawEvent', { senderId: event.sender.id })
-    return { senderId: event.sender.id }
+  withRawEvent(@RawEvent() event: IpcMainInvokeEvent): { eventType: string } {
+    this.logger.log('util.withRawEvent', { eventType: event.type })
+    return { eventType: event.type }
   }
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ComplexPayload, PayloadKind } from 'src/ipc'
+
+import { ComplexPayload, PayloadKind } from './ipc.types'
 
 type SectionState = { status: string; error?: boolean }
 

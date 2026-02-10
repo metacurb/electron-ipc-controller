@@ -8,8 +8,7 @@ export default defineConfig({
     plugins: [
       externalizeDepsPlugin(),
       electronIpcController({
-        main: 'src/main/index.ts',
-        output: 'src/ipc.d.ts'
+        main: 'src/main/index.ts'
       })
     ]
   },

@@ -33,7 +33,7 @@ export class EchoController {
 
   @IpcOnce()
   onceListen(): void {
-    this.logger.log('echo.onceListen')
+    this.logger.log('echo.onceListen', { message: "This won't fire again" })
   }
 
   @IpcHandle()

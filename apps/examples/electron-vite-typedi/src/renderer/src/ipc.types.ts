@@ -26,11 +26,3 @@ export interface IpcApi {
     reset(): void
   }
 }
-
-declare global {
-  interface Window {
-    ipc: IpcApi
-  }
-}
-
-export {}

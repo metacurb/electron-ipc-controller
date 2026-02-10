@@ -4,11 +4,20 @@ import path from "path";
 
 import pkg from "../package.json" with { type: "json" };
 
-import { generateTypes } from "./generator/generate-types.js";
+import { DEFAULT_MAIN_ENTRY, DEFAULT_PRELOAD_ENTRY } from "./constants.js";
+import { generateGlobalTypes, generateRuntimeTypes } from "./generator/generate-outputs.js";
 import { hashControllerMetadata } from "./hash-metadata.js";
 import { findControllers } from "./parser/find-controllers.js";
 import { PluginState } from "./plugin-state.js";
 import { resolveApiRootFromPreload } from "./preload/resolve-api-root.js";
+import { resolveTypePaths } from "./resolve-type-paths.js";
+
+export interface PluginTypesOptions {
+  /** Output path for generated global Window augmentation d.ts. @default auto-detected */
+  global?: string | false;
+  /** Output path for generated runtime types module. @default auto-detected */
+  runtime?: string | false;
+}
 
 /**
  * Options for the electron-ipc-controller Vite plugin.
@@ -16,10 +25,10 @@ import { resolveApiRootFromPreload } from "./preload/resolve-api-root.js";
 export interface PluginOptions {
   /** Path to your main process entry file. @default "src/main/index.ts" */
   main?: string;
-  /** Output path for generated type definitions. @default "src/ipc.d.ts" */
-  output?: string;
   /** Path to your preload entry file. @default "src/preload/index.ts" */
   preload?: string;
+  /** Output configuration for generated types. */
+  types?: PluginTypesOptions;
 }
 export interface ElectronIpcControllerPlugin {
   buildStart?(): void | Promise<void>;
@@ -46,9 +55,9 @@ export interface ElectronIpcControllerPlugin {
  * ```
  */
 export function electronIpcController({
-  main = "src/main/index.ts",
-  output = "src/ipc.d.ts",
-  preload = "src/preload/index.ts",
+  main = DEFAULT_MAIN_ENTRY,
+  preload = DEFAULT_PRELOAD_ENTRY,
+  types = {},
 }: PluginOptions = {}): ElectronIpcControllerPlugin {
   const normalizePath = (p: string) => p.replace(/\\/g, "/");
 
@@ -72,19 +81,63 @@ export function electronIpcController({
       }
 
       const metadataHash = hashControllerMetadata(controllers);
-      const absOutput = path.resolve(root, output);
       if (!state.updateMetadataHash(metadataHash)) return;
 
       state.setControllerFiles(new Set([...processedFiles].map(normalizePath)));
 
-      const typeDef = generateTypes(controllers, resolvedApiRoot);
+      const { globalPath, runtimePath } = resolveTypePaths({
+        hasRendererRuntimeDir: (absPath) => fs.existsSync(absPath),
+        preloadPath,
+        root,
+        types,
+      });
 
-      const hash = crypto.createHash("md5").update(typeDef).digest("hex");
-      if (!state.updateHash(hash)) return;
+      if (!runtimePath && !globalPath) {
+        console.warn(`[${pkg.name}] Both runtime and global type outputs are disabled; nothing to generate.`);
+        return;
+      }
 
-      fs.mkdirSync(path.dirname(absOutput), { recursive: true });
-      fs.writeFileSync(absOutput, typeDef);
-      console.log(`[${pkg.name}] Types generated at ${output}`);
+      let runtimeTypesContent: string | null = null;
+      let globalTypesContent: string | null = null;
+
+      if (runtimePath) {
+        runtimeTypesContent = generateRuntimeTypes(controllers);
+      }
+
+      if (globalPath) {
+        const ipcApiImportPath = (() => {
+          if (!runtimePath) {
+            throw new Error("Global type generation requires a runtime types output path.");
+          }
+          const rel = path
+            .relative(path.dirname(globalPath), runtimePath)
+            .replace(/\\/g, "/")
+            .replace(/\.tsx?$/, ".ts")
+            .replace(/(\.d)?\.ts$/, "");
+          return rel.startsWith(".") ? rel : `./${rel}`;
+        })();
+        globalTypesContent = generateGlobalTypes(resolvedApiRoot, ipcApiImportPath);
+      }
+
+      const combinedHash = crypto
+        .createHash("md5")
+        .update(runtimeTypesContent ?? "")
+        .update(globalTypesContent ?? "")
+        .digest("hex");
+
+      if (!state.updateHash(combinedHash)) return;
+
+      if (runtimePath && runtimeTypesContent != null) {
+        fs.mkdirSync(path.dirname(runtimePath), { recursive: true });
+        fs.writeFileSync(runtimePath, runtimeTypesContent);
+        console.log(`[${pkg.name}] Runtime types generated at ${path.relative(root, runtimePath)}`);
+      }
+
+      if (globalPath && globalTypesContent != null) {
+        fs.mkdirSync(path.dirname(globalPath), { recursive: true });
+        fs.writeFileSync(globalPath, globalTypesContent);
+        console.log(`[${pkg.name}] Global types generated at ${path.relative(root, globalPath)}`);
+      }
     } catch (err) {
       console.error(`[${pkg.name}] Type generation failed:`, err);
     }

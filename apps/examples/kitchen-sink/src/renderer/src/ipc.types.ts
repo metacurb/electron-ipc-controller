@@ -40,14 +40,6 @@ export interface IpcApi {
   }
   util: {
     withOrigin(): Promise<{ hasFrame: boolean }>
-    withRawEvent(): Promise<{ senderId: number }>
+    withRawEvent(): Promise<{ eventType: string }>
   }
 }
-
-declare global {
-  interface Window {
-    custom: IpcApi
-  }
-}
-
-export {}
