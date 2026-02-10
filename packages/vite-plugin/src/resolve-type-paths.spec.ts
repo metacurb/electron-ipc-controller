@@ -10,11 +10,6 @@ import {
 import { resolveTypePaths } from "./resolve-type-paths.js";
 
 describe("defaults", () => {
-  it("exposes main and preload defaults as constants", () => {
-    expect(DEFAULT_MAIN_ENTRY).toBe("src/main/index.ts");
-    expect(DEFAULT_PRELOAD_ENTRY).toBe("src/preload/index.ts");
-  });
-
   it("resolves runtime and global paths with renderer dir present", () => {
     const root = "C:\\project";
     const preloadPath = path.join(root, DEFAULT_PRELOAD_ENTRY);

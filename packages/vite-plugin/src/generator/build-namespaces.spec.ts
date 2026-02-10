@@ -34,7 +34,6 @@ describe("buildNamespaces", () => {
     const methods: MethodMetadata[] = [
       {
         decoratorName: "IpcHandle",
-        isAsync: false,
         name: "bar",
         params: [
           { name: "id", optional: false, type: "string" },

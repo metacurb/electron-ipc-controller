@@ -8,7 +8,6 @@ describe("hashControllerMetadata", () => {
     methods: [
       {
         decoratorName: "IpcHandle",
-        isAsync: true,
         name: "testMethod",
         params: [],
         referencedTypes: [],

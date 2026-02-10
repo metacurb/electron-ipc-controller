@@ -15,7 +15,6 @@ export interface TypeDefinition {
 
 export interface MethodMetadata {
   decoratorName: IpcDecoratorName;
-  isAsync: boolean;
   name: string;
   params: ParamMetadata[];
   referencedTypes: TypeDefinition[];

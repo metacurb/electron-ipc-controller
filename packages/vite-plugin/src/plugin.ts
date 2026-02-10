@@ -5,8 +5,10 @@ import path from "path";
 import pkg from "../package.json" with { type: "json" };
 
 import { DEFAULT_MAIN_ENTRY, DEFAULT_PRELOAD_ENTRY } from "./constants.js";
-import { generateGlobalTypes, generateRuntimeTypes } from "./generator/generate-outputs.js";
+import { generateGlobalTypes } from "./generator/generate-global-types.js";
+import { generateRuntimeTypes } from "./generator/generate-runtime-types.js";
 import { hashControllerMetadata } from "./hash-metadata.js";
+import { normalizePath } from "./normalize-path.js";
 import { findControllers } from "./parser/find-controllers.js";
 import { PluginState } from "./plugin-state.js";
 import { resolveApiRootFromPreload } from "./preload/resolve-api-root.js";
@@ -62,8 +64,6 @@ export function electronIpcController({
   preload = DEFAULT_PRELOAD_ENTRY,
   types = {},
 }: PluginOptions = {}): ElectronIpcControllerPlugin {
-  const normalizePath = (p: string) => p.replace(/\\/g, "/");
-
   let root = process.cwd();
   const state = new PluginState();
 
@@ -83,7 +83,7 @@ export function electronIpcController({
         console.warn(`[${pkg.name}] No createIpcApp() call found in ${entryPath}; generated types will be empty.`);
       }
       const metadataHash = hashControllerMetadata(controllers);
-      state.updateMetadataHash(metadataHash);
+      if (!state.updateMetadataHash(metadataHash)) return;
 
       state.setControllerFiles(new Set([...processedFiles].map(normalizePath)));
 

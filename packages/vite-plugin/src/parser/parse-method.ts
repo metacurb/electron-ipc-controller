@@ -1,14 +1,6 @@
 import { IPC_METHOD_DECORATOR_NAMES, IPC_PARAM_INJECTION_DECORATOR_NAMES } from "@electron-ipc-controller/shared";
 import type { Decorator } from "typescript";
-import {
-  getModifiers,
-  Identifier,
-  isCallExpression,
-  isStringLiteral,
-  MethodDeclaration,
-  SyntaxKind,
-  TypeChecker,
-} from "typescript";
+import { Identifier, isCallExpression, isStringLiteral, MethodDeclaration, TypeChecker } from "typescript";
 
 import { collectTypeDefinitions } from "./extract-type.js";
 import { getDecorator } from "./get-decorator.js";
@@ -69,7 +61,6 @@ export const parseMethod = (node: MethodDeclaration, typeChecker: TypeChecker): 
 
   return {
     decoratorName: found,
-    isAsync: !!getModifiers(node)?.some((m) => m.kind === SyntaxKind.AsyncKeyword),
     name,
     params: filteredParams,
     referencedTypes,

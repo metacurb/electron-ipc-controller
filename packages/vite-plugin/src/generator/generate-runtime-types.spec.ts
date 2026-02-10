@@ -25,7 +25,6 @@ describe("generateRuntimeTypes", () => {
     const methods: MethodMetadata[] = [
       {
         decoratorName: "IpcHandle",
-        isAsync: false,
         name: "bar",
         params: [],
         referencedTypes: [],
