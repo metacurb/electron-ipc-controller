@@ -16,6 +16,9 @@ export default defineConfig({
     plugins: [
       externalizeDepsPlugin({
         exclude: ['@electron-ipc-controller/core', '@electron-toolkit/preload']
+      }),
+      electronIpcController({
+        main: 'src/main/index.ts'
       })
     ]
   },

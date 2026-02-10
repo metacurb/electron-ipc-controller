@@ -33,6 +33,9 @@ export interface PluginOptions {
 export interface ElectronIpcControllerPlugin {
   buildStart?(): void | Promise<void>;
   configResolved?(config: { root: string }): void | Promise<void>;
+  configureServer?(server: {
+    watcher: { add: (path: string) => void; on: (e: "change", fn: (path: string) => void) => void };
+  }): void;
   name: string;
   transform?(code: string, id: string): null | Promise<null>;
 }
@@ -79,9 +82,8 @@ export function electronIpcController({
       if (controllers.length === 0) {
         console.warn(`[${pkg.name}] No createIpcApp() call found in ${entryPath}; generated types will be empty.`);
       }
-
       const metadataHash = hashControllerMetadata(controllers);
-      if (!state.updateMetadataHash(metadataHash)) return;
+      state.updateMetadataHash(metadataHash);
 
       state.setControllerFiles(new Set([...processedFiles].map(normalizePath)));
 
@@ -152,14 +154,24 @@ export function electronIpcController({
     configResolved(config) {
       root = config.root;
     },
+    configureServer(server) {
+      const preloadPath = path.resolve(root, preload);
+      server.watcher.add(preloadPath);
+      server.watcher.on("change", (file) => {
+        if (normalizePath(file) === normalizePath(preloadPath)) {
+          state.scheduleGenerate(generate);
+        }
+      });
+    },
     name: "electron-ipc-controller",
     transform(_code, id) {
       if (id.includes("node_modules") || id.endsWith(".d.ts")) return null;
 
       const absId = normalizePath(path.resolve(id));
       const mainEntryPath = normalizePath(path.resolve(root, main));
+      const preloadEntryPath = normalizePath(path.resolve(root, preload));
 
-      if (state.shouldRegenerate(absId, mainEntryPath)) {
+      if (state.shouldRegenerate(absId, mainEntryPath, preloadEntryPath)) {
         state.scheduleGenerate(generate);
       }
       return null;

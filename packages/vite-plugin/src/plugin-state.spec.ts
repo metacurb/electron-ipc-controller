@@ -28,9 +28,10 @@ describe("PluginState", () => {
     const state = new PluginState();
     state.setControllerFiles(new Set(["/a.ts", "/b.ts"]));
 
-    expect(state.shouldRegenerate("/a.ts", "/main.ts")).toBe(true);
-    expect(state.shouldRegenerate("/c.ts", "/main.ts")).toBe(false);
-    expect(state.shouldRegenerate("/main.ts", "/main.ts")).toBe(true);
+    expect(state.shouldRegenerate("/a.ts", "/main.ts", "/preload.ts")).toBe(true);
+    expect(state.shouldRegenerate("/c.ts", "/main.ts", "/preload.ts")).toBe(false);
+    expect(state.shouldRegenerate("/main.ts", "/main.ts", "/preload.ts")).toBe(true);
+    expect(state.shouldRegenerate("/preload.ts", "/main.ts", "/preload.ts")).toBe(true);
   });
 
   it("updates hash only when changed", () => {

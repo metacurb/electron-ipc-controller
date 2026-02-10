@@ -1,29 +1,38 @@
 import { IPC_DEFAULT_API_ROOT } from "@electron-ipc-controller/shared";
 import fs from "fs";
-import * as ts from "typescript";
+import {
+  createSourceFile,
+  forEachChild,
+  isCallExpression,
+  isIdentifier,
+  isStringLiteral,
+  Node,
+  ScriptKind,
+  ScriptTarget,
+} from "typescript";
 
 export const resolveApiRootFromPreload = (preloadPath: string): string => {
   if (!fs.existsSync(preloadPath)) return IPC_DEFAULT_API_ROOT;
   const sourceText = fs.readFileSync(preloadPath, "utf8");
-  const sourceFile = ts.createSourceFile(preloadPath, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const sourceFile = createSourceFile(preloadPath, sourceText, ScriptTarget.Latest, true, ScriptKind.TS);
   let found: string | null = null;
-  const visit = (node: ts.Node) => {
+  const visit = (node: Node) => {
     if (found) return;
-    if (ts.isCallExpression(node)) {
-      if (ts.isIdentifier(node.expression) && node.expression.text === "setupPreload") {
+    if (isCallExpression(node)) {
+      if (isIdentifier(node.expression) && node.expression.text === "setupPreload") {
         const args = node.arguments;
         if (args.length === 0) {
           found = IPC_DEFAULT_API_ROOT;
           return;
         }
-        if (args.length > 0 && ts.isStringLiteral(args[0])) {
+        if (args.length > 0 && isStringLiteral(args[0])) {
           found = args[0].text;
           return;
         }
       }
     }
-    ts.forEachChild(node, visit);
+    forEachChild(node, visit);
   };
-  ts.forEachChild(sourceFile, visit);
+  forEachChild(sourceFile, visit);
   return found || IPC_DEFAULT_API_ROOT;
 };

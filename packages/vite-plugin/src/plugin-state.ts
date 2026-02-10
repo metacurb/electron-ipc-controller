@@ -28,10 +28,11 @@ export class PluginState {
     this.controllerFiles = files;
   }
 
-  shouldRegenerate(absId: string, mainEntryPath: string): boolean {
+  shouldRegenerate(absId: string, mainEntryPath: string, preloadEntryPath?: string): boolean {
     const isMainEntry = absId === mainEntryPath;
+    const isPreloadEntry = preloadEntryPath ? absId === preloadEntryPath : false;
     const isControllerFile = this.controllerFiles?.has(absId);
-    return isMainEntry || !!isControllerFile;
+    return isMainEntry || isPreloadEntry || !!isControllerFile;
   }
 
   updateHash(hash: string): boolean {
