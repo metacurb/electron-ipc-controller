@@ -23,7 +23,7 @@ export interface FindControllersResult {
   program: Program;
 }
 
-function isCreateIpcAppCall(node: CallExpression, typeChecker: TypeChecker): boolean {
+const isCreateIpcAppCall = (node: CallExpression, typeChecker: TypeChecker): boolean => {
   if (!isIdentifier(node.expression)) return false;
   const sym = typeChecker.getSymbolAtLocation(node.expression);
   if (!sym) return false;
@@ -35,7 +35,7 @@ function isCreateIpcAppCall(node: CallExpression, typeChecker: TypeChecker): boo
     // Not an alias; use original symbol (e.g. local createIpcApp)
   }
   return target.name === "createIpcApp";
-}
+};
 
 export const findControllers = (
   entryFile: string,

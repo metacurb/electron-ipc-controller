@@ -19,7 +19,7 @@ describe("resolveApiRootFromPreload", () => {
   it("returns the default when preload file is missing", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "ipc-preload-missing-"));
     const missingPath = path.join(dir, "missing.ts");
-    expect(resolveApiRootFromPreload(missingPath)).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(missingPath).apiRoot).toBe(IPC_DEFAULT_API_ROOT);
     fs.rmSync(dir, { force: true, recursive: true });
   });
 
@@ -27,7 +27,8 @@ describe("resolveApiRootFromPreload", () => {
     const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
 setupPreload();
 `);
-    expect(resolveApiRootFromPreload(filePath)).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(filePath).apiRoot).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(filePath).dependencies.has(filePath)).toBe(true);
     cleanup();
   });
 
@@ -35,7 +36,7 @@ setupPreload();
     const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
 setupPreload("custom");
 `);
-    expect(resolveApiRootFromPreload(filePath)).toBe("custom");
+    expect(resolveApiRootFromPreload(filePath).apiRoot).toBe("custom");
     cleanup();
   });
 
@@ -44,7 +45,7 @@ setupPreload("custom");
 const apiRoot = "custom";
 setupPreload(apiRoot);
 `);
-    expect(resolveApiRootFromPreload(filePath)).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(filePath).apiRoot).toBe(IPC_DEFAULT_API_ROOT);
     cleanup();
   });
 });

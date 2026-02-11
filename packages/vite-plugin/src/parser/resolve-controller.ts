@@ -1,5 +1,6 @@
 import { Expression, isClassDeclaration, TypeChecker } from "typescript";
 
+import { collectDependencies } from "./collect-dependencies.js";
 import { extractControllerMetadata } from "./extract-metadata.js";
 import { ControllerMetadata } from "./types.js";
 
@@ -41,5 +42,6 @@ export const resolveController = (
   const match = fileControllers.find((c) => c.className === className);
   if (match) {
     controllers.push(match);
+    collectDependencies(match.referencedTypes, processedFiles);
   }
 };

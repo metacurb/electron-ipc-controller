@@ -11,6 +11,7 @@ export interface TypeDefinition {
   definition: string;
   name: string;
   referencedTypes: TypeDefinition[];
+  sourceFile: string;
 }
 
 export interface MethodMetadata {

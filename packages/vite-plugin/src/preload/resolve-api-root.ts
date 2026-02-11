@@ -6,33 +6,32 @@ import {
   isCallExpression,
   isIdentifier,
   isStringLiteral,
-  Node,
-  ScriptKind,
   ScriptTarget,
 } from "typescript";
 
-export const resolveApiRootFromPreload = (preloadPath: string): string => {
-  if (!fs.existsSync(preloadPath)) return IPC_DEFAULT_API_ROOT;
-  const sourceText = fs.readFileSync(preloadPath, "utf8");
-  const sourceFile = createSourceFile(preloadPath, sourceText, ScriptTarget.Latest, true, ScriptKind.TS);
-  let found: string | null = null;
-  const visit = (node: Node) => {
-    if (found) return;
-    if (isCallExpression(node)) {
-      if (isIdentifier(node.expression) && node.expression.text === "setupPreload") {
-        const args = node.arguments;
-        if (args.length === 0) {
-          found = IPC_DEFAULT_API_ROOT;
-          return;
-        }
-        if (args.length > 0 && isStringLiteral(args[0])) {
-          found = args[0].text;
-          return;
-        }
+export const resolveApiRootFromPreload = (preloadPath: string): { apiRoot: string; dependencies: Set<string> } => {
+  const dependencies = new Set<string>();
+  dependencies.add(preloadPath);
+  let apiRoot: string = IPC_DEFAULT_API_ROOT;
+
+  if (!fs.existsSync(preloadPath)) {
+    return { apiRoot, dependencies };
+  }
+
+  const content = fs.readFileSync(preloadPath, "utf-8");
+  const sourceFile = createSourceFile(preloadPath, content, ScriptTarget.Latest, true);
+
+  const visit = (node: import("typescript").Node) => {
+    if (isCallExpression(node) && isIdentifier(node.expression) && node.expression.text === "setupPreload") {
+      const args = node.arguments;
+      if (args.length > 0 && isStringLiteral(args[0])) {
+        apiRoot = args[0].text;
       }
     }
     forEachChild(node, visit);
   };
+
   forEachChild(sourceFile, visit);
-  return found || IPC_DEFAULT_API_ROOT;
+
+  return { apiRoot, dependencies };
 };

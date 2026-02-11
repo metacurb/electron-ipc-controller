@@ -69,7 +69,7 @@ export function electronIpcController({
   const generate = () => {
     try {
       const preloadPath = path.resolve(root, preload);
-      const resolvedApiRoot = resolveApiRootFromPreload(preloadPath);
+      const { apiRoot: resolvedApiRoot, dependencies: preloadDependencies } = resolveApiRootFromPreload(preloadPath);
       const entryPath = path.resolve(root, main);
       if (!fs.existsSync(entryPath)) {
         console.warn(`[${pkg.name}] Main entry not found at: ${entryPath}`);
@@ -84,7 +84,7 @@ export function electronIpcController({
         console.warn(`[${pkg.name}] No createIpcApp() call found in ${entryPath}; generated types will be empty.`);
       }
 
-      state.setControllerFiles(new Set([...processedFiles].map(normalizePath)));
+      state.setControllerFiles(new Set([...processedFiles, ...preloadDependencies].map(normalizePath)));
 
       const { globalPath, runtimePath } = resolveTypePaths({
         hasRendererRuntimeDir: (absPath) => fs.existsSync(absPath),

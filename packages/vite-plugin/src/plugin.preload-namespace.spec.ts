@@ -29,10 +29,10 @@ setupPreload("renamed");
     );
 
     try {
-      const apiRoot1 = resolveApiRootFromPreload(first.preloadPath);
+      const apiRoot1 = resolveApiRootFromPreload(first.preloadPath).apiRoot;
       const types1 = generateGlobalTypes(apiRoot1, "../runtime/ipc.types");
 
-      const apiRoot2 = resolveApiRootFromPreload(second.preloadPath);
+      const apiRoot2 = resolveApiRootFromPreload(second.preloadPath).apiRoot;
       const types2 = generateGlobalTypes(apiRoot2, "../runtime/ipc.types");
 
       expect(types1).toContain("custom:");

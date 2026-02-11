@@ -22,7 +22,13 @@ describe("extractControllerMetadata", () => {
 
   it("calls parseController when IpcController decorator is found", () => {
     mockGetDecorator.mockReturnValue({} as Decorator);
-    mockParseController.mockReturnValue({ className: "MockController", namespace: "mock" } as ControllerMetadata);
+    mockParseController.mockReturnValue({
+      className: "MockController",
+      filePath: "/src/mock.controller.ts",
+      methods: [],
+      namespace: "mock",
+      referencedTypes: [],
+    });
 
     const { sourceFile, typeChecker } = createFixtureProgram(fixturesDir, "counter.controller.ts");
     const controllers = extractControllerMetadata(sourceFile, typeChecker);

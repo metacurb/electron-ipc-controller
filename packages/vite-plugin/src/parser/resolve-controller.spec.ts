@@ -23,8 +23,8 @@ describe("resolveController", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockExtractControllerMetadata.mockReturnValue([
-      { className: "OtherController", namespace: "other" },
-      { className: "CounterController", namespace: "counter" },
+      { className: "OtherController", namespace: "other", referencedTypes: [] },
+      { className: "CounterController", namespace: "counter", referencedTypes: [] },
     ] as ControllerMetadata[]);
   });
 

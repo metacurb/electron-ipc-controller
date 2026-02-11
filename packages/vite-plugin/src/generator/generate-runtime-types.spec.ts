@@ -40,6 +40,7 @@ describe("generateRuntimeTypes", () => {
           definition: "type Payload = { id: string }",
           name: "Payload",
           referencedTypes: [],
+          sourceFile: "/src/types.ts",
         },
       ],
     });

@@ -6,11 +6,11 @@ const defaultOptions: CompilerOptions = {
   experimentalDecorators: true,
 };
 
-export function createFixtureProgram(
+export const createFixtureProgram = (
   fixturesDir: string,
   filename: string,
   compilerOptions?: CompilerOptions,
-): { sourceFile: SourceFile; typeChecker: TypeChecker } {
+): { sourceFile: SourceFile; typeChecker: TypeChecker } => {
   const filePath = path.join(fixturesDir, filename);
   const program = createProgram([filePath], { ...defaultOptions, ...compilerOptions });
   const sourceFile = program.getSourceFile(filePath);
@@ -18,4 +18,4 @@ export function createFixtureProgram(
     throw new Error(`Could not get source file: ${filePath}`);
   }
   return { sourceFile, typeChecker: program.getTypeChecker() };
-}
+};

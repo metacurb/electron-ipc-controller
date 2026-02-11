@@ -23,16 +23,19 @@ describe("buildTypeDefinitions", () => {
       definition: "type A = { a: string }",
       name: "A",
       referencedTypes: [],
+      sourceFile: "a.ts",
     };
     const tB = {
       definition: "interface B { b: number }",
       name: "B",
       referencedTypes: [],
+      sourceFile: "b.ts",
     };
     const tDuplicateA = {
       definition: "type A = { a: string }",
       name: "A",
       referencedTypes: [],
+      sourceFile: "a.ts",
     };
 
     const controller = makeController([tB, tA, tDuplicateA]);

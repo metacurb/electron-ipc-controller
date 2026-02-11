@@ -43,17 +43,17 @@ const BUILTIN_TYPE_NAMES = new Set([
   "undefined",
 ]);
 
-export function collectTypeDefinitions(
+export const collectTypeDefinitions = (
   node: Node,
   typeChecker: TypeChecker,
   seen = new Set<string>(),
-): TypeDefinition[] {
+): TypeDefinition[] => {
   const result: TypeDefinition[] = [];
   walkForTypeRefs(node, typeChecker, seen, result);
   return result;
-}
+};
 
-function walkForTypeRefs(node: Node, typeChecker: TypeChecker, seen: Set<string>, out: TypeDefinition[]): void {
+const walkForTypeRefs = (node: Node, typeChecker: TypeChecker, seen: Set<string>, out: TypeDefinition[]): void => {
   if (isTypeReferenceNode(node)) {
     const sym = typeChecker.getSymbolAtLocation(node.typeName);
     if (sym) {
@@ -93,7 +93,7 @@ function walkForTypeRefs(node: Node, typeChecker: TypeChecker, seen: Set<string>
               .trim();
 
             if (definition) {
-              out.push({ definition, name, referencedTypes });
+              out.push({ definition, name, referencedTypes, sourceFile: sourceFile.fileName });
             }
           }
         }
@@ -107,4 +107,4 @@ function walkForTypeRefs(node: Node, typeChecker: TypeChecker, seen: Set<string>
   }
 
   forEachChild(node, (child) => walkForTypeRefs(child, typeChecker, seen, out));
-}
+};
