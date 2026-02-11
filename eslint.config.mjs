@@ -9,7 +9,15 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default defineConfig([
   {
-    ignores: ["eslint.config.mjs", "**/dist/**", "**/out/**", "**/node_modules/**", "**/fixtures/**"],
+    ignores: [
+      "eslint.config.mjs",
+      "**/dist/**",
+      "**/out/**",
+      "**/node_modules/**",
+      "**/fixtures/**",
+      "**/build/**",
+      "**/.docusaurus/**",
+    ],
   },
   eslintConfigPrettier,
   js.configs.recommended,
@@ -30,7 +38,6 @@ export default defineConfig([
             "packages/*/scripts/*.mjs",
             "apps/*/*/eslint.config.mjs",
           ],
-          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,
         },
         tsconfigRootDir: import.meta.dirname,
       },
@@ -49,11 +56,12 @@ export default defineConfig([
           groups: [["^\\u0000"], ["^@?\\w"], ["^@", "^"], ["^\\./"]],
         },
       ],
+      "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-floating-promises": "warn",
+      "@typescript-eslint/no-redundant-type-constituents": "off",
       "@typescript-eslint/no-unsafe-argument": "warn",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/unbound-method": "off",
-      "@typescript-eslint/no-redundant-type-constituents": "off",
       "perfectionist/sort-objects": [
         "error",
         {

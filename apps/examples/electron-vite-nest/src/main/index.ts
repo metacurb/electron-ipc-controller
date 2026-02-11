@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { createIpcApp, getControllerMetadata } from '@electron-ipc-controller/core'
+import { createIpcApp, isIpcController } from '@electron-ipc-controller/core'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import type { INestApplicationContext } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
@@ -12,17 +12,9 @@ import icon from '../../resources/icon.png?asset'
 import { IpcModule } from './ipc.module'
 
 /** IPC controller classes registered as providers on the given Nest module. */
-function getIpcControllersFromModule(ModuleClass: new (...args: unknown[]) => unknown): unknown[] {
+const getIpcControllersFromModule = (ModuleClass: new (...args: unknown[]) => unknown) => {
   const providers = (Reflect.getMetadata('providers', ModuleClass) as unknown[] | undefined) ?? []
-  return providers.filter((token) => {
-    if (typeof token !== 'function') return false
-    try {
-      getControllerMetadata(token as new (...args: unknown[]) => unknown)
-      return true
-    } catch {
-      return false
-    }
-  })
+  return providers.filter(isIpcController)
 }
 
 function createWindow(nestContext: INestApplicationContext): void {
@@ -36,9 +28,7 @@ function createWindow(nestContext: INestApplicationContext): void {
   })
 
   const ipcApp = createIpcApp({
-    controllers: getIpcControllersFromModule(IpcModule) as Parameters<
-      typeof createIpcApp
-    >[0]['controllers'],
+    controllers: getIpcControllersFromModule(IpcModule),
     correlation: true,
     resolver: {
       resolve: <T>(Controller: new (...args: unknown[]) => T): T => nestContext.get(Controller)
