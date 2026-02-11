@@ -11,7 +11,6 @@ module.exports = {
       "ts-jest",
       {
         diagnostics: false,
-        isolatedModules: true,
         tsconfig: {
           module: "commonjs",
           moduleResolution: "node",

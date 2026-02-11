@@ -11,7 +11,7 @@ import { resolveTypePaths } from "./resolve-type-paths.js";
 
 describe("defaults", () => {
   it("resolves runtime and global paths with renderer dir present", () => {
-    const root = "C:\\project";
+    const root = path.resolve("/project");
     const preloadPath = path.join(root, DEFAULT_PRELOAD_ENTRY);
 
     const { globalPath, runtimePath } = resolveTypePaths({
@@ -26,7 +26,7 @@ describe("defaults", () => {
   });
 
   it("resolves runtime path outside renderer when renderer dir missing", () => {
-    const root = "C:\\project";
+    const root = path.resolve("/project");
     const preloadPath = path.join(root, DEFAULT_PRELOAD_ENTRY);
 
     const { globalPath, runtimePath } = resolveTypePaths({
