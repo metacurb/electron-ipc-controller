@@ -9,5 +9,4 @@ export { getCorrelationId } from "./correlation/get-correlation-id";
 
 export { createIpcApp } from "./core/create-ipc-app";
 export type { IpcApp, IpcAppOptions } from "./core/create-ipc-app";
-export { getControllerMetadata } from "./metadata/get-controller-metadata";
 export { isIpcController } from "./metadata/is-ipc-controller";
