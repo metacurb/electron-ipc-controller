@@ -1,0 +1,47 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #27577f;
+  --ifm-color-primary-dark: #224d6f;
+  --ifm-color-primary-darker: #1e4564;
+  --ifm-color-primary-darkest: #183552;
+  --ifm-color-primary-light: #2e6a99;
+  --ifm-color-primary-lighter: #357db3;
+  --ifm-color-primary-lightest: #4a8fc4;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme="dark"] {
+  --ifm-color-primary: #5a9fd4;
+  --ifm-color-primary-dark: #4a8fc4;
+  --ifm-color-primary-darker: #4086ba;
+  --ifm-color-primary-darkest: #356e99;
+  --ifm-color-primary-light: #6eafe0;
+  --ifm-color-primary-lighter: #7eb9e4;
+  --ifm-color-primary-lightest: #9eccec;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Navbar: version link and GitHub icon */
+.navbar__version-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.navbar__github-icon {
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+}
+
+.navbar__github-icon svg {
+  width: 22px;
+  height: 22px;
+}
