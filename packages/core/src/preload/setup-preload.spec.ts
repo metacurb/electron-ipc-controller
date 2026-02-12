@@ -35,7 +35,7 @@ describe("setupPreload", () => {
     const contract: SerializedIpcContract = { controllers: [] };
     mockIpcRenderer.invoke.mockResolvedValue(contract);
 
-    await setupPreload("myCustomApi");
+    await setupPreload({ namespace: "myCustomApi" });
 
     expect(mockContextBridge.exposeInMainWorld).toHaveBeenCalledWith("myCustomApi", {});
   });

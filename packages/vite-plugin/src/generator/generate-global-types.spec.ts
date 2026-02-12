@@ -13,7 +13,7 @@ describe("generateGlobalTypes", () => {
     expect(code).toContain(`${IPC_DEFAULT_API_ROOT}: IpcApi;`);
   });
 
-  it("emits a computed property when apiRoot is not a valid identifier", () => {
+  it("emits a computed property when namespace is not a valid identifier", () => {
     const code = generateGlobalTypes("custom-api-root", "./ipc.types");
 
     expect(code).toContain(`["custom-api-root"]: IpcApi;`);

@@ -9,13 +9,13 @@ import {
   ScriptTarget,
 } from "typescript";
 
-export const resolveApiRootFromPreload = (preloadPath: string): { apiRoot: string; dependencies: Set<string> } => {
+export const resolveApiRootFromPreload = (preloadPath: string): { namespace: string; dependencies: Set<string> } => {
   const dependencies = new Set<string>();
   dependencies.add(preloadPath);
-  let apiRoot: string = IPC_DEFAULT_API_ROOT;
+  let namespace: string = IPC_DEFAULT_API_ROOT;
 
   if (!fs.existsSync(preloadPath)) {
-    return { apiRoot, dependencies };
+    return { dependencies, namespace };
   }
 
   const content = fs.readFileSync(preloadPath, "utf-8");
@@ -25,7 +25,7 @@ export const resolveApiRootFromPreload = (preloadPath: string): { apiRoot: strin
     if (isCallExpression(node) && isIdentifier(node.expression) && node.expression.text === "setupPreload") {
       const args = node.arguments;
       if (args.length > 0 && isStringLiteral(args[0])) {
-        apiRoot = args[0].text;
+        namespace = args[0].text;
       }
     }
     forEachChild(node, visit);
@@ -33,5 +33,5 @@ export const resolveApiRootFromPreload = (preloadPath: string): { apiRoot: strin
 
   forEachChild(sourceFile, visit);
 
-  return { apiRoot, dependencies };
+  return { dependencies, namespace };
 };

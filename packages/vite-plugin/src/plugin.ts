@@ -69,7 +69,7 @@ export function electronIpcController({
   const generate = () => {
     try {
       const preloadPath = path.resolve(root, preload);
-      const { apiRoot: resolvedApiRoot, dependencies: preloadDependencies } = resolveApiRootFromPreload(preloadPath);
+      const { dependencies: preloadDependencies, namespace: resolvedApiRoot } = resolveApiRootFromPreload(preloadPath);
       const entryPath = path.resolve(root, main);
       if (!fs.existsSync(entryPath)) {
         console.warn(`[${pkg.name}] Main entry not found at: ${entryPath}`);

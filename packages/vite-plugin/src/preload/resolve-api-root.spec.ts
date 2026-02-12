@@ -19,7 +19,7 @@ describe("resolveApiRootFromPreload", () => {
   it("returns the default when preload file is missing", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "ipc-preload-missing-"));
     const missingPath = path.join(dir, "missing.ts");
-    expect(resolveApiRootFromPreload(missingPath).apiRoot).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(missingPath).namespace).toBe(IPC_DEFAULT_API_ROOT);
     fs.rmSync(dir, { force: true, recursive: true });
   });
 
@@ -27,7 +27,7 @@ describe("resolveApiRootFromPreload", () => {
     const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
 setupPreload();
 `);
-    expect(resolveApiRootFromPreload(filePath).apiRoot).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(filePath).namespace).toBe(IPC_DEFAULT_API_ROOT);
     expect(resolveApiRootFromPreload(filePath).dependencies.has(filePath)).toBe(true);
     cleanup();
   });
@@ -36,16 +36,16 @@ setupPreload();
     const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
 setupPreload("custom");
 `);
-    expect(resolveApiRootFromPreload(filePath).apiRoot).toBe("custom");
+    expect(resolveApiRootFromPreload(filePath).namespace).toBe("custom");
     cleanup();
   });
 
   it("returns the default when setupPreload receives non-literal args", () => {
     const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
-const apiRoot = "custom";
-setupPreload(apiRoot);
+const namespace = "custom";
+setupPreload(namespace);
 `);
-    expect(resolveApiRootFromPreload(filePath).apiRoot).toBe(IPC_DEFAULT_API_ROOT);
+    expect(resolveApiRootFromPreload(filePath).namespace).toBe(IPC_DEFAULT_API_ROOT);
     cleanup();
   });
 });

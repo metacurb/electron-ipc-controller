@@ -4,11 +4,17 @@ import { contextBridge, ipcRenderer } from "electron";
 import { createPreloadApi } from "./create-preload-api";
 import { PreloadApi } from "./types";
 
-export const setupPreload = async (apiRoot: string = IPC_DEFAULT_API_ROOT): Promise<PreloadApi> => {
+export type SetupPreloadOptions = {
+  namespace?: string;
+};
+
+export const setupPreload = async ({
+  namespace = IPC_DEFAULT_API_ROOT,
+}: SetupPreloadOptions = {}): Promise<PreloadApi> => {
   const contract: SerializedIpcContract = await ipcRenderer.invoke(IPC_CONTRACT_CHANNEL);
   const api = createPreloadApi(contract);
 
-  contextBridge.exposeInMainWorld(apiRoot, api);
+  contextBridge.exposeInMainWorld(namespace, api);
 
   return api;
 };
