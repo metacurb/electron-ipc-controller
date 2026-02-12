@@ -56,7 +56,7 @@ const sidebars: SidebarsConfig = {
       type: "category",
     },
     {
-      items: ["migration/from-manual-ipc"],
+      items: ["migration/from-manual-ipc", "troubleshooting"],
       label: "Operations",
       type: "category",
     },
