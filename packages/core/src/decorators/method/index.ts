@@ -1,4 +1,4 @@
-import { IPC_METHOD_DECORATOR_NAMES } from "@electron-ipc-controller/shared";
+import { IPC_METHOD_DECORATOR_NAMES } from "@electron-ipc-bridge/shared";
 
 import { IpcHandle } from "./ipc-handle";
 import { IpcHandleOnce } from "./ipc-handle-once";

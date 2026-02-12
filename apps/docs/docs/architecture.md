@@ -7,12 +7,12 @@ sidebar_position: 1
 
 This library has two cooperating layers:
 
-1. **Runtime layer (`@electron-ipc-controller/core`)**
+1. **Runtime layer (`@electron-ipc-bridge/core`)**
    - Registers controller handlers on Electron `ipcMain`
    - Injects event-derived parameters (`@Sender()`, `@Window()`, `@RawEvent()`, etc.)
    - Optionally wraps handler execution in correlation context
 
-2. **Build layer (`@electron-ipc-controller/vite-plugin`)**
+2. **Build layer (`@electron-ipc-bridge/vite-plugin`)**
    - Parses `createIpcApp(...)` from your main entry
    - Finds controllers and extracts handler signatures
    - Generates renderer-facing type artifacts (`ipc.types.ts` and `ipc.d.ts`)

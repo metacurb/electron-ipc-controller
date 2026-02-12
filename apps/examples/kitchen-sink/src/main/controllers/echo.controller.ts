@@ -1,10 +1,4 @@
-import {
-  IpcController,
-  IpcHandle,
-  IpcHandleOnce,
-  IpcOn,
-  IpcOnce
-} from '@electron-ipc-controller/core'
+import { IpcController, IpcHandle, IpcHandleOnce, IpcOn, IpcOnce } from '@electron-ipc-bridge/core'
 
 import type { LoggerService } from '../services/logger.service'
 

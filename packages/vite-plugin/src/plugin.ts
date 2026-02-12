@@ -21,7 +21,7 @@ export interface PluginTypesOptions {
 }
 
 /**
- * Options for the electron-ipc-controller Vite plugin.
+ * Options for the electron-ipc-bridge Vite plugin.
  */
 export interface PluginOptions {
   /** Path to your main process entry file. @default "src/main/index.ts" */
@@ -51,7 +51,7 @@ export interface ElectronIpcControllerPlugin {
  * @example
  * ```ts
  * // vite.config.ts
- * import { electronIpcController } from "@electron-ipc-controller/vite-plugin";
+ * import { electronIpcController } from "@electron-ipc-bridge/vite-plugin";
  *
  * export default defineConfig({
  *   plugins: [electronIpcController(options)],
@@ -162,7 +162,7 @@ export function electronIpcController({
         }
       });
     },
-    name: "electron-ipc-controller",
+    name: "electron-ipc-bridge",
     transform(_code, id) {
       if (id.includes("node_modules") || id.endsWith(".d.ts")) return null;
 

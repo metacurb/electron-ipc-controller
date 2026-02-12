@@ -1,4 +1,4 @@
-import { IPC_DEFAULT_API_ROOT } from "@electron-ipc-controller/shared";
+import { IPC_DEFAULT_API_ROOT } from "@electron-ipc-bridge/shared";
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -24,7 +24,7 @@ describe("resolveApiRootFromPreload", () => {
   });
 
   it("returns default when setupPreload() has no args", () => {
-    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
+    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-bridge/core/preload";
 setupPreload();
 `);
     expect(resolveApiRootFromPreload(filePath).namespace).toBe(IPC_DEFAULT_API_ROOT);
@@ -33,7 +33,7 @@ setupPreload();
   });
 
   it("returns string literal when setupPreload('custom') is used", () => {
-    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
+    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-bridge/core/preload";
 setupPreload("custom");
 `);
     expect(resolveApiRootFromPreload(filePath).namespace).toBe("custom");
@@ -41,7 +41,7 @@ setupPreload("custom");
   });
 
   it("returns the default when setupPreload receives non-literal args", () => {
-    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-controller/core/preload";
+    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-bridge/core/preload";
 const namespace = "custom";
 setupPreload(namespace);
 `);

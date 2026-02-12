@@ -18,12 +18,12 @@ describe("preload namespace integration", () => {
 
   it("updates global window property name when setupPreload namespace changes", () => {
     const first = writePreload(
-      `import { setupPreload } from "@electron-ipc-controller/core/preload";
+      `import { setupPreload } from "@electron-ipc-bridge/core/preload";
 setupPreload("custom");
 `,
     );
     const second = writePreload(
-      `import { setupPreload } from "@electron-ipc-controller/core/preload";
+      `import { setupPreload } from "@electron-ipc-bridge/core/preload";
 setupPreload("renamed");
 `,
     );

@@ -6,7 +6,7 @@ import {
   ProcessId,
   Sender,
   Window
-} from '@electron-ipc-controller/core'
+} from '@electron-ipc-bridge/core'
 import type { BrowserWindow, WebContents } from 'electron/main'
 
 type ComplexInput = {

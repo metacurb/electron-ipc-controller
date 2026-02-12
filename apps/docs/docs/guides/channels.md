@@ -5,7 +5,7 @@ sidebar_position: 6
 
 # Channels & Interoperability
 
-Electron IPC Controller abstracts away the underlying Electron IPC channel names, but understanding how they are generated is useful for debugging, auditing, or manual interoperability.
+Electron IPC Bridge abstracts away the underlying Electron IPC channel names, but understanding how they are generated is useful for debugging, auditing, or manual interoperability.
 
 ## Channel Naming Convention
 

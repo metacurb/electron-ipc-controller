@@ -1,4 +1,4 @@
-import { getCorrelationId } from '@electron-ipc-controller/core'
+import { getCorrelationId } from '@electron-ipc-bridge/core'
 
 export class LoggerService {
   log(event: string, payload?: Record<string, unknown>): void {

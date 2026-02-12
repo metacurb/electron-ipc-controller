@@ -24,7 +24,7 @@ const ipcApp = createIpcApp({
 You can access the ID via the decorator or the helper function anywhere in your async stack.
 
 ```typescript {5,12}
-import { IpcHandle, CorrelationId, getCorrelationId } from "@electron-ipc-controller/core";
+import { IpcHandle, CorrelationId, getCorrelationId } from "@electron-ipc-bridge/core";
 
 export class LoggerController {
   @IpcHandle()
@@ -48,7 +48,7 @@ This ensures that every log line related to a specific IPC request shares the sa
 
 ```typescript {6}
 import pino from "pino";
-import { getCorrelationId } from "@electron-ipc-controller/core";
+import { getCorrelationId } from "@electron-ipc-bridge/core";
 
 const logger = pino({
   mixin() {

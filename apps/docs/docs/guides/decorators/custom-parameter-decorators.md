@@ -1,6 +1,6 @@
 # Custom Parameter Decorators
 
-While `@electron-ipc-controller` provides several built-in decorators like `@Sender()` and `@Window()`, you can easily create your own **parameter decorators** to inject custom data or services into your handler methods.
+While `@electron-ipc-bridge` provides several built-in decorators like `@Sender()` and `@Window()`, you can easily create your own **parameter decorators** to inject custom data or services into your handler methods.
 
 ## `createParamDecorator`
 
@@ -11,7 +11,7 @@ The `createParamDecorator` utility allows you to define a decorator that extract
 Imagine you want to extract a "User" from a global session manager based on the event sender.
 
 ```typescript
-import { createParamDecorator } from "@electron-ipc-controller/core";
+import { createParamDecorator } from "@electron-ipc-bridge/core";
 
 export const CurrentUser = createParamDecorator((event, data) => {
   // Logic to extract user from event or global state

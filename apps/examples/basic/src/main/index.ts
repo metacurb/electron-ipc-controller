@@ -1,4 +1,4 @@
-import { createIpcApp } from "@electron-ipc-controller/core";
+import { createIpcApp } from "@electron-ipc-bridge/core";
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 
@@ -10,7 +10,7 @@ function createWindow(): void {
   mainWindow = new BrowserWindow({
     height: 800,
     webPreferences: {
-      preload: require.resolve("@electron-ipc-controller/core/preload.js"),
+      preload: require.resolve("@electron-ipc-bridge/core/preload.js"),
     },
     width: 800,
   });

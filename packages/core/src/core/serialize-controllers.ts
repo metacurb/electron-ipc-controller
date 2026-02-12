@@ -1,4 +1,4 @@
-import { SerializedIpcContract } from "@electron-ipc-controller/shared";
+import { SerializedIpcContract } from "@electron-ipc-bridge/shared";
 
 import { getControllerMetadata } from "../metadata/get-controller-metadata";
 import { Constructor } from "../metadata/types";

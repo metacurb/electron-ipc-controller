@@ -1,4 +1,4 @@
-import { IpcHandlerType } from "@electron-ipc-controller/shared";
+import { IpcHandlerType } from "@electron-ipc-bridge/shared";
 import { ipcMain, IpcMainInvokeEvent } from "electron";
 
 import { wrapWithCorrelation } from "../correlation/wrap-with-correlation";

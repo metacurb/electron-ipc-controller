@@ -1,4 +1,4 @@
-import { IpcHandlerType } from "@electron-ipc-controller/shared";
+import { IpcHandlerType } from "@electron-ipc-bridge/shared";
 import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
 export interface IpcControllerMetadata {

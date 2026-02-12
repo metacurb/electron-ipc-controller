@@ -30,7 +30,7 @@ The plugin exports the following types for use in your configuration files:
 - `PluginOptions`: The configuration object interface.
 
 ```ts
-import type { PluginOptions } from "@electron-ipc-controller/vite-plugin";
+import type { PluginOptions } from "@electron-ipc-bridge/vite-plugin";
 ```
 
 ## Defaults
@@ -56,7 +56,7 @@ If your preload namespace is not a valid JavaScript identifier (for example `"my
 ## Minimal example
 
 ```ts
-import { electronIpcController } from "@electron-ipc-controller/vite-plugin";
+import { electronIpcController } from "@electron-ipc-bridge/vite-plugin";
 
 export default {
   plugins: [

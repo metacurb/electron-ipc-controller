@@ -1,12 +1,4 @@
-import {
-  CorrelationId,
-  IpcController,
-  IpcHandle,
-  IpcOn,
-  ProcessId,
-  Sender,
-  Window,
-} from "@electron-ipc-controller/core";
+import { CorrelationId, IpcController, IpcHandle, IpcOn, ProcessId, Sender, Window } from "@electron-ipc-bridge/core";
 import type { BrowserWindow, WebContents } from "electron/main";
 
 type ComplexInput = {

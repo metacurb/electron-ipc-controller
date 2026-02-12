@@ -61,7 +61,7 @@ contextBridge.exposeInMainWorld("api", {
 After:
 
 ```ts
-import { setupPreload } from "@electron-ipc-controller/core/preload";
+import { setupPreload } from "@electron-ipc-bridge/core/preload";
 
 void setupPreload(); // exposes window.ipc by default
 ```

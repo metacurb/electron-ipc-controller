@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="apps/docs/static/img/logo.png" alt="Electron IPC Controller" width="120" />
+  <img src="apps/docs/static/img/logo.png" alt="Electron IPC Bridge" width="120" />
 </p>
 
-<h1 align="center">Electron IPC Controller</h1>
+<h1 align="center">Electron IPC Bridge</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Electron-2B2E3A?style=for-the-badge&logo=electron&logoColor=9FEAF9" alt="Electron" />
@@ -15,9 +15,9 @@
 </p>
 
 <p align="center">
-  <a href="https://metacurb.github.io/electron-ipc-controller/"><strong>Documentation</strong></a> ·
-  <a href="https://metacurb.github.io/electron-ipc-controller/quickstart"><strong>Quickstart</strong></a> ·
-  <a href="https://metacurb.github.io/electron-ipc-controller/examples"><strong>Examples</strong></a>
+  <a href="https://metacurb.github.io/electron-ipc-bridge/"><strong>Documentation</strong></a> ·
+  <a href="https://metacurb.github.io/electron-ipc-bridge/quickstart"><strong>Quickstart</strong></a> ·
+  <a href="https://metacurb.github.io/electron-ipc-bridge/examples"><strong>Examples</strong></a>
 </p>
 
 ---
@@ -27,7 +27,7 @@
 **Controller** (main process):
 
 ```ts
-import { IpcController, IpcHandle } from "@electron-ipc-controller/core";
+import { IpcController, IpcHandle } from "@electron-ipc-bridge/core";
 
 @IpcController("users")
 export class UserController {
@@ -56,17 +56,17 @@ console.log(user.name); // "Alice"  — fully typed, auto-completed
 ## Install
 
 ```bash
-npm install @electron-ipc-controller/core reflect-metadata
-npm install -D @electron-ipc-controller/vite-plugin
+npm install @electron-ipc-bridge/core reflect-metadata
+npm install -D @electron-ipc-bridge/vite-plugin
 ```
 
 ## Getting Started
 
-Head to the **[Quickstart guide](https://metacurb.github.io/electron-ipc-controller/quickstart)** for full setup instructions, including TypeScript config, Vite plugin setup, preload wiring, and your first controller.
+Head to the **[Quickstart guide](https://metacurb.github.io/electron-ipc-bridge/quickstart)** for full setup instructions, including TypeScript config, Vite plugin setup, preload wiring, and your first controller.
 
 ## Documentation
 
-Full documentation is available at **[metacurb.github.io/electron-ipc-controller](https://metacurb.github.io/electron-ipc-controller/)**.
+Full documentation is available at **[metacurb.github.io/electron-ipc-bridge](https://metacurb.github.io/electron-ipc-bridge/)**.
 
 ## License
 

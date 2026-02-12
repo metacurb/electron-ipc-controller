@@ -1,7 +1,7 @@
 module.exports = {
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
-    "^@electron-ipc-controller/shared$": "<rootDir>/../shared/src/index.ts",
+    "^@electron-ipc-bridge/shared$": "<rootDir>/../shared/src/index.ts",
   },
   preset: "ts-jest",
   roots: ["<rootDir>/src", "<rootDir>/../shared"],

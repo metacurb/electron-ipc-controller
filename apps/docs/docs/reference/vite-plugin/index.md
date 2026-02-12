@@ -3,7 +3,7 @@ title: Vite Plugin Package
 sidebar_position: 1
 ---
 
-# `@electron-ipc-controller/vite-plugin`
+# `@electron-ipc-bridge/vite-plugin`
 
 The Vite plugin performs build-time analysis and type generation for renderer-safe IPC usage.
 

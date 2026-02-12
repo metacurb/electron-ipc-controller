@@ -1,6 +1,6 @@
 # Basic Example
 
-A minimal Electron application using `electron-ipc-controller` with a pre-bundled preload script.
+A minimal Electron application using `electron-ipc-bridge` with a pre-bundled preload script.
 
 ## Overview
 
@@ -31,7 +31,7 @@ src/
 pnpm install
 
 # Build and start
-pnpm --filter @electron-ipc-controller/example-basic start
+pnpm --filter @electron-ipc-bridge/example-basic start
 
 # Or from this directory
 pnpm start
@@ -78,7 +78,7 @@ This example uses the pre-bundled preload script provided by the library, which 
 ```ts
 // src/main/index.ts
 webPreferences: {
-  preload: require.resolve("electron-ipc-controller/preload.js"),
+  preload: require.resolve("electron-ipc-bridge/preload.js"),
 },
 ```
 

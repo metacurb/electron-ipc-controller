@@ -1,4 +1,4 @@
-import { IPC_METHOD_DECORATOR_NAMES, IPC_PARAM_INJECTION_DECORATOR_NAMES } from "@electron-ipc-controller/shared";
+import { IPC_METHOD_DECORATOR_NAMES, IPC_PARAM_INJECTION_DECORATOR_NAMES } from "@electron-ipc-bridge/shared";
 import type { Decorator } from "typescript";
 import { Identifier, isCallExpression, isStringLiteral, MethodDeclaration, TypeChecker } from "typescript";
 

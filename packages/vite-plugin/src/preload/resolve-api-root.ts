@@ -1,4 +1,4 @@
-import { IPC_DEFAULT_API_ROOT } from "@electron-ipc-controller/shared";
+import { IPC_DEFAULT_API_ROOT } from "@electron-ipc-bridge/shared";
 import fs from "fs";
 import {
   createSourceFile,

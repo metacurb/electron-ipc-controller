@@ -37,7 +37,7 @@ type PreloadApi = Record<string, PreloadNamespace>;
 For zero-config preload, use:
 
 ```ts
-preload: require.resolve("@electron-ipc-controller/core/preload.js");
+preload: require.resolve("@electron-ipc-bridge/core/preload.js");
 ```
 
 This runs `setupPreload()` internally using the default namespace `"ipc"`.

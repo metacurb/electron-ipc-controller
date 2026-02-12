@@ -1,4 +1,4 @@
-import { deriveNamespace } from "@electron-ipc-controller/shared";
+import { deriveNamespace } from "@electron-ipc-bridge/shared";
 import {
   ClassDeclaration,
   Decorator,

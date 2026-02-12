@@ -1,4 +1,4 @@
-import { SerializedIpcContract } from "@electron-ipc-controller/shared";
+import { SerializedIpcContract } from "@electron-ipc-bridge/shared";
 import { ipcRenderer } from "electron";
 
 import { createPreloadApi } from "./create-preload-api";

@@ -39,7 +39,7 @@ const sidebars: SidebarsConfig = {
             "reference/core/preload-api",
             "reference/core/advanced-helpers",
           ],
-          label: "Core package (@electron-ipc-controller/core)",
+          label: "Core package (@electron-ipc-bridge/core)",
           type: "category",
         },
         {
@@ -48,7 +48,7 @@ const sidebars: SidebarsConfig = {
             "reference/vite-plugin/plugin-options",
             "reference/vite-plugin/generation-behaviour",
           ],
-          label: "Vite plugin (@electron-ipc-controller/vite-plugin)",
+          label: "Vite plugin (@electron-ipc-bridge/vite-plugin)",
           type: "category",
         },
       ],

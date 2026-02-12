@@ -1,5 +1,5 @@
 {
-  "name": "@electron-ipc-controller/core",
+  "name": "@electron-ipc-bridge/core",
   "version": "0.1.0",
   "description": "A class-based IPC abstraction for Electron applications",
   "main": "./dist/index.js",
@@ -39,7 +39,7 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
-    "@electron-ipc-controller/shared": "workspace:*",
+    "@electron-ipc-bridge/shared": "workspace:*",
     "electron": "^40.3.0",
     "esbuild": "^0.27.3"
   }

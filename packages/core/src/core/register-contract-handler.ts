@@ -1,4 +1,4 @@
-import { IPC_CONTRACT_CHANNEL } from "@electron-ipc-controller/shared";
+import { IPC_CONTRACT_CHANNEL } from "@electron-ipc-bridge/shared";
 import { ipcMain } from "electron";
 
 import { Constructor, Disposer } from "../metadata/types";

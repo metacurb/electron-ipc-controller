@@ -5,7 +5,7 @@ title: Preload Integration
 
 # Preload Integration
 
-Electron IPC Controller supports two preload integration strategies, depending on how much control you need. Both options work with contextIsolation: true and sandbox mode.
+Electron IPC Bridge supports two preload integration strategies, depending on how much control you need. Both options work with contextIsolation: true and sandbox mode.
 
 ## Option 1: Fully Managed Preload (Zero Config)
 
@@ -17,7 +17,7 @@ For simple setups, the library provides a ready-made preload script that exposes
 ```typescript title="src/main/index.ts"
 new BrowserWindow({
   webPreferences: {
-    preload: require.resolve("@electron-ipc-controller/core/preload.js"),
+    preload: require.resolve("@electron-ipc-bridge/core/preload.js"),
   },
 });
 ```
@@ -33,7 +33,7 @@ This allows you to:
 - Integrate with existing Electron tooling
 
 ```typescript title="src/preload/index.ts"
-import { setupPreload } from "@electron-ipc-controller/core/preload";
+import { setupPreload } from "@electron-ipc-bridge/core/preload";
 import { electronAPI } from "@electron-toolkit/preload";
 import { contextBridge } from "electron";
 
@@ -52,7 +52,7 @@ try {
 By default, `setupPreload()` attaches the generated API to `window.ipc`. However, you might want to expose your API under a different namespace, or you might have multiple isolated APIs. You can change this by passing a custom namespace to `setupPreload`.
 
 ```typescript title="src/preload/index.ts"
-import { setupPreload } from "@electron-ipc-controller/core/preload";
+import { setupPreload } from "@electron-ipc-bridge/core/preload";
 
 setupPreload({
   // Your API will now be bound to window.myCustomApi
@@ -60,7 +60,7 @@ setupPreload({
 });
 ```
 
-If you're using `@electron-ipc-controller/vite-plugin`, types are updated automatically.
+If you're using `@electron-ipc-bridge/vite-plugin`, types are updated automatically.
 For namespace inference caveats (especially with dynamic preload patterns), see [Generation Behaviour](../reference/vite-plugin/generation-behaviour.md).
 
 For details on how the underlying IPC channels are named (e.g. for debugging), see [Channels & Interoperability](./channels.md).

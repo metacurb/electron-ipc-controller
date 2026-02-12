@@ -1,4 +1,4 @@
-import { IpcHandlerType } from "@electron-ipc-controller/shared";
+import { IpcHandlerType } from "@electron-ipc-bridge/shared";
 
 import { IPC_PARAM_INJECTIONS, IPC_PENDING_HANDLERS } from "../../metadata/constants";
 import { ParameterInjection, PendingHandlerMetadata } from "../../metadata/types";

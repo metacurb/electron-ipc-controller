@@ -1,5 +1,5 @@
 {
-  "name": "electron-ipc-controller-monorepo",
+  "name": "electron-ipc-bridge-monorepo",
   "private": true,
   "scripts": {
     "test": "pnpm -r test",

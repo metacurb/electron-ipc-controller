@@ -3,7 +3,7 @@ title: Core Package
 sidebar_position: 1
 ---
 
-# `@electron-ipc-controller/core`
+# `@electron-ipc-bridge/core`
 
 The core package provides runtime IPC registration, decorators, and preload integration support.
 

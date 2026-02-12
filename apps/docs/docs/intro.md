@@ -23,7 +23,7 @@ The library bridges your main and renderer processes using shared types generate
 ### 1. Create a Controller (Main Process)
 
 ```typescript
-import { IpcController, IpcHandle } from "@electron-ipc-controller/core";
+import { IpcController, IpcHandle } from "@electron-ipc-bridge/core";
 
 @IpcController("users")
 export class UserController {
@@ -73,12 +73,12 @@ graph LR
 
 This library consists of two main parts working in tandem:
 
-1. **Runtime (`@electron-ipc-controller/core`):**
+1. **Runtime (`@electron-ipc-bridge/core`):**
    - Uses TypeScript decorators to register class methods as `ipcMain` handlers.
    - Handles parameter injection (e.g., getting the `BrowserWindow` or `WebContents` directly in your method).
    - Manages the `preload` script to expose a type-safe API bridge.
 
-2. **Build-time (`@electron-ipc-controller/vite-plugin`):**
+2. **Build-time (`@electron-ipc-bridge/vite-plugin`):**
    - Statically analyses your Controller classes.
    - Generates:
      - a runtime TypeScript module with your IPC API and shared types

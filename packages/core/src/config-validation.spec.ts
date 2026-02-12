@@ -3,7 +3,7 @@ import {
   IPC_DECORATOR_HANDLE_ONCE,
   IPC_DECORATOR_ON,
   IPC_DECORATOR_ONCE,
-} from "@electron-ipc-controller/shared";
+} from "@electron-ipc-bridge/shared";
 
 import * as CoreExports from "./index";
 

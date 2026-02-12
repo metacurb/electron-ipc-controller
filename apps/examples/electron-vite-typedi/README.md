@@ -1,6 +1,6 @@
 # electron-vite-typedi
 
-Electron + Vite + React + TypeScript example using **TypeDI** for dependency injection with [electron-ipc-controller](https://github.com/metacurb/electron-ipc-controller).
+Electron + Vite + React + TypeScript example using **TypeDI** for dependency injection with [electron-ipc-bridge](https://github.com/metacurb/electron-ipc-bridge).
 
 Controllers are registered as TypeDI services (`@Service()`) and resolved via `Container.get(Controller)` in the IPC app resolver. See `src/main/controllers/counter.controller.ts` for `@Service()` + `@IpcController()` and `src/main/index.ts` for the typedi-based resolver.
 

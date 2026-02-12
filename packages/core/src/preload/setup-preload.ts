@@ -1,4 +1,4 @@
-import { IPC_CONTRACT_CHANNEL, IPC_DEFAULT_API_ROOT, SerializedIpcContract } from "@electron-ipc-controller/shared";
+import { IPC_CONTRACT_CHANNEL, IPC_DEFAULT_API_ROOT, SerializedIpcContract } from "@electron-ipc-bridge/shared";
 import { contextBridge, ipcRenderer } from "electron";
 
 import { createPreloadApi } from "./create-preload-api";

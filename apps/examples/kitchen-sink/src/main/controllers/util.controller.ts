@@ -1,4 +1,4 @@
-import { IpcController, IpcHandle, Origin, RawEvent } from '@electron-ipc-controller/core'
+import { IpcController, IpcHandle, Origin, RawEvent } from '@electron-ipc-bridge/core'
 import type { IpcMainInvokeEvent, WebFrameMain } from 'electron/main'
 
 import type { LoggerService } from '../services/logger.service'

@@ -1,4 +1,4 @@
-import type { IpcDecoratorName } from "@electron-ipc-controller/shared";
+import type { IpcDecoratorName } from "@electron-ipc-bridge/shared";
 
 export interface ControllerMetadata {
   className: string;

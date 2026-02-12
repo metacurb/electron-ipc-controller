@@ -1,4 +1,4 @@
-import { IPC_PARAM_INJECTION_DECORATOR_NAMES } from "@electron-ipc-controller/shared";
+import { IPC_PARAM_INJECTION_DECORATOR_NAMES } from "@electron-ipc-bridge/shared";
 
 import { CorrelationId } from "./correlation-id";
 import { Origin } from "./origin";

@@ -1,7 +1,7 @@
 {
   "name": "electron-vite-typedi",
   "version": "0.1.0",
-  "description": "Electron + Vite + React + TypeDI example for electron-ipc-controller",
+  "description": "Electron + Vite + React + TypeDI example for electron-ipc-bridge",
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
@@ -21,14 +21,14 @@
     "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
-    "@electron-ipc-controller/core": "workspace:*",
+    "@electron-ipc-bridge/core": "workspace:*",
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
     "reflect-metadata": "^0.2.2",
     "typedi": "^0.10.0"
   },
   "devDependencies": {
-    "@electron-ipc-controller/vite-plugin": "workspace:*",
+    "@electron-ipc-bridge/vite-plugin": "workspace:*",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.1.0",
     "@electron-toolkit/tsconfig": "^2.0.0",

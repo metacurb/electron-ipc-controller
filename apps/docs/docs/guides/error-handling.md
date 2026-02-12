@@ -5,7 +5,7 @@ sidebar_position: 6
 
 # Error Handling
 
-When your controller methods throw an error (or reject a promise), `@electron-ipc-controller` ensures the error is propagated back to the renderer process.
+When your controller methods throw an error (or reject a promise), `@electron-ipc-bridge` ensures the error is propagated back to the renderer process.
 
 ## Default Behaviour
 

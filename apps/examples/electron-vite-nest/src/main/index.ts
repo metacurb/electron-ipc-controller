@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { createIpcApp, isIpcController } from '@electron-ipc-controller/core'
+import { createIpcApp, isIpcController } from '@electron-ipc-bridge/core'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import type { INestApplicationContext } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'

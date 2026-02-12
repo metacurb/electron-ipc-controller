@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { createIpcApp } from '@electron-ipc-controller/core'
+import { createIpcApp } from '@electron-ipc-bridge/core'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'

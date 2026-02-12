@@ -5,7 +5,7 @@ title: Security & Sandbox Compatibility
 
 # Security & Sandbox Compatibility
 
-Security is a first-class citizen in `@electron-ipc-controller`. Modern Electron applications should always run with `contextIsolation: true` and the sandbox enabled to minimize the impact of potential vulnerabilities in the renderer process.
+Security is a first-class citizen in `@electron-ipc-bridge`. Modern Electron applications should always run with `contextIsolation: true` and the sandbox enabled to minimize the impact of potential vulnerabilities in the renderer process.
 
 This library is designed to work seamlessly with these security features while providing a developer experience that feels like working in a unified environment.
 
@@ -30,7 +30,7 @@ For a comprehensive guide on production hardening, we recommend the official [El
 
 ## Best Practices
 
-When using `@electron-ipc-controller`, keep these library-specific tips in mind:
+When using `@electron-ipc-bridge`, keep these library-specific tips in mind:
 
 - **Validate Inputs**: The library handles type checking, but you must validate the _content_ of arguments (e.g. check if a file path is safe).
 - **Context Awareness**: Use `@Sender()` to inspect the `WebContents` if you need to authorize requests based on the caller.

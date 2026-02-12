@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 As your application grows, managing the dependencies between your controllers and services (like database clients, logger instances, or configuration objects) can become complex.
 
-`@electron-ipc-controller` provides a flexible **resolver** bridge that allows you to integrate any Dependency Injection (DI) container or custom factory logic into your IPC setup.
+`@electron-ipc-bridge` provides a flexible **resolver** bridge that allows you to integrate any Dependency Injection (DI) container or custom factory logic into your IPC setup.
 
 ## Why use Dependency Injection?
 
@@ -93,7 +93,7 @@ Most DI containers have a way to resolve a class. The examples below are a start
     <TabItem value="nest" label="NestJS">
     ```typescript title="src/main/index.ts"
     import { NestFactory } from '@nestjs/core';
-    import { createIpcApp, isIpcController } from '@electron-ipc-controller/core';
+    import { createIpcApp, isIpcController } from '@electron-ipc-bridge/core';
     import { IpcModule } from './ipc.module';
 
     /** Helper to extract IPC controller classes registered as providers */
@@ -117,4 +117,4 @@ Most DI containers have a way to resolve a class. The examples below are a start
   </TabItem>
 </Tabs>
 
-We have a full example demonstrating [TypeDI integration](https://github.com/metacurb/electron-ipc-controller/tree/main/apps/examples/electron-vite-typedi) in the repository.
+We have a full example demonstrating [TypeDI integration](https://github.com/metacurb/electron-ipc-bridge/tree/main/apps/examples/electron-vite-typedi) in the repository.
