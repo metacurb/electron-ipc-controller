@@ -43,4 +43,20 @@ setupPreload("renamed");
       second.cleanup();
     }
   });
+
+  it("resolves namespace from setupPreload({ namespace: 'custom' }) object API", () => {
+    const { cleanup, preloadPath } = writePreload(
+      `import { setupPreload } from "@electron-ipc-bridge/core/preload";
+setupPreload({ namespace: 'custom' }).catch(console.error);
+`,
+    );
+    try {
+      const namespace = resolveApiRootFromPreload(preloadPath).namespace;
+      const types = generateGlobalTypes(namespace, "../runtime/ipc.types");
+      expect(namespace).toBe("custom");
+      expect(types).toContain("custom:");
+    } finally {
+      cleanup();
+    }
+  });
 });

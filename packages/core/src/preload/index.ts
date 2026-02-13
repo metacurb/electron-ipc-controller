@@ -1,2 +1,2 @@
-export { setupPreload } from "./setup-preload";
+export { setupPreload, type SetupPreloadOptions } from "./setup-preload";
 export type { PreloadApi } from "./types";

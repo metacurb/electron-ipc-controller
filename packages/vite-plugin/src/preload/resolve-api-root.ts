@@ -5,6 +5,8 @@ import {
   forEachChild,
   isCallExpression,
   isIdentifier,
+  isObjectLiteralExpression,
+  isPropertyAssignment,
   isStringLiteral,
   ScriptTarget,
 } from "typescript";
@@ -24,8 +26,18 @@ export const resolveApiRootFromPreload = (preloadPath: string): { namespace: str
   const visit = (node: import("typescript").Node) => {
     if (isCallExpression(node) && isIdentifier(node.expression) && node.expression.text === "setupPreload") {
       const args = node.arguments;
-      if (args.length > 0 && isStringLiteral(args[0])) {
-        namespace = args[0].text;
+      if (args.length > 0) {
+        const first = args[0];
+        if (isStringLiteral(first)) {
+          namespace = first.text;
+        } else if (isObjectLiteralExpression(first)) {
+          const namespaceProp = first.properties.find(
+            (p) => isPropertyAssignment(p) && isIdentifier(p.name) && p.name.text === "namespace",
+          );
+          if (namespaceProp && isPropertyAssignment(namespaceProp) && isStringLiteral(namespaceProp.initializer)) {
+            namespace = namespaceProp.initializer.text;
+          }
+        }
       }
     }
     forEachChild(node, visit);

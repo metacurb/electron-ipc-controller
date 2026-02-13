@@ -40,6 +40,14 @@ setupPreload("custom");
     cleanup();
   });
 
+  it("returns namespace when setupPreload({ namespace: 'custom' }) is used", () => {
+    const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-bridge/core/preload";
+setupPreload({ namespace: 'custom' }).catch(console.error);
+`);
+    expect(resolveApiRootFromPreload(filePath).namespace).toBe("custom");
+    cleanup();
+  });
+
   it("returns the default when setupPreload receives non-literal args", () => {
     const { cleanup, filePath } = writeTempFile(`import { setupPreload } from "@electron-ipc-bridge/core/preload";
 const namespace = "custom";

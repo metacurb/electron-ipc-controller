@@ -4,6 +4,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metacurb/electron-ipc-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/metacurb/electron-ipc-bridge/issues"
+  },
+  "homepage": "https://metacurb.github.io/electron-ipc-bridge/",
   "description": "A class-based IPC abstraction for Electron applications",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

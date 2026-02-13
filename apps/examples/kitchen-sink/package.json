@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@electron-ipc-bridge/core": "workspace:*",
-    "reflect-metadata": "^0.2.2",
     "@electron-toolkit/preload": "^3.0.2",
-    "@electron-toolkit/utils": "^4.0.0"
+    "@electron-toolkit/utils": "^4.0.0",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@electron-ipc-bridge/vite-plugin": "workspace:*",

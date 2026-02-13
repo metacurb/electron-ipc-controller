@@ -4,9 +4,9 @@ import { contextBridge, ipcRenderer } from "electron";
 import { createPreloadApi } from "./create-preload-api";
 import { PreloadApi } from "./types";
 
-export type SetupPreloadOptions = {
+export interface SetupPreloadOptions {
   namespace?: string;
-};
+}
 
 export const setupPreload = async ({
   namespace = IPC_DEFAULT_API_ROOT,
