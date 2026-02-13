@@ -18,6 +18,7 @@ export const registerHandler = (
 
   const parameterInjectionWrappedHandler = createParameterInjectionWrapper(
     boundOriginalHandler,
+    { channel: handler.channel },
     handler.paramInjections,
   );
 

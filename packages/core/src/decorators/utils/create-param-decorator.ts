@@ -1,10 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
 import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
-import { ParameterInjection } from "../../metadata/types";
+import { ParameterInjection, ParameterInjectionContext } from "../../metadata/types";
 
 export const createParamDecorator = <T = unknown>(
-  resolver: (event: IpcMainEvent | IpcMainInvokeEvent, data?: T) => unknown,
+  resolver: (event: IpcMainEvent | IpcMainInvokeEvent, context: ParameterInjectionContext, data?: T) => unknown,
 ) => {
   return (data?: T): ParameterDecorator =>
     (target: object, propertyKey: string | symbol | undefined, parameterIndex: number) => {

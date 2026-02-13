@@ -16,10 +16,14 @@ export interface IpcHandlerMetadata {
   type: IpcHandlerType;
 }
 
+export interface ParameterInjectionContext {
+  channel: string;
+}
+
 export interface ParameterInjection<T = unknown> {
   data?: unknown;
   index: number;
-  resolver: (event: IpcMainEvent | IpcMainInvokeEvent, data?: T) => unknown;
+  resolver: (event: IpcMainEvent | IpcMainInvokeEvent, context: ParameterInjectionContext, data?: T) => unknown;
 }
 
 export type PendingHandlerMetadata = Omit<IpcHandlerMetadata, "channel">;

@@ -14,6 +14,7 @@ export const IPC_METHOD_DECORATOR_NAMES = [
 ] as const;
 
 export const IPC_PARAM_INJECTION_DECORATOR_NAMES = [
+  "Channel",
   "CorrelationId",
   "Origin",
   "ProcessId",

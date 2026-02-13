@@ -26,7 +26,7 @@ npm install @electron-ipc-bridge/core reflect-metadata
 
 ## What it provides
 
-- **Decorators:** `@IpcController`, `@IpcHandle`, `@IpcHandleOnce`, `@IpcOn`, `@IpcOnce`, and parameter decorators (`@Sender`, `@Window`, `@RawEvent`, etc.)
+- **Decorators:** `@IpcController`, `@IpcHandle`, `@IpcHandleOnce`, `@IpcOn`, `@IpcOnce`, and parameter decorators (`@Sender`, `@Window`, `@RawEvent`, `@Channel`, etc.)
 - **Runtime:** `createIpcApp()`, `IpcApp`, `IpcAppOptions`
 - **Preload:** `setupPreload()` and the managed entry `@electron-ipc-bridge/core/preload.js`
 - **Advanced:** `createParamDecorator`, `getCorrelationId`, `isIpcController`

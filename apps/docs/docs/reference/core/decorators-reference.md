@@ -54,6 +54,10 @@ description: Complete list of class, method, and parameter decorators with signa
 
 - Injects raw Electron event ([`IpcMainEvent`](https://www.electronjs.org/docs/latest/api/structures/ipc-main-event) | [`IpcMainInvokeEvent`](https://www.electronjs.org/docs/latest/api/structures/ipc-main-invoke-event))
 
+### `@Channel()`
+
+- Injects the IPC channel name for the current handler (e.g. `"users.get_profile"`).
+
 ### `@Origin()`
 
 - Injects sender frame ([`WebFrameMain`](https://www.electronjs.org/docs/latest/api/web-frame-main))

@@ -6,7 +6,7 @@ description: Create custom parameter decorators with createParamDecorator for DI
 
 # Custom Parameter Decorators
 
-While `@electron-ipc-bridge` provides several built-in decorators like `@Sender()` and `@Window()`, you can easily create your own **parameter decorators** to inject custom data or services into your handler methods.
+While `@electron-ipc-bridge` provides several built-in decorators like `@Sender()`, `@Window()`, and `@Channel()`, you can easily create your own **parameter decorators** to inject custom data or services into your handler methods.
 
 ## `createParamDecorator`
 

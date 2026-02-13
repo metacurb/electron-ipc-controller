@@ -49,7 +49,7 @@ console.log(user.name); // "Alice"  — fully typed, auto-completed
 
 - **Zero channel boilerplate** — channels are generated automatically
 - **Auto-generated renderer types** — the Vite plugin analyses your controllers and outputs `d.ts` declarations
-- **Parameter injection** — `@Sender()`, `@Window()`, `@RawEvent()`, and custom decorators
+- **Parameter injection** — `@Sender()`, `@Window()`, `@RawEvent()`, `@Channel()`, and custom decorators
 - **No manual preload wiring** — `setupPreload()` handles everything
 - **DI-friendly** — bring your own container (TypeDI, NestJS, or a simple factory)
 

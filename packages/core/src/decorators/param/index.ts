@@ -1,5 +1,6 @@
 import { IPC_PARAM_INJECTION_DECORATOR_NAMES } from "@electron-ipc-bridge/shared";
 
+import { Channel } from "./channel";
 import { CorrelationId } from "./correlation-id";
 import { Origin } from "./origin";
 import { ProcessId } from "./process-id";
@@ -10,6 +11,7 @@ import { Window } from "./window";
 type ParamDecoratorName = (typeof IPC_PARAM_INJECTION_DECORATOR_NAMES)[number];
 
 export const IPC_PARAM_DECORATORS = {
+  Channel,
   CorrelationId,
   Origin,
   ProcessId,
@@ -18,4 +20,4 @@ export const IPC_PARAM_DECORATORS = {
   Window,
 } satisfies Record<ParamDecoratorName, ParameterDecorator>;
 
-export { CorrelationId, Origin, ProcessId, RawEvent, Sender, Window };
+export { Channel, CorrelationId, Origin, ProcessId, RawEvent, Sender, Window };

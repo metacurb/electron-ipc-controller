@@ -2,7 +2,7 @@ import { IpcHandlerType } from "@electron-ipc-bridge/shared";
 import { ipcMain, IpcMainInvokeEvent } from "electron";
 
 import { wrapWithCorrelation } from "../correlation/wrap-with-correlation";
-import { IpcHandlerMetadata } from "../metadata/types";
+import { IpcHandlerMetadata, ParameterInjectionContext } from "../metadata/types";
 import { createChannelName } from "../utils/create-channel-name";
 
 import { registerHandler } from "./register-handler";
@@ -15,8 +15,7 @@ const mockWrapWithCorrelation = jest.mocked(wrapWithCorrelation);
 
 const mockChannel = "mock_channel";
 
-const rawEventResolver = (event: IpcMainInvokeEvent, _data: unknown) => event;
-
+const rawEventResolver = (event: IpcMainInvokeEvent, _context: ParameterInjectionContext, _data: unknown) => event;
 const mockIpcMain = jest.mocked(ipcMain);
 
 describe("registerHandler", () => {
@@ -162,6 +161,23 @@ describe("registerHandler", () => {
 
       expect(mockWrapWithCorrelation).toHaveBeenCalledWith(expect.any(Function), true);
       expect(mockInstance.testMethod).toHaveBeenCalledWith("payload", mockEvent);
+    });
+
+    test("should pass channel context to resolvers so handler receives channel", () => {
+      const channelResolver = (_event: IpcMainInvokeEvent, context: ParameterInjectionContext, _data: unknown) =>
+        context.channel;
+      const handlerWithChannel: IpcHandlerMetadata = {
+        ...createHandler("handle"),
+        paramInjections: [{ index: 0, resolver: channelResolver }],
+      };
+
+      registerHandler(handlerWithChannel, mockInstance, { correlation: false });
+
+      const registeredHandler = mockIpcMain.handle.mock.calls[0][1];
+      const mockEvent = { sender: {} } as IpcMainInvokeEvent;
+      registeredHandler(mockEvent, "payload");
+
+      expect(mockInstance.testMethod).toHaveBeenCalledWith(mockChannel, "payload");
     });
   });
 });

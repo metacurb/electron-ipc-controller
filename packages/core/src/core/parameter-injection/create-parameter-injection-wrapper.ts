@@ -1,9 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
-import { ParameterInjection } from "../../metadata/types";
+import { ParameterInjection, ParameterInjectionContext } from "../../metadata/types";
 
 export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn>(
   handler: (...args: TArgs) => TReturn,
+  context: ParameterInjectionContext,
   paramInjections: ParameterInjection[] | undefined,
 ): ((event: IpcMainEvent | IpcMainInvokeEvent, ...args: TArgs) => TReturn) => {
   if (!paramInjections?.length) {
@@ -21,7 +22,7 @@ export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn
     for (let i = 0; i < totalArgsCount; i++) {
       const injection = injectionsMap.get(i);
       if (injection) {
-        const resolved = injection.resolver(event, injection.data);
+        const resolved = injection.resolver(event, context, injection.data);
         finalArgs.push(resolved);
       } else {
         if (argIndex < args.length) {

@@ -1,5 +1,7 @@
+import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
+
 import { IPC_PARAM_INJECTIONS } from "../../metadata/constants";
-import { ParameterInjection } from "../../metadata/types";
+import type { ParameterInjection, ParameterInjectionContext } from "../../metadata/types";
 
 import { createParamDecorator } from "./create-param-decorator";
 
@@ -58,5 +60,25 @@ describe("createParamDecorator", () => {
     );
 
     expect(injections).toHaveLength(2);
+  });
+
+  test("should store context-aware resolver for param injection", () => {
+    const contextResolver = (_event: IpcMainEvent | IpcMainInvokeEvent, context: ParameterInjectionContext) =>
+      context.channel;
+    const ContextDecorator = createParamDecorator(contextResolver);
+
+    class TestClass {
+      method(@ContextDecorator() _channel: string) {}
+    }
+
+    const injections: ParameterInjection[] = Reflect.getOwnMetadata(
+      IPC_PARAM_INJECTIONS,
+      TestClass.prototype,
+      "method",
+    );
+
+    expect(injections).toHaveLength(1);
+    expect(injections[0].resolver).toBe(contextResolver);
+    expect(injections[0].index).toBe(0);
   });
 });
