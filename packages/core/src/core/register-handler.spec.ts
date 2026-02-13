@@ -70,6 +70,17 @@ describe("registerHandler", () => {
     expect(removeFn).toHaveBeenCalledWith(mockChannel, expect.any(Function));
   });
 
+  test("should throw error for unknown handler type", () => {
+    const handler = {
+      ...createHandler("handle"),
+      type: "unknown" as unknown as IpcHandlerType,
+    };
+
+    expect(() => registerHandler(handler, mockInstance, { correlation: false })).toThrow(
+      "Unknown handler type: unknown",
+    );
+  });
+
   describe("parameter injection", () => {
     test("should inject event at index 0", () => {
       const handler: IpcHandlerMetadata = {
