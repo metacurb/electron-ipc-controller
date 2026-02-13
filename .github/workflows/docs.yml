@@ -30,7 +30,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run docs quality checks
         run: pnpm --filter docs typecheck && pnpm --filter docs build

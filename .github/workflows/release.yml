@@ -40,7 +40,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build docs
         run: pnpm --filter docs build
@@ -87,7 +87,7 @@ jobs:
           VERSION: ${{ inputs.version }}
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build packages
         run: pnpm --filter "@electron-ipc-bridge/core" --filter "@electron-ipc-bridge/vite-plugin" build
