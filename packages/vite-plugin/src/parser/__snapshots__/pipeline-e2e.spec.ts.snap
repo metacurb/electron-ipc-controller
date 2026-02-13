@@ -99,6 +99,7 @@ export interface IpcApi {
       getCount(): Promise<number>;
       inc(amount?: number): Promise<number>;
       reset(): void;
+      noReturnType(): Promise<number>;
     };
 }
 "

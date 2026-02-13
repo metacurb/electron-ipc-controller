@@ -4,6 +4,7 @@ import { Identifier, isCallExpression, isStringLiteral, MethodDeclaration, TypeC
 
 import { collectTypeDefinitions } from "./extract-type.js";
 import { getDecorator } from "./get-decorator.js";
+import { resolveReturnType } from "./resolve-return-type.js";
 import { MethodMetadata, ParamMetadata, TypeDefinition } from "./types.js";
 
 export const parseMethod = (node: MethodDeclaration, typeChecker: TypeChecker): MethodMetadata | null => {
@@ -29,7 +30,7 @@ export const parseMethod = (node: MethodDeclaration, typeChecker: TypeChecker): 
   }
 
   const signature = typeChecker.getSignatureFromDeclaration(node);
-  const returnType = signature ? typeChecker.typeToString(signature.getReturnType()) : "Promise<unknown>";
+  const returnType = resolveReturnType(node, signature ?? undefined, typeChecker);
 
   const referencedTypes: TypeDefinition[] = [];
   const seen = new Set<string>();

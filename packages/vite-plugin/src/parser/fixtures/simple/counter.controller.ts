@@ -38,4 +38,9 @@ export class CounterController {
   reset(): void {
     // fire and forget
   }
+
+  @IpcHandle()
+  noReturnType() {
+    return 1;
+  }
 }
