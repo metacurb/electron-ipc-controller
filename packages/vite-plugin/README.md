@@ -16,10 +16,10 @@ Peer: `vite` ^5 / ^6 / ^7, `typescript` ^5.
 
 ```ts
 // vite.config.ts
-import { electronIpcController } from "@electron-ipc-bridge/vite-plugin";
+import { electronIpcBridge } from "@electron-ipc-bridge/vite-plugin";
 
 export default {
-  plugins: [electronIpcController()],
+  plugins: [electronIpcBridge()],
 };
 ```
 

@@ -1,1 +1,1 @@
-export { electronIpcController, type ElectronIpcControllerPlugin, type PluginOptions } from "./plugin.js";
+export { electronIpcBridge, type electronIpcBridgePlugin, type PluginOptions } from "./plugin.js";

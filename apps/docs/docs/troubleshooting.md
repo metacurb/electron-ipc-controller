@@ -17,7 +17,7 @@ Common issues and fast fixes.
 
 ### Checks
 
-- [Vite](https://vitejs.dev/) config includes `electronIpcController(...)`
+- [Vite](https://vitejs.dev/) config includes `electronIpcBridge(...)`
 - `main` option points to the correct file containing `createIpcApp(...)`
 - Controller classes are discoverable from that entrypoint
 

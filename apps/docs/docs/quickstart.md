@@ -38,10 +38,10 @@ You must import `reflect-metadata` at the very top of your application entry poi
 This is optional, but without it you lose type generation. Add the plugin to your [Vite](https://vitejs.dev/) config (`vite.config.ts`).
 
 ```typescript title="vite.config.ts"
-import { electronIpcController } from "@electron-ipc-bridge/vite-plugin";
+import { electronIpcBridge } from "@electron-ipc-bridge/vite-plugin";
 
 export default {
-  plugins: [electronIpcController()],
+  plugins: [electronIpcBridge()],
 };
 ```
 

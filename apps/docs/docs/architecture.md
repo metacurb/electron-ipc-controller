@@ -30,7 +30,7 @@ flowchart LR
   preload --> windowApi["window.ipc (or custom namespace)"]
   windowApi --> renderer["Renderer calls typed methods"]
 
-  controllers --> vitePlugin["electronIpcController() plugin"]
+  controllers --> vitePlugin["electronIpcBridge() plugin"]
   vitePlugin --> generatedTypes["Generated types<br/>runtime + global declaration"]
   generatedTypes --> renderer
 ```

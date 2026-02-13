@@ -31,7 +31,7 @@ export interface PluginOptions {
   /** Output configuration for generated types. */
   types?: PluginTypesOptions;
 }
-export interface ElectronIpcControllerPlugin {
+export interface electronIpcBridgePlugin {
   buildStart?(): void | Promise<void>;
   configResolved?(config: { root: string }): void | Promise<void>;
   configureServer?(server: {
@@ -51,18 +51,18 @@ export interface ElectronIpcControllerPlugin {
  * @example
  * ```ts
  * // vite.config.ts
- * import { electronIpcController } from "@electron-ipc-bridge/vite-plugin";
+ * import { electronIpcBridge } from "@electron-ipc-bridge/vite-plugin";
  *
  * export default defineConfig({
- *   plugins: [electronIpcController(options)],
+ *   plugins: [electronIpcBridge(options)],
  * });
  * ```
  */
-export function electronIpcController({
+export function electronIpcBridge({
   main = DEFAULT_MAIN_ENTRY,
   preload = DEFAULT_PRELOAD_ENTRY,
   types = {},
-}: PluginOptions = {}): ElectronIpcControllerPlugin {
+}: PluginOptions = {}): electronIpcBridgePlugin {
   let root = process.cwd();
   const state = new PluginState();
 

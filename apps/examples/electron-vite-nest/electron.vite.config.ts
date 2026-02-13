@@ -1,11 +1,11 @@
-import { electronIpcController } from '@electron-ipc-bridge/vite-plugin'
+import { electronIpcBridge } from '@electron-ipc-bridge/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import { resolve } from 'path'
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin(), electronIpcController()]
+    plugins: [externalizeDepsPlugin(), electronIpcBridge()]
   },
   preload: {
     plugins: [

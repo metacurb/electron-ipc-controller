@@ -1,12 +1,12 @@
 ---
 title: Plugin Options
 sidebar_position: 2
-description: electronIpcController plugin options—main, preload, and type output paths.
+description: electronIpcBridge plugin options—main, preload, and type output paths.
 ---
 
 # Plugin Options
 
-## `electronIpcController(options?: PluginOptions)`
+## `electronIpcBridge(options?: PluginOptions)`
 
 Creates a Vite plugin that parses controller metadata from your main entry and generates renderer-consumable type files.
 
@@ -27,7 +27,7 @@ interface PluginOptions {
 
 The plugin exports the following types for use in your configuration files:
 
-- `ElectronIpcControllerPlugin`: The return type of the plugin function.
+- `electronIpcBridgePlugin`: The return type of the plugin function.
 - `PluginOptions`: The configuration object interface.
 
 ```ts
@@ -57,11 +57,11 @@ If your preload namespace is not a valid JavaScript identifier (for example `"my
 ## Minimal example
 
 ```ts
-import { electronIpcController } from "@electron-ipc-bridge/vite-plugin";
+import { electronIpcBridge } from "@electron-ipc-bridge/vite-plugin";
 
 export default {
   plugins: [
-    electronIpcController({
+    electronIpcBridge({
       main: "src/main/index.ts",
       preload: "src/preload/index.ts",
       types: {
