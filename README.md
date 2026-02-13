@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  A type-safe, class-based IPC framework for Electron — inspired by NestJS.<br/>
+  A type-safe, class-based IPC framework for Electron. Inspired by NestJS.<br/>
   Define controllers in main, <strong>automatically</strong> get fully typed APIs in the renderer.
 </p>
 
@@ -42,16 +42,16 @@ export class UserController {
 
 ```ts
 const user = await window.ipc.users.getUser("123");
-console.log(user.name); // "Alice"  — fully typed, auto-completed
+console.log(user.name); // "Alice" is fully typed, auto-completed
 ```
 
 ## Features
 
-- **Zero channel boilerplate** — channels are generated automatically
-- **Auto-generated renderer types** — the Vite plugin analyses your controllers and outputs `d.ts` declarations
-- **Parameter injection** — `@Sender()`, `@Window()`, `@RawEvent()`, `@Channel()`, and custom decorators
-- **No manual preload wiring** — `setupPreload()` handles everything
-- **DI-friendly** — bring your own container (TypeDI, NestJS, or a simple factory)
+- **Zero channel boilerplate:** channels are generated automatically
+- **Auto-generated renderer types:** the Vite plugin analyses your controllers and outputs `d.ts` declarations
+- **Parameter injection:** `@Sender()`, `@Window()`, `@RawEvent()`, `@Channel()`, and custom decorators
+- **No manual preload wiring:** `setupPreload()` handles everything
+- **DI-friendly:** bring your own container (TypeDI, NestJS, or a simple factory)
 
 ## Install
 

@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  A type-safe, class-based IPC framework for Electron — inspired by NestJS.<br/>
+  A type-safe, class-based IPC framework for Electron. Inspired by NestJS.<br/>
   Define controllers in main, <strong>automatically</strong> get fully typed APIs in the renderer.
 </p>
 
@@ -61,6 +61,6 @@ const user = await window.ipc.users.getUser("123");
 
 ## Subpath exports
 
-- **`@electron-ipc-bridge/core`** — main entry (decorators, `createIpcApp`, etc.)
-- **`@electron-ipc-bridge/core/preload`** — TypeScript types and `setupPreload` for custom preload scripts
-- **`@electron-ipc-bridge/core/preload.js`** — zero-config preload entry that runs `setupPreload()` with default namespace `"ipc"`
+- **`@electron-ipc-bridge/core`:** main entry (decorators, `createIpcApp`, etc.)
+- **`@electron-ipc-bridge/core/preload`:** TypeScript types and `setupPreload` for custom preload scripts
+- **`@electron-ipc-bridge/core/preload.js`:** zero-config preload entry that runs `setupPreload()` with default namespace `"ipc"`

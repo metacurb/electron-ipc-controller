@@ -133,12 +133,12 @@ export function App(): React.JSX.Element {
           </button>
         </div>
         <div className={`status ${counterStatus.error ? 'error' : ''}`}>
-          {counterStatus.status || '—'}
+          {counterStatus.status || '-'}
         </div>
       </section>
 
       <section className="section">
-        <h2>Echo (IpcHandle, IpcHandleOnce, IpcOn, IpcOnce — complex/simple types)</h2>
+        <h2>Echo (IpcHandle, IpcHandleOnce, IpcOn, IpcOnce - complex/simple types)</h2>
         <div className="section-actions">
           <button
             onClick={() => {
@@ -181,7 +181,7 @@ export function App(): React.JSX.Element {
           </button>
         </div>
         <div className={`status pre ${echoStatus.error ? 'error' : ''}`}>
-          {echoStatus.status || '—'}
+          {echoStatus.status || '-'}
         </div>
       </section>
 
@@ -204,7 +204,7 @@ export function App(): React.JSX.Element {
           </button>
         </div>
         <div className={`status ${utilStatus.error ? 'error' : ''}`}>
-          {utilStatus.status || '—'}
+          {utilStatus.status || '-'}
         </div>
       </section>
     </>
