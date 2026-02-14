@@ -207,11 +207,11 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(electron@40.3.0)
       '@nestjs/common':
-        specifier: ^10.4.15
-        version: 10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2)
+        specifier: ^11.1.13
+        version: 11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core':
         specifier: ^11.1.13
-        version: 11.1.13(@nestjs/common@10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
+        version: 11.1.13(@nestjs/common@11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -2538,11 +2538,11 @@ packages:
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
 
-  '@nestjs/common@10.4.22':
-    resolution: {integrity: sha512-fxJ4v85nDHaqT1PmfNCQ37b/jcv2OojtXTaK1P2uAXhzLf9qq6WNUOFvxBrV4fhQek1EQoT1o9oj5xAZmv3NRw==}
+  '@nestjs/common@11.1.13':
+    resolution: {integrity: sha512-ieqWtipT+VlyDWLz5Rvz0f3E5rXcVAnaAi+D53DEHLjc1kmFxCgZ62qVfTX2vwkywwqNkTNXvBgGR72hYqV//Q==}
     peerDependencies:
-      class-transformer: '*'
-      class-validator: '*'
+      class-transformer: '>=0.4.1'
+      class-validator: '>=0.13.2'
       reflect-metadata: ^0.1.12 || ^0.2.0
       rxjs: ^7.1.0
     peerDependenciesMeta:
@@ -2907,8 +2907,8 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tokenizer/inflate@0.2.7':
-    resolution: {integrity: sha512-MADQgmZT1eKjp06jpI2yozxaU9uVs4GzzgSL+uEq7bVcJ9V1ZXQkeGNql1fsSI0gMy1vhvNTNbUqrx+pZfJVmg==}
+  '@tokenizer/inflate@0.4.1':
+    resolution: {integrity: sha512-2mAv+8pkG6GIZiF1kNg1jAjh27IDxEPKwdGul3snfztFerfPGI1LjDezZp3i7BElXompqEtPmoPx6c2wgtWsOA==}
     engines: {node: '>=18'}
 
   '@tokenizer/token@0.3.0':
@@ -5132,9 +5132,6 @@ packages:
     resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
     engines: {node: '>=0.4.0'}
 
-  fflate@0.8.2:
-    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
-
   figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
     engines: {node: '>=8'}
@@ -5149,9 +5146,9 @@ packages:
     peerDependencies:
       webpack: ^4.0.0 || ^5.0.0
 
-  file-type@20.4.1:
-    resolution: {integrity: sha512-hw9gNZXUfZ02Jo0uafWLaFVPter5/k2rfcrjFJJHX/77xtSDOfJuEFb6oKlFV86FLP1SuyHMW1PSk0U9M5tKkQ==}
-    engines: {node: '>=18'}
+  file-type@21.3.0:
+    resolution: {integrity: sha512-8kPJMIGz1Yt/aPEwOsrR97ZyZaD1Iqm8PClb1nYFclUCkBi0Ma5IsYNQzvSFS9ib51lWyIw5mIT9rWzI/xjpzA==}
+    engines: {node: '>=20'}
 
   filelist@1.0.4:
     resolution: {integrity: sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==}
@@ -6238,6 +6235,10 @@ packages:
   listr2@9.0.5:
     resolution: {integrity: sha512-ME4Fb83LgEgwNw96RKNvKV4VTLuXfoKudAmm2lP8Kk87KaMK0/Xrx/aAkMWmT8mDb+3MlFDspfbCs7adjRxA2g==}
     engines: {node: '>=20.0.0'}
+
+  load-esm@1.0.3:
+    resolution: {integrity: sha512-v5xlu8eHD1+6r8EHTg6hfmO97LN8ugKtiXcy5e6oN72iD2r6u0RPfLl6fxM+7Wnh2ZRq15o0russMst44WauPA==}
+    engines: {node: '>=13.2.0'}
 
   loader-runner@4.3.1:
     resolution: {integrity: sha512-IWqP2SCPhyVFTBtRcgMHdzlf9ul25NwaFx4wCEH/KjAXuuHY4yNjvPXsBokp8jCB936PyWRaPKUNh8NvylLp2Q==}
@@ -12089,10 +12090,11 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@nestjs/common@10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2)':
+  '@nestjs/common@11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2)':
     dependencies:
-      file-type: 20.4.1
+      file-type: 21.3.0
       iterare: 1.2.1
+      load-esm: 1.0.3
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
       tslib: 2.8.1
@@ -12100,9 +12102,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@nestjs/core@11.1.13(@nestjs/common@10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)':
+  '@nestjs/core@11.1.13(@nestjs/common@11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)':
     dependencies:
-      '@nestjs/common': 10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/common': 11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nuxt/opencollective': 0.4.1
       fast-safe-stringify: 2.1.1
       iterare: 1.2.1
@@ -12471,10 +12473,9 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tokenizer/inflate@0.2.7':
+  '@tokenizer/inflate@0.4.1':
     dependencies:
       debug: 4.4.3
-      fflate: 0.8.2
       token-types: 6.1.2
     transitivePeerDependencies:
       - supports-color
@@ -15289,8 +15290,6 @@ snapshots:
     dependencies:
       xml-js: 1.6.11
 
-  fflate@0.8.2: {}
-
   figures@3.2.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -15305,9 +15304,9 @@ snapshots:
       schema-utils: 3.3.0
       webpack: 5.105.1
 
-  file-type@20.4.1:
+  file-type@21.3.0:
     dependencies:
-      '@tokenizer/inflate': 0.2.7
+      '@tokenizer/inflate': 0.4.1
       strtok3: 10.3.4
       token-types: 6.1.2
       uint8array-extras: 1.5.0
@@ -16686,6 +16685,8 @@ snapshots:
       log-update: 6.1.0
       rfdc: 1.4.1
       wrap-ansi: 9.0.2
+
+  load-esm@1.0.3: {}
 
   loader-runner@4.3.1: {}
 

@@ -24,7 +24,7 @@
     "@electron-ipc-bridge/core": "workspace:*",
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "@nestjs/common": "^10.4.15",
+    "@nestjs/common": "^11.1.13",
     "@nestjs/core": "^11.1.13",
     "reflect-metadata": "^0.2.2"
   },
