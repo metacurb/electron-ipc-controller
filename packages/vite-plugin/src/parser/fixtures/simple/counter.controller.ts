@@ -2,13 +2,13 @@ function IpcController(): (target: typeof CounterController) => void | typeof Co
   throw new Error("Function not implemented.");
 }
 
-function IpcHandle(
+function IpcHandle<T extends (...args: any[]) => any>(
   _name?: string,
 ): (
   target: CounterController,
   propertyKey: string,
-  descriptor: TypedPropertyDescriptor<() => number>,
-) => void | TypedPropertyDescriptor<() => number> {
+  descriptor: TypedPropertyDescriptor<T>,
+) => void | TypedPropertyDescriptor<T> {
   throw new Error("Function not implemented.");
 }
 
@@ -21,6 +21,11 @@ function IpcOn(
 ) => void | TypedPropertyDescriptor<() => void> {
   throw new Error("Function not implemented.");
 }
+
+type ListModel = {
+  id: string;
+  title: string;
+};
 
 @IpcController()
 export class CounterController {
@@ -42,5 +47,11 @@ export class CounterController {
   @IpcHandle()
   noReturnType() {
     return 1;
+  }
+
+  @IpcHandle()
+  getInferredList() {
+    const list: ListModel[] = [];
+    return list;
   }
 }

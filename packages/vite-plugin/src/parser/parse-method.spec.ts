@@ -62,4 +62,16 @@ describe("parseMethod", () => {
     expect(metadata?.decoratorName).toBe("IpcOn");
     expect(metadata?.returnType).toBe("void");
   });
+
+  it("collects inferred return type definitions when return annotation is missing", () => {
+    const { sourceFile, typeChecker } = createFixtureProgram(fixturesDir, "counter.controller.ts");
+    const method = getMethod(sourceFile, "CounterController", "getInferredList");
+
+    const metadata = parseMethod(method, typeChecker);
+
+    expect(metadata).toBeDefined();
+    expect(metadata?.returnType).toBe("ListModel[]");
+    const names = metadata?.referencedTypes.map((t) => t.name) ?? [];
+    expect(names).toContain("ListModel");
+  });
 });

@@ -9,7 +9,7 @@ describe("isTruncatedTypeString", () => {
 
   it("returns false for normal type strings", () => {
     expect(isTruncatedTypeString("number")).toBe(false);
-    expect(isTruncatedTypeString("Promise<GameListModel[]>")).toBe(false);
+    expect(isTruncatedTypeString("Promise<ListModel[]>")).toBe(false);
     expect(isTruncatedTypeString("void")).toBe(false);
     expect(isTruncatedTypeString("{ a: string; b: number }")).toBe(false);
   });

@@ -2,7 +2,7 @@ import { IPC_METHOD_DECORATOR_NAMES, IPC_PARAM_INJECTION_DECORATOR_NAMES } from 
 import type { Decorator } from "typescript";
 import { Identifier, isCallExpression, isStringLiteral, MethodDeclaration, TypeChecker } from "typescript";
 
-import { collectTypeDefinitions } from "./extract-type.js";
+import { collectTypeDefinitions, collectTypeDefinitionsFromType } from "./extract-type.js";
 import { getDecorator } from "./get-decorator.js";
 import { resolveReturnType } from "./resolve-return-type.js";
 import { MethodMetadata, ParamMetadata, TypeDefinition } from "./types.js";
@@ -57,6 +57,9 @@ export const parseMethod = (node: MethodDeclaration, typeChecker: TypeChecker): 
 
   if (node.type) {
     const returnTypeRefs = collectTypeDefinitions(node.type, typeChecker, seen);
+    referencedTypes.push(...returnTypeRefs);
+  } else if (signature) {
+    const returnTypeRefs = collectTypeDefinitionsFromType(signature.getReturnType(), typeChecker, seen);
     referencedTypes.push(...returnTypeRefs);
   }
 

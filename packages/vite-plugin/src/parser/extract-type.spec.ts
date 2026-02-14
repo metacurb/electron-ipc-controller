@@ -1,7 +1,7 @@
 import path from "path";
-import { forEachChild, isClassDeclaration, isMethodDeclaration, Node, SourceFile } from "typescript";
+import { forEachChild, isClassDeclaration, isMethodDeclaration, MethodDeclaration, Node, SourceFile } from "typescript";
 
-import { collectTypeDefinitions } from "./extract-type";
+import { collectTypeDefinitions, collectTypeDefinitionsFromType } from "./extract-type";
 import { createFixtureProgram } from "./test-utils";
 
 const fixturesDir = path.resolve(__dirname, "fixtures/complex-types");
@@ -24,6 +24,26 @@ const getControllerMethodParamType = (sourceFile: SourceFile, className: string,
   }
 
   return typeNode;
+};
+
+const getControllerMethod = (sourceFile: SourceFile, className: string, methodName: string): MethodDeclaration => {
+  let method: MethodDeclaration | undefined;
+
+  forEachChild(sourceFile, (node) => {
+    if (isClassDeclaration(node) && node.name?.text === className) {
+      node.members.forEach((member) => {
+        if (isMethodDeclaration(member) && member.name.getText() === methodName) {
+          method = member;
+        }
+      });
+    }
+  });
+
+  if (!method) {
+    throw new Error(`Method node for ${className}.${methodName} not found`);
+  }
+
+  return method;
 };
 
 describe("collectTypeDefinitions", () => {
@@ -65,5 +85,18 @@ describe("collectTypeDefinitions", () => {
       expect(def.definition.startsWith("export ")).toBe(false);
       expect(def.definition.startsWith("declare ")).toBe(false);
     }
+  });
+
+  it("collects definitions from inferred return type symbols", () => {
+    const simpleDir = path.resolve(__dirname, "fixtures/simple");
+    const { sourceFile, typeChecker } = createFixtureProgram(simpleDir, "counter.controller.ts");
+
+    const method = getControllerMethod(sourceFile, "CounterController", "getInferredList");
+    const signature = typeChecker.getSignatureFromDeclaration(method);
+
+    expect(signature).toBeDefined();
+    const results = collectTypeDefinitionsFromType(signature!.getReturnType(), typeChecker);
+    const names = results.map((r) => r.name);
+    expect(names).toContain("ListModel");
   });
 });
