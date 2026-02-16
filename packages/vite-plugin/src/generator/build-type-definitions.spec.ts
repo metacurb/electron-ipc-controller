@@ -44,4 +44,27 @@ describe("buildTypeDefinitions", () => {
 
     expect(output).toBe(["export type A = { a: string }", "export interface B { b: number }"].join("\n\n"));
   });
+
+  it("collects recursively nested types", () => {
+    const childType: TypeDefinition = {
+      name: "Child",
+      definition: "interface Child { id: string }",
+      referencedTypes: [],
+      sourceFile: "child.ts",
+    };
+
+    const parentType: TypeDefinition = {
+      name: "Parent",
+      definition: "interface Parent { child: Child }",
+      referencedTypes: [childType],
+      sourceFile: "parent.ts",
+    };
+
+    const controller = makeController([parentType]);
+
+    const output = buildTypeDefinitions([controller]);
+
+    expect(output).toContain("export interface Child { id: string }");
+    expect(output).toContain("export interface Parent { child: Child }");
+  });
 });
