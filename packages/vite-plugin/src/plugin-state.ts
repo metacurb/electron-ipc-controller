@@ -21,10 +21,10 @@ export class PluginState {
     return this.program ?? undefined;
   }
 
-  scheduleGenerate(callback: () => void): void {
+  scheduleGenerate(callback: () => void | Promise<void>): void {
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
     this.debounceTimer = setTimeout(() => {
-      callback();
+      void callback();
       this.debounceTimer = null;
     }, this.debounceMs);
   }

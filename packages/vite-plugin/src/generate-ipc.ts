@@ -12,7 +12,7 @@ import { resolveApiRootFromPreload } from "./preload/resolve-api-root.js";
 import { resolveTypePaths } from "./resolve-type-paths.js";
 import type { PluginTypesOptions } from "./types.js";
 
-export function generateIpc(
+export async function generateIpc(
   root: string,
   logger: Logger,
   state: PluginState,
@@ -21,7 +21,7 @@ export function generateIpc(
     preload: string;
     types: PluginTypesOptions;
   },
-): void {
+): Promise<void> {
   try {
     const { main, preload, types } = options;
     const preloadPath = path.resolve(root, preload);
@@ -84,17 +84,22 @@ export function generateIpc(
 
     if (!state.updateHash(combinedHash)) return;
 
-    if (runtimePath && runtimeTypesContent != null) {
-      fs.mkdirSync(path.dirname(runtimePath), { recursive: true });
-      fs.writeFileSync(runtimePath, runtimeTypesContent);
-      logger.info(`Runtime types generated at ${path.relative(root, runtimePath)}`);
-    }
-
-    if (globalPath && globalTypesContent != null) {
-      fs.mkdirSync(path.dirname(globalPath), { recursive: true });
-      fs.writeFileSync(globalPath, globalTypesContent);
-      logger.info(`Global types generated at ${path.relative(root, globalPath)}`);
-    }
+    await Promise.all([
+      (async () => {
+        if (runtimePath && runtimeTypesContent != null) {
+          await fs.promises.mkdir(path.dirname(runtimePath), { recursive: true });
+          await fs.promises.writeFile(runtimePath, runtimeTypesContent);
+          logger.info(`Runtime types generated at ${path.relative(root, runtimePath)}`);
+        }
+      })(),
+      (async () => {
+        if (globalPath && globalTypesContent != null) {
+          await fs.promises.mkdir(path.dirname(globalPath), { recursive: true });
+          await fs.promises.writeFile(globalPath, globalTypesContent);
+          logger.info(`Global types generated at ${path.relative(root, globalPath)}`);
+        }
+      })(),
+    ]);
   } catch (err) {
     logger.error(`Type generation failed: ${err instanceof Error ? err.message : String(err)}`);
   }
