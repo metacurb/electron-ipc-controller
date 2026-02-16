@@ -66,4 +66,11 @@ describe("createParameterInjectionWrapper", () => {
     expect(contextResolver).toHaveBeenCalledWith(mockEvent, mockContext, undefined);
     expect(handler).toHaveBeenCalledWith("test.channel", "arg1");
   });
+
+  test("should handle missing optional arguments before injection", () => {
+    const wrapper = createParameterInjectionWrapper(handler, mockContext, [{ index: 2, resolver: rawEventResolver }]);
+    wrapper(mockEvent, "arg1");
+
+    expect(handler).toHaveBeenCalledWith("arg1", undefined, mockEvent);
+  });
 });

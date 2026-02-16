@@ -15,11 +15,12 @@ export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn
 
   return (event: IpcMainEvent | IpcMainInvokeEvent, ...args: TArgs) => {
     const injectionsMap = new Map((paramInjections || []).map((i) => [i.index, i]));
-    const totalArgsCount = (paramInjections?.length || 0) + args.length;
+    const maxInjectionIndex =
+      paramInjections && paramInjections.length > 0 ? Math.max(...paramInjections.map((i) => i.index)) : -1;
     const finalArgs: unknown[] = [];
     let argIndex = 0;
 
-    for (let i = 0; i < totalArgsCount; i++) {
+    for (let i = 0; i <= maxInjectionIndex || argIndex < args.length; i++) {
       const injection = injectionsMap.get(i);
       if (injection) {
         const resolved = injection.resolver(event, context, injection.data);
@@ -31,10 +32,6 @@ export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn
           finalArgs.push(undefined);
         }
       }
-    }
-
-    while (argIndex < args.length) {
-      finalArgs.push(args[argIndex++]);
     }
 
     return handler(...(finalArgs as TArgs));
