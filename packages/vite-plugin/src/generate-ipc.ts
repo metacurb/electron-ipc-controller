@@ -20,7 +20,7 @@ export function generateIpc(
     main: string;
     preload: string;
     types: PluginTypesOptions;
-  }
+  },
 ): void {
   try {
     const { main, preload, types } = options;
