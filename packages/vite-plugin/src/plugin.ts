@@ -5,6 +5,7 @@ import { generateIpc } from "./generate-ipc.js";
 import { normalizePath } from "./normalize-path.js";
 import { PluginState } from "./plugin-state.js";
 import type { electronIpcBridgePlugin, PluginOptions } from "./types.js";
+import { ConsoleLogger } from "./utils/logger.js";
 
 export { type electronIpcBridgePlugin, type PluginOptions, type PluginTypesOptions } from "./types.js";
 
@@ -32,6 +33,7 @@ export function electronIpcBridge({
 }: PluginOptions = {}): electronIpcBridgePlugin {
   let root = process.cwd();
   const state = new PluginState();
+  const logger = new ConsoleLogger(`[${pkg.name}]`);
 
   const generate = () => {
     generateIpc(root, state, { main, preload, types });
