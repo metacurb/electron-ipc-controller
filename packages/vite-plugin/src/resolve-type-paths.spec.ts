@@ -57,4 +57,56 @@ describe("defaults", () => {
     expect(runtimePath).toBe(path.resolve(root, "custom/runtime.ts"));
     expect(globalPath).toBeNull();
   });
+
+  it("honours explicit runtime disabled and global override", () => {
+    const root = "/project";
+    const preloadPath = path.join(root, DEFAULT_PRELOAD_ENTRY);
+
+    const { globalPath, runtimePath } = resolveTypePaths({
+      hasRendererRuntimeDir: () => true,
+      preloadPath,
+      root,
+      types: {
+        global: "custom/global.ts",
+        runtime: false,
+      },
+    });
+
+    expect(runtimePath).toBeNull();
+    expect(globalPath).toBe(path.resolve(root, "custom/global.ts"));
+  });
+
+  it("resolves default runtime path with custom global path", () => {
+    const root = path.resolve("/project");
+    const preloadPath = path.join(root, DEFAULT_PRELOAD_ENTRY);
+
+    const { globalPath, runtimePath } = resolveTypePaths({
+      hasRendererRuntimeDir: (absPath) => absPath === path.join(root, DEFAULT_RENDERER_RUNTIME_DIR),
+      preloadPath,
+      root,
+      types: {
+        global: "custom/global.ts",
+      },
+    });
+
+    expect(runtimePath).toBe(path.join(root, DEFAULT_RENDERER_RUNTIME_DIR, DEFAULT_RUNTIME_TYPES_FILENAME));
+    expect(globalPath).toBe(path.resolve(root, "custom/global.ts"));
+  });
+
+  it("resolves default global path with custom runtime path", () => {
+    const root = path.resolve("/project");
+    const preloadPath = path.join(root, DEFAULT_PRELOAD_ENTRY);
+
+    const { globalPath, runtimePath } = resolveTypePaths({
+      hasRendererRuntimeDir: (absPath) => absPath === path.join(root, DEFAULT_RENDERER_RUNTIME_DIR),
+      preloadPath,
+      root,
+      types: {
+        runtime: "custom/runtime.ts",
+      },
+    });
+
+    expect(runtimePath).toBe(path.resolve(root, "custom/runtime.ts"));
+    expect(globalPath).toBe(path.join(path.dirname(preloadPath), DEFAULT_GLOBAL_TYPES_FILENAME));
+  });
 });
