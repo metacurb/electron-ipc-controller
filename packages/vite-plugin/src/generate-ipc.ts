@@ -1,8 +1,7 @@
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
-
-import pkg from "../package.json" with { type: "json" };
+import { Logger } from "vite";
 
 import { generateGlobalTypes } from "./generator/generate-global-types.js";
 import { generateRuntimeTypes } from "./generator/generate-runtime-types.js";
@@ -15,6 +14,7 @@ import type { PluginTypesOptions } from "./types.js";
 
 export function generateIpc(
   root: string,
+  logger: Logger,
   state: PluginState,
   options: {
     main: string;
@@ -28,16 +28,16 @@ export function generateIpc(
     const { dependencies: preloadDependencies, namespace: resolvedApiRoot } = resolveApiRootFromPreload(preloadPath);
     const entryPath = path.resolve(root, main);
     if (!fs.existsSync(entryPath)) {
-      console.warn(`[${pkg.name}] Main entry not found at: ${entryPath}`);
+      logger.warn(`Main entry not found at: ${entryPath}`);
       return;
     }
 
-    console.log(`[${pkg.name}] Generating IPC types from ${entryPath}...`);
+    logger.info(`Generating IPC types from ${entryPath}...`);
     const { controllers, processedFiles, program } = findControllers(entryPath, undefined, state.getProgram());
     state.setProgram(program);
 
     if (controllers.length === 0) {
-      console.warn(`[${pkg.name}] No createIpcApp() call found in ${entryPath}; generated types will be empty.`);
+      logger.warn(`No createIpcApp() call found in ${entryPath}; generated types will be empty.`);
     }
 
     state.setControllerFiles(new Set([...processedFiles, ...preloadDependencies].map(normalizePath)));
@@ -50,7 +50,7 @@ export function generateIpc(
     });
 
     if (!runtimePath && !globalPath) {
-      console.warn(`[${pkg.name}] Both runtime and global type outputs are disabled; nothing to generate.`);
+      logger.warn(`Both runtime and global type outputs are disabled; nothing to generate.`);
       return;
     }
 
@@ -87,15 +87,15 @@ export function generateIpc(
     if (runtimePath && runtimeTypesContent != null) {
       fs.mkdirSync(path.dirname(runtimePath), { recursive: true });
       fs.writeFileSync(runtimePath, runtimeTypesContent);
-      console.log(`[${pkg.name}] Runtime types generated at ${path.relative(root, runtimePath)}`);
+      logger.info(`Runtime types generated at ${path.relative(root, runtimePath)}`);
     }
 
     if (globalPath && globalTypesContent != null) {
       fs.mkdirSync(path.dirname(globalPath), { recursive: true });
       fs.writeFileSync(globalPath, globalTypesContent);
-      console.log(`[${pkg.name}] Global types generated at ${path.relative(root, globalPath)}`);
+      logger.info(`Global types generated at ${path.relative(root, globalPath)}`);
     }
   } catch (err) {
-    console.error(`[${pkg.name}] Type generation failed:`, err);
+    logger.error(`Type generation failed: ${err instanceof Error ? err.message : String(err)}`);
   }
 }

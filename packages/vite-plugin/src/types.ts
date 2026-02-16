@@ -16,13 +16,3 @@ export interface PluginOptions {
   /** Output configuration for generated types. */
   types?: PluginTypesOptions;
 }
-
-export interface electronIpcBridgePlugin {
-  buildStart?(): void | Promise<void>;
-  configResolved?(config: { root: string }): void | Promise<void>;
-  configureServer?(server: {
-    watcher: { add: (path: string) => void; on: (e: "change", fn: (path: string) => void) => void };
-  }): void;
-  name: string;
-  transform?(code: string, id: string): null | Promise<null>;
-}
