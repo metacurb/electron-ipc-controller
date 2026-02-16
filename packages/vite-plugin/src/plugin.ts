@@ -1,14 +1,15 @@
 import path from "path";
-import { createLogger, type Logger, type Plugin } from "vite";
+import { createLogger, type Logger,Plugin } from "vite";
+
+import pkg from "../package.json" with { type: "json" };
 
 import { DEFAULT_MAIN_ENTRY, DEFAULT_PRELOAD_ENTRY } from "./constants.js";
 import { generateIpc } from "./generate-ipc.js";
 import { normalizePath } from "./normalize-path.js";
 import { PluginState } from "./plugin-state.js";
-import type { electronIpcBridgePlugin, PluginOptions } from "./types.js";
-import { ConsoleLogger } from "./utils/logger.js";
+import type { PluginOptions } from "./types.js";
 
-export { type electronIpcBridgePlugin, type PluginOptions, type PluginTypesOptions } from "./types.js";
+export { type PluginOptions, type PluginTypesOptions } from "./types.js";
 
 /**
  * Creates a Vite plugin that generates TypeScript type definitions
@@ -31,13 +32,14 @@ export function electronIpcBridge({
   main = DEFAULT_MAIN_ENTRY,
   preload = DEFAULT_PRELOAD_ENTRY,
   types = {},
-}: PluginOptions = {}): electronIpcBridgePlugin {
+}: PluginOptions = {}): Plugin {
   let root = process.cwd();
+  let logger: Logger;
+
   const state = new PluginState();
-  const logger = new ConsoleLogger(`[${pkg.name}]`);
 
   const generate = () => {
-    generateIpc(root, state, { main, preload, types });
+    generateIpc(root, logger, state, { main, preload, types });
   };
 
   return {
@@ -48,6 +50,11 @@ export function electronIpcBridge({
     },
     configResolved(config) {
       root = config.root;
+      logger = createLogger(config.logLevel, {
+          allowClearScreen: config.clearScreen,
+          customLogger: config.customLogger,
+          prefix: `[${pkg.name}]`,
+        });
     },
     configureServer(server) {
       const preloadPath = path.resolve(root, preload);
