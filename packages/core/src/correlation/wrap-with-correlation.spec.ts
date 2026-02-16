@@ -12,11 +12,11 @@ describe("wrapWithCorrelation", () => {
     jest.clearAllMocks();
   });
 
-  test("should run handler in correlation context when enabled", async () => {
-    const handler = jest.fn().mockImplementation(() => correlationStore.getStore());
+  test("should run handler in correlation context when enabled", () => {
+    const handler = jest.fn<string | undefined, []>().mockImplementation(() => correlationStore.getStore());
 
     const wrapped = wrapWithCorrelation(handler, true);
-    const result = await wrapped();
+    const result = wrapped();
 
     expect(result).toBe("generated-uuid");
     expect(handler).toHaveBeenCalled();
@@ -31,13 +31,13 @@ describe("wrapWithCorrelation", () => {
     expect(randomUUID).not.toHaveBeenCalled();
   });
 
-  test("should reuse existing correlation context if available", async () => {
+  test("should reuse existing correlation context if available", () => {
     const existingId = "existing-correlation-id";
-    const handler = jest.fn().mockImplementation(() => correlationStore.getStore());
+    const handler = jest.fn<string | undefined, []>().mockImplementation(() => correlationStore.getStore());
 
     const wrapped = wrapWithCorrelation(handler, true);
 
-    const result = await correlationStore.run(existingId, () => wrapped());
+    const result = correlationStore.run(existingId, () => wrapped());
 
     expect(result).toBe(existingId);
     expect(handler).toHaveBeenCalled();
