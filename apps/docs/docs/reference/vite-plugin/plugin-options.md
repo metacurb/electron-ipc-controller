@@ -1,7 +1,7 @@
 ---
 title: Plugin Options
 sidebar_position: 2
-description: electronIpcBridge plugin options: main, preload, and type output paths.
+description: "electronIpcBridge plugin options: main, preload, and type output paths."
 ---
 
 # Plugin Options

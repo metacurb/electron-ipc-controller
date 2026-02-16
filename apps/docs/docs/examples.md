@@ -1,7 +1,7 @@
 ---
 sidebar_position: 10
 title: Examples
-description: Example apps: basic, Electron+Vite, TypeDI, NestJS, and kitchen sink—for learning and reference.
+description: "Example apps: basic, Electron+Vite, TypeDI, NestJS, and kitchen sink—for learning and reference."
 ---
 
 # Examples
