@@ -11,7 +11,6 @@ import icon from '../../resources/icon.png?asset'
 
 import { IpcModule } from './ipc.module'
 
-/** IPC controller classes registered as providers on the given Nest module. */
 const getIpcControllersFromModule = (ModuleClass: new (...args: unknown[]) => unknown) => {
   const providers = (Reflect.getMetadata('providers', ModuleClass) as unknown[] | undefined) ?? []
   return providers.filter(isIpcController)

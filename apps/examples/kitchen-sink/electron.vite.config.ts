@@ -8,7 +8,8 @@ export default defineConfig({
     plugins: [
       externalizeDepsPlugin(),
       electronIpcBridge({
-        main: 'src/main/index.ts'
+        main: 'src/main/index.ts',
+        resolutionStrategy: 'nest'
       })
     ]
   },
@@ -18,7 +19,8 @@ export default defineConfig({
         exclude: ['@electron-ipc-bridge/core', '@electron-toolkit/preload']
       }),
       electronIpcBridge({
-        main: 'src/main/index.ts'
+        main: 'src/main/index.ts',
+        resolutionStrategy: 'nest'
       })
     ]
   },

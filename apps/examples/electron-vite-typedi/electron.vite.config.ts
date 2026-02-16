@@ -11,7 +11,8 @@ export default defineConfig({
     plugins: [
       externalizeDepsPlugin({
         exclude: ['@electron-ipc-bridge/core', '@electron-toolkit/preload']
-      })
+      }),
+      electronIpcBridge()
     ]
   },
   renderer: {
