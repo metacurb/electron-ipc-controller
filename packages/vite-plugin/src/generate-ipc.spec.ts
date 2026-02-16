@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { Logger } from "vite";
 
 import { generateIpc } from "./generate-ipc.js";
 import { PluginState } from "./plugin-state.js";
@@ -33,7 +34,7 @@ jest.mock("./parser/find-controllers.js", () => ({
 }));
 
 jest.mock("./preload/resolve-api-root.js", () => ({
-  resolveApiRootFromPreload: jest.fn().mockReturnValue({
+  resolveApiRootFromPreload: jest.fn().mockResolvedValue({
     dependencies: ["mockPreloadDep.ts"],
     namespace: {},
   }),
@@ -61,10 +62,19 @@ describe("generateIpc", () => {
     types: {},
   };
   let mockState: PluginState;
+  let mockLogger: Logger;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockState = new PluginState();
+    mockLogger = {
+        clearScreen: jest.fn(),
+        error: jest.fn(),
+        hasErrorLogged: jest.fn(),
+        hasWarned: jest.fn(),
+        info: jest.fn(),
+        warn: jest.fn(),
+    } as unknown as Logger;
 
     // Setup default mock behaviors
     mockExistsSync.mockReturnValue(true);
@@ -75,23 +85,20 @@ describe("generateIpc", () => {
     mockRelative.mockImplementation((_from: string, to: string) => `relative/${to}`);
   });
 
-  it("should generate types when main entry exists", () => {
-    generateIpc(mockRoot, mockState, mockOptions);
+  it("should generate types when main entry exists", async () => {
+    await generateIpc(mockRoot, mockLogger, mockState, mockOptions);
 
     expect(fs.existsSync).toHaveBeenCalledWith("/root/src/main.ts");
     expect(fs.writeFileSync).toHaveBeenCalledWith("/root/dist/runtime.ts", "mockRuntimeTypes");
     expect(fs.writeFileSync).toHaveBeenCalledWith("/root/dist/global.d.ts", "mockGlobalTypes");
   });
 
-  it("should warn and return if main entry does not exist", () => {
+  it("should warn and return if main entry does not exist", async () => {
     mockExistsSync.mockReturnValue(false);
-    const consoleSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 
-    generateIpc(mockRoot, mockState, mockOptions);
+    await generateIpc(mockRoot, mockLogger, mockState, mockOptions);
 
-    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Main entry not found"));
+    expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Main entry not found"));
     expect(fs.writeFileSync).not.toHaveBeenCalled();
-
-    consoleSpy.mockRestore();
   });
 });

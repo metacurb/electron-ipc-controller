@@ -38,14 +38,14 @@ export function electronIpcBridge({
 
   const state = new PluginState();
 
-  const generate = () => {
-    generateIpc(root, logger, state, { main, preload, types });
+  const generate = async () => {
+    await generateIpc(root, logger, state, { main, preload, types });
   };
 
   return {
-    buildStart() {
+    async buildStart() {
       if (state.claimInitialGeneration()) {
-        generate();
+        await generate();
       }
     },
     configResolved(config) {

@@ -16,7 +16,7 @@ describe("preload namespace integration", () => {
     };
   };
 
-  it("updates global window property name when setupPreload namespace changes", () => {
+  it("updates global window property name when setupPreload namespace changes", async () => {
     const first = writePreload(
       `import { setupPreload } from "@electron-ipc-bridge/core/preload";
 setupPreload("custom");
@@ -29,10 +29,10 @@ setupPreload("renamed");
     );
 
     try {
-      const apiNamespace1 = resolveApiRootFromPreload(first.preloadPath).namespace;
+      const apiNamespace1 = (await resolveApiRootFromPreload(first.preloadPath)).namespace;
       const types1 = generateGlobalTypes(apiNamespace1, "../runtime/ipc.types");
 
-      const apiNamespace2 = resolveApiRootFromPreload(second.preloadPath).namespace;
+      const apiNamespace2 = (await resolveApiRootFromPreload(second.preloadPath)).namespace;
       const types2 = generateGlobalTypes(apiNamespace2, "../runtime/ipc.types");
 
       expect(types1).toContain("custom:");
@@ -44,14 +44,14 @@ setupPreload("renamed");
     }
   });
 
-  it("resolves namespace from setupPreload({ namespace: 'custom' }) object API", () => {
+  it("resolves namespace from setupPreload({ namespace: 'custom' }) object API", async () => {
     const { cleanup, preloadPath } = writePreload(
       `import { setupPreload } from "@electron-ipc-bridge/core/preload";
 setupPreload({ namespace: 'custom' }).catch(console.error);
 `,
     );
     try {
-      const namespace = resolveApiRootFromPreload(preloadPath).namespace;
+      const namespace = (await resolveApiRootFromPreload(preloadPath)).namespace;
       const types = generateGlobalTypes(namespace, "../runtime/ipc.types");
       expect(namespace).toBe("custom");
       expect(types).toContain("custom:");

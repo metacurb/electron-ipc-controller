@@ -12,7 +12,7 @@ import { resolveApiRootFromPreload } from "./preload/resolve-api-root.js";
 import { resolveTypePaths } from "./resolve-type-paths.js";
 import type { PluginTypesOptions } from "./types.js";
 
-export function generateIpc(
+export async function generateIpc(
   root: string,
   logger: Logger,
   state: PluginState,
@@ -21,11 +21,11 @@ export function generateIpc(
     preload: string;
     types: PluginTypesOptions;
   },
-): void {
+): Promise<void> {
   try {
     const { main, preload, types } = options;
     const preloadPath = path.resolve(root, preload);
-    const { dependencies: preloadDependencies, namespace: resolvedApiRoot } = resolveApiRootFromPreload(preloadPath);
+    const { dependencies: preloadDependencies, namespace: resolvedApiRoot } = await resolveApiRootFromPreload(preloadPath);
     const entryPath = path.resolve(root, main);
     if (!fs.existsSync(entryPath)) {
       logger.warn(`Main entry not found at: ${entryPath}`);
