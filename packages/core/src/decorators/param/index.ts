@@ -6,6 +6,7 @@ import { Origin } from "./origin";
 import { ProcessId } from "./process-id";
 import { RawEvent } from "./raw-event";
 import { Sender } from "./sender";
+import { Validate } from "./validate";
 import { Window } from "./window";
 
 type ParamDecoratorName = (typeof IPC_PARAM_INJECTION_DECORATOR_NAMES)[number];
@@ -20,4 +21,4 @@ export const IPC_PARAM_DECORATORS = {
   Window,
 } satisfies Record<ParamDecoratorName, ParameterDecorator>;
 
-export { Channel, CorrelationId, Origin, ProcessId, RawEvent, Sender, Window };
+export { Channel, CorrelationId, Origin, ProcessId, RawEvent, Sender, Validate, Window };

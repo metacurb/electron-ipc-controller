@@ -13,6 +13,7 @@ export interface IpcHandlerMetadata {
   handler: (...args: unknown[]) => unknown;
   methodName: string;
   paramInjections?: ParameterInjection[];
+  paramValidations?: ParameterValidation[];
   type: IpcHandlerType;
 }
 
@@ -24,6 +25,11 @@ export interface ParameterInjection<T = unknown> {
   data?: unknown;
   index: number;
   resolver: (event: IpcMainEvent | IpcMainInvokeEvent, context: ParameterInjectionContext, data?: T) => unknown;
+}
+
+export interface ParameterValidation {
+  index: number;
+  validator: (value: unknown) => boolean | void;
 }
 
 export type PendingHandlerMetadata = Omit<IpcHandlerMetadata, "channel">;

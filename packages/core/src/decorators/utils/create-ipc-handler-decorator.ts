@@ -1,7 +1,7 @@
 import { IpcHandlerType } from "@electron-ipc-bridge/shared";
 
-import { IPC_PARAM_INJECTIONS, IPC_PENDING_HANDLERS } from "../../metadata/constants";
-import { ParameterInjection, PendingHandlerMetadata } from "../../metadata/types";
+import { IPC_PARAM_INJECTIONS, IPC_PARAM_VALIDATIONS, IPC_PENDING_HANDLERS } from "../../metadata/constants";
+import { ParameterInjection, ParameterValidation, PendingHandlerMetadata } from "../../metadata/types";
 
 export const createIpcHandlerDecorator =
   (type: IpcHandlerType) =>
@@ -17,12 +17,19 @@ export const createIpcHandlerDecorator =
         propertyKey,
       );
 
+      const paramValidations: ParameterValidation[] | undefined = Reflect.getOwnMetadata(
+        IPC_PARAM_VALIDATIONS,
+        target,
+        propertyKey,
+      );
+
       const methodName = name || String(propertyKey);
 
       const handlerMeta: PendingHandlerMetadata = {
         handler: descriptor.value,
         methodName,
         paramInjections,
+        paramValidations,
         type,
       };
 

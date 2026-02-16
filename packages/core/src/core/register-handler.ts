@@ -20,6 +20,7 @@ export const registerHandler = (
     boundOriginalHandler,
     { channel: handler.channel },
     handler.paramInjections,
+    handler.paramValidations,
   );
 
   const correlationWrappedHandler = wrapWithCorrelation(parameterInjectionWrappedHandler, correlation);

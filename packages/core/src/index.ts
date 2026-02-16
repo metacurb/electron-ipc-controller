@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 export { IpcController } from "./decorators/class";
 export { IpcHandle, IpcHandleOnce, IpcOn, IpcOnce } from "./decorators/method";
-export { Channel, CorrelationId, Origin, ProcessId, RawEvent, Sender, Window } from "./decorators/param";
+export { Channel, CorrelationId, Origin, ProcessId, RawEvent, Sender, Validate, Window } from "./decorators/param";
 
 export { createParamDecorator } from "./decorators/utils/create-param-decorator";
 export { getCorrelationId } from "./correlation/get-correlation-id";

@@ -1,36 +1,53 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 
-import { ParameterInjection, ParameterInjectionContext } from "../../metadata/types";
+import { ParameterInjection, ParameterInjectionContext, ParameterValidation } from "../../metadata/types";
 
 export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn>(
   handler: (...args: TArgs) => TReturn,
   context: ParameterInjectionContext,
   paramInjections: ParameterInjection[] | undefined,
+  paramValidations?: ParameterValidation[],
 ): ((event: IpcMainEvent | IpcMainInvokeEvent, ...args: TArgs) => TReturn) => {
-  if (!paramInjections?.length) {
+  if (!paramInjections?.length && !paramValidations?.length) {
     return (event: IpcMainEvent | IpcMainInvokeEvent, ...args: TArgs) => {
       return handler(...args);
     };
   }
 
-  const injectionsMap = new Map(paramInjections.map((i) => [i.index, i]));
+  const injectionsMap = new Map((paramInjections || []).map((i) => [i.index, i]));
   const maxInjectionIndex =
     paramInjections && paramInjections.length > 0 ? Math.max(...paramInjections.map((i) => i.index)) : -1;
+
+  const validationsMap = new Map((paramValidations || []).map((v) => [v.index, v]));
+  const maxValidationIndex =
+    paramValidations && paramValidations.length > 0 ? Math.max(...paramValidations.map((v) => v.index)) : -1;
+
+  const loopLimit = Math.max(maxInjectionIndex, maxValidationIndex);
 
   return (event: IpcMainEvent | IpcMainInvokeEvent, ...args: TArgs) => {
     const finalArgs: unknown[] = [];
     let argIndex = 0;
 
-    for (let i = 0; i <= maxInjectionIndex || argIndex < args.length; i++) {
+    for (let i = 0; i <= loopLimit || argIndex < args.length; i++) {
       const injection = injectionsMap.get(i);
+      let value: unknown;
+
       if (injection) {
-        const resolved = injection.resolver(event, context, injection.data);
-        finalArgs.push(resolved);
+        value = injection.resolver(event, context, injection.data);
       } else {
         if (argIndex < args.length) {
-          finalArgs.push(args[argIndex++]);
+          value = args[argIndex++];
         } else {
-          finalArgs.push(undefined);
+          value = undefined;
+        }
+      }
+
+      finalArgs.push(value);
+
+      const validation = validationsMap.get(i);
+      if (validation) {
+        if (validation.validator(value) === false) {
+          throw new Error(`Validation failed for argument at index ${i}`);
         }
       }
     }
