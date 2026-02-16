@@ -13,10 +13,11 @@ export const createParameterInjectionWrapper = <TArgs extends unknown[], TReturn
     };
   }
 
+  const injectionsMap = new Map(paramInjections.map((i) => [i.index, i]));
+  const maxInjectionIndex =
+    paramInjections && paramInjections.length > 0 ? Math.max(...paramInjections.map((i) => i.index)) : -1;
+
   return (event: IpcMainEvent | IpcMainInvokeEvent, ...args: TArgs) => {
-    const injectionsMap = new Map((paramInjections || []).map((i) => [i.index, i]));
-    const maxInjectionIndex =
-      paramInjections && paramInjections.length > 0 ? Math.max(...paramInjections.map((i) => i.index)) : -1;
     const finalArgs: unknown[] = [];
     let argIndex = 0;
 
