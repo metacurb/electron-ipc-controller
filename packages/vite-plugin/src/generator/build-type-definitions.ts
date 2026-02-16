@@ -16,7 +16,6 @@ export const buildTypeDefinitions = (controllers: ControllerMetadata[]): string 
 
   return Array.from(referencedTypes.entries())
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .filter(([, def]) => def.trim().length > 0)
     .map(([, def]) => `export ${def}`)
     .join("\n\n");
 };

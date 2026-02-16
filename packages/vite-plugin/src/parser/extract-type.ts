@@ -14,7 +14,7 @@ import {
 
 import { TypeDefinition } from "./types.js";
 
-const printer = createPrinter();
+const printer = createPrinter({ removeComments: true });
 
 const BUILTIN_TYPE_NAMES = new Set([
   "Promise",

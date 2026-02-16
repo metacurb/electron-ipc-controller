@@ -35,11 +35,7 @@ describe("parseMethod with inferred types", () => {
     const metadata = parseMethod(method, typeChecker);
 
     expect(metadata).toBeDefined();
-    console.log("Inferred Return Type:", metadata?.returnType);
-
-    // It should be NodeJS.Platform
     expect(metadata?.returnType).toBe("NodeJS.Platform");
-    // And it should require the "node" reference
     expect(metadata?.requiredReferenceTypes).toContain("node");
   });
 });
