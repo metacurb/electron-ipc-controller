@@ -39,7 +39,11 @@ export interface IpcApi {
     simple(input: SimplePayload): Promise<SimplePayload>
   }
   util: {
-    withOrigin(): Promise<{ hasFrame: boolean }>
-    withRawEvent(): Promise<{ eventType: string }>
+    withOrigin(): Promise<{
+      hasFrame: boolean
+    }>
+    withRawEvent(): Promise<{
+      eventType: string
+    }>
   }
 }
