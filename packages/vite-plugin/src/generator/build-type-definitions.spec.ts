@@ -47,15 +47,15 @@ describe("buildTypeDefinitions", () => {
 
   it("collects recursively nested types", () => {
     const childType: TypeDefinition = {
-      name: "Child",
       definition: "interface Child { id: string }",
+      name: "Child",
       referencedTypes: [],
       sourceFile: "child.ts",
     };
 
     const parentType: TypeDefinition = {
-      name: "Parent",
       definition: "interface Parent { child: Child }",
+      name: "Parent",
       referencedTypes: [childType],
       sourceFile: "parent.ts",
     };
