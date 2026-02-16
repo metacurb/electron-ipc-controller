@@ -1,4 +1,5 @@
 import path from "path";
+import { createLogger, type Logger, type Plugin } from "vite";
 
 import { DEFAULT_MAIN_ENTRY, DEFAULT_PRELOAD_ENTRY } from "./constants.js";
 import { generateIpc } from "./generate-ipc.js";
