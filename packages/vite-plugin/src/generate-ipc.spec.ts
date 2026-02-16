@@ -4,11 +4,10 @@ import path from "path";
 import { generateIpc } from "./generate-ipc.js";
 import { PluginState } from "./plugin-state.js";
 
-// Mock external modules
 jest.mock("fs");
 jest.mock("path", () => {
-  const originalPath = jest.requireActual("path");
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  const originalPath = jest.requireActual<typeof import("path")>("path");
+
   return {
     ...originalPath,
     dirname: jest.fn(),
@@ -17,13 +16,14 @@ jest.mock("path", () => {
   };
 });
 
-// Mock internal modules
 jest.mock("./generator/generate-global-types.js", () => ({
   generateGlobalTypes: jest.fn().mockReturnValue("mockGlobalTypes"),
 }));
+
 jest.mock("./generator/generate-runtime-types.js", () => ({
   generateRuntimeTypes: jest.fn().mockReturnValue("mockRuntimeTypes"),
 }));
+
 jest.mock("./parser/find-controllers.js", () => ({
   findControllers: jest.fn().mockReturnValue({
     controllers: ["mockController"],
@@ -31,18 +31,27 @@ jest.mock("./parser/find-controllers.js", () => ({
     program: {},
   }),
 }));
+
 jest.mock("./preload/resolve-api-root.js", () => ({
   resolveApiRootFromPreload: jest.fn().mockReturnValue({
     dependencies: ["mockPreloadDep.ts"],
     namespace: {},
   }),
 }));
+
 jest.mock("./resolve-type-paths.js", () => ({
   resolveTypePaths: jest.fn().mockReturnValue({
     globalPath: "/root/dist/global.d.ts",
     runtimePath: "/root/dist/runtime.ts",
   }),
 }));
+
+const mockExistsSync = jest.mocked(fs.existsSync);
+const mockMkdirSync = jest.mocked(fs.mkdirSync);
+const mockWriteFileSync = jest.mocked(fs.writeFileSync);
+const mockResolve = jest.mocked(path.resolve);
+const mockDirname = jest.mocked(path.dirname);
+const mockRelative = jest.mocked(path.relative);
 
 describe("generateIpc", () => {
   const mockRoot = "/root";
@@ -58,30 +67,24 @@ describe("generateIpc", () => {
     mockState = new PluginState();
 
     // Setup default mock behaviors
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.mkdirSync as jest.Mock).mockImplementation(() => {});
-    (fs.writeFileSync as jest.Mock).mockImplementation(() => {});
-    (path.resolve as jest.Mock).mockImplementation((...args: string[]) => args.join("/"));
-    (path.dirname as jest.Mock).mockImplementation((p: string) => p.substring(0, p.lastIndexOf("/")));
-    (path.relative as jest.Mock).mockImplementation((_from: string, to: string) => `relative/${to}`);
+    mockExistsSync.mockReturnValue(true);
+    mockMkdirSync.mockImplementation(() => "foo");
+    mockWriteFileSync.mockImplementation(() => {});
+    mockResolve.mockImplementation((...args: string[]) => args.join("/"));
+    mockDirname.mockImplementation((p: string) => p.substring(0, p.lastIndexOf("/")));
+    mockRelative.mockImplementation((_from: string, to: string) => `relative/${to}`);
   });
 
   it("should generate types when main entry exists", () => {
     generateIpc(mockRoot, mockState, mockOptions);
 
     expect(fs.existsSync).toHaveBeenCalledWith("/root/src/main.ts");
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      "/root/dist/runtime.ts",
-      "mockRuntimeTypes"
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      "/root/dist/global.d.ts",
-      "mockGlobalTypes"
-    );
+    expect(fs.writeFileSync).toHaveBeenCalledWith("/root/dist/runtime.ts", "mockRuntimeTypes");
+    expect(fs.writeFileSync).toHaveBeenCalledWith("/root/dist/global.d.ts", "mockGlobalTypes");
   });
 
   it("should warn and return if main entry does not exist", () => {
-    (fs.existsSync as jest.Mock).mockReturnValue(false);
+    mockExistsSync.mockReturnValue(false);
     const consoleSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 
     generateIpc(mockRoot, mockState, mockOptions);
