@@ -27,7 +27,6 @@
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
-    "postinstall": "pnpm build",
     "test": "pnpm exec jest --config jest.config.cjs"
   },
   "peerDependencies": {

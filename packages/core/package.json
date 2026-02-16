@@ -41,7 +41,6 @@
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
-    "postinstall": "pnpm build",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
