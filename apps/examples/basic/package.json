@@ -1,6 +1,6 @@
 {
   "name": "@electron-ipc-bridge/example-basic",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Basic Electron example using electron-ipc-bridge",
   "main": "dist/main/index.js",

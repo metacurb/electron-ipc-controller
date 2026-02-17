@@ -1,6 +1,6 @@
 {
   "name": "electron-vite-nest",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Electron + Vite + React + NestJS core DI example for electron-ipc-bridge",
   "main": "./out/main/index.js",
   "author": "example.com",
