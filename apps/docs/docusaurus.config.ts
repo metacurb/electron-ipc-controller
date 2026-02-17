@@ -104,8 +104,11 @@ const config: Config = {
         },
         {
           items: [
-            { href: "https://www.npmjs.com/", label: "@electron-ipc-bridge/core" },
-            { href: "https://www.npmjs.com/", label: "@electron-ipc-bridge/vite-plugin" },
+            { href: "https://www.npmjs.com/package/@electron-ipc-bridge/core", label: "@electron-ipc-bridge/core" },
+            {
+              href: "https://www.npmjs.com/package/@electron-ipc-bridge/vite-plugin",
+              label: "@electron-ipc-bridge/vite-plugin",
+            },
           ],
           title: "Packages",
         },
