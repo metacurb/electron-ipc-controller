@@ -18,8 +18,8 @@ importers:
         specifier: ^25.2.3
         version: 25.2.3
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -116,8 +116,8 @@ importers:
         specifier: ^2.4.1
         version: 2.4.1
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -129,10 +129,10 @@ importers:
         version: link:../../../packages/core
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@40.3.0)
+        version: 3.0.2(electron@40.4.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@40.3.0)
+        version: 4.0.0(electron@40.4.1)
     devDependencies:
       '@electron-ipc-bridge/vite-plugin':
         specifier: workspace:*
@@ -159,8 +159,8 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       electron-builder:
         specifier: ^26.0.12
         version: 26.7.0(electron-builder-squirrel-windows@26.7.0)
@@ -202,10 +202,10 @@ importers:
         version: link:../../../packages/core
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@40.3.0)
+        version: 3.0.2(electron@40.4.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@40.3.0)
+        version: 4.0.0(electron@40.4.1)
       '@nestjs/common':
         specifier: ^11.1.13
         version: 11.1.13(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -241,8 +241,8 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       electron-builder:
         specifier: ^26.0.12
         version: 26.7.0(electron-builder-squirrel-windows@26.7.0)
@@ -284,10 +284,10 @@ importers:
         version: link:../../../packages/core
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@40.3.0)
+        version: 3.0.2(electron@40.4.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@40.3.0)
+        version: 4.0.0(electron@40.4.1)
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -320,8 +320,8 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       electron-builder:
         specifier: ^26.0.12
         version: 26.7.0(electron-builder-squirrel-windows@26.7.0)
@@ -363,10 +363,10 @@ importers:
         version: link:../../../packages/core
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@40.3.0)
+        version: 3.0.2(electron@40.4.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@40.3.0)
+        version: 4.0.0(electron@40.4.1)
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -396,8 +396,8 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       electron-vite:
         specifier: ^5.0.0
         version: 5.0.0(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2))
@@ -439,8 +439,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       electron:
-        specifier: ^40.3.0
-        version: 40.3.0
+        specifier: ^40.4.1
+        version: 40.4.1
       esbuild:
         specifier: ^0.27.3
         version: 0.27.3
@@ -4740,8 +4740,8 @@ packages:
     resolution: {integrity: sha512-bO3y10YikuUwUuDUQRM4KfwNkKhnpVO7IPdbsrejwN9/AABJzzTQ4GeHwyzNSrVO+tEH3/Np255a3sVZpZDjvg==}
     engines: {node: '>=8.0.0'}
 
-  electron@40.3.0:
-    resolution: {integrity: sha512-ZaDkTZpNHr863tyZHieoqbaiLI0e3RVCXoEC5y1Ld70/Q5H1mPV9d5TK0h1dWtaSFVOW0w8iDvtdLwAXtasXpg==}
+  electron@40.4.1:
+    resolution: {integrity: sha512-N1ZXybQZL8kYemO8vAeh9nrk4mSvqlAO8xs0QCHkXIvRnuB/7VGwEehjvQbsU5/f4bmTKpG+2GQERe/zmKpudQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -11200,17 +11200,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron-toolkit/preload@3.0.2(electron@40.3.0)':
+  '@electron-toolkit/preload@3.0.2(electron@40.4.1)':
     dependencies:
-      electron: 40.3.0
+      electron: 40.4.1
 
   '@electron-toolkit/tsconfig@2.0.0(@types/node@25.2.3)':
     dependencies:
       '@types/node': 25.2.3
 
-  '@electron-toolkit/utils@4.0.0(electron@40.3.0)':
+  '@electron-toolkit/utils@4.0.0(electron@40.4.1)':
     dependencies:
-      electron: 40.3.0
+      electron: 40.4.1
 
   '@electron/asar@3.4.1':
     dependencies:
@@ -14577,7 +14577,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@40.3.0:
+  electron@40.4.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 24.10.13
