@@ -7,7 +7,7 @@ keywords: [electron, ipc, typescript, type-safe, decorators, ipc-main, preload]
 
 # Introduction
 
-IPC Electron Controller is a **type-safe, class-based** IPC framework for [Electron](https://www.electronjs.org/) applications.
+Electron IPC Bridge is a **type-safe, class-based** IPC framework for [Electron](https://www.electronjs.org/) applications.
 
 Inspired by [NestJS](https://nestjs.com/), this library allows you to structure your Electron Main Process logic using **Controllers** and **Decorators**. It includes a [Vite](https://vitejs.dev/) plugin that automatically generates [TypeScript](https://www.typescriptlang.org/) definitions for your Renderer process, ensuring your renderer and main process types are always in sync without manual duplication.
 
