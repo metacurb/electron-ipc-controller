@@ -5,6 +5,7 @@ import { Logger } from "vite";
 import { generateIpc } from "./generate-ipc.js";
 import { findControllers } from "./parser/find-controllers.js";
 import { PluginState } from "./plugin-state.js";
+import { resolveTypePaths } from "./resolve-type-paths.js";
 
 jest.mock("fs");
 jest.mock("path", () => {
@@ -111,5 +112,40 @@ describe("generateIpc", () => {
     });
 
     expect(findControllers).toHaveBeenCalledWith(expect.any(String), undefined, undefined, "nest");
+  });
+
+  it("should catch errors during generation and log them", () => {
+    jest.mocked(findControllers).mockImplementationOnce(() => {
+      throw new Error("mock error");
+    });
+
+    generateIpc(mockRoot, mockLogger, mockState, mockOptions);
+
+    expect(mockLogger.error).toHaveBeenCalledWith(expect.stringContaining("Type generation failed: mock error"));
+  });
+
+  it("should warn if no createIpcApp call found", () => {
+    jest.mocked(findControllers).mockReturnValueOnce({
+      controllers: [],
+      processedFiles: ["mockFile.ts"],
+      program: {},
+    } as any);
+
+    generateIpc(mockRoot, mockLogger, mockState, mockOptions);
+
+    expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("No createIpcApp() call found"));
+  });
+
+  it("should warn if both runtime and global type outputs are disabled", () => {
+    jest.mocked(resolveTypePaths).mockReturnValueOnce({
+      globalPath: undefined,
+      runtimePath: undefined,
+    } as any);
+
+    generateIpc(mockRoot, mockLogger, mockState, mockOptions);
+
+    expect(mockLogger.warn).toHaveBeenCalledWith(
+      expect.stringContaining("Both runtime and global type outputs are disabled"),
+    );
   });
 });
