@@ -72,9 +72,7 @@ export function generateIpc(
         if (!runtimePath) {
           throw new Error("Global type generation requires a runtime types output path.");
         }
-        const rel = path
-          .relative(path.dirname(globalPath), runtimePath)
-          .replace(/\\/g, "/")
+        const rel = normalizePath(path.relative(path.dirname(globalPath), runtimePath))
           .replace(/\.tsx?$/, ".ts")
           .replace(/(\.d)?\.ts$/, "");
         return rel.startsWith(".") ? rel : `./${rel}`;

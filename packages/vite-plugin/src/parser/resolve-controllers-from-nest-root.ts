@@ -1,4 +1,3 @@
-import path from "path";
 import {
   ClassDeclaration,
   Expression,
@@ -15,10 +14,9 @@ import {
   TypeChecker,
 } from "typescript";
 
+import { normalizePath } from "../normalize-path.js";
 import { resolveControllersFromModuleClass } from "./resolve-controllers-from-module-class.js";
 import { ControllerMetadata } from "./types.js";
-
-const normalizePathSafe = (p: string) => path.normalize(p).replace(/\\/g, "/");
 
 function resolveImportElementToClass(element: Expression, typeChecker: TypeChecker): ClassDeclaration | undefined {
   if (isIdentifier(element)) {
@@ -62,7 +60,7 @@ export const resolveControllersFromNestRoot = (
   visitedModules: Set<string>,
 ): void => {
   const sourceFile = targetDecl.getSourceFile();
-  const filePath = normalizePathSafe(sourceFile.fileName);
+  const filePath = normalizePath(sourceFile.fileName);
   if (visitedModules.has(filePath)) return;
   visitedModules.add(filePath);
 

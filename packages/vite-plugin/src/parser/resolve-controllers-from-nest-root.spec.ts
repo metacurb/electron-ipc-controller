@@ -1,6 +1,7 @@
 import path from "path";
 import { createProgram, forEachChild, isClassDeclaration } from "typescript";
 
+import { normalizePath } from "../normalize-path";
 import { resolveControllersFromNestRoot } from "./resolve-controllers-from-nest-root";
 import { ControllerMetadata } from "./types";
 
@@ -61,7 +62,7 @@ describe("resolveControllersFromNestRoot", () => {
     const processedFiles = new Set<string>();
     const fileCache = new Map<string, ControllerMetadata[]>();
     const filePath = path.join(fixturesDir, "app.module.ts");
-    const normalizedPath = path.normalize(filePath).replace(/\\/g, "/");
+    const normalizedPath = normalizePath(filePath);
     const visitedModules = new Set<string>([normalizedPath]);
 
     resolveControllersFromNestRoot(classDecl, typeChecker, processedFiles, controllers, fileCache, visitedModules);
